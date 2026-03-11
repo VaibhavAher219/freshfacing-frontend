@@ -24,8 +24,9 @@ export function middleware(request: NextRequest) {
   // For local dev, just pass through
   const isLocalhost = hostname.includes('localhost') || hostname.includes('127.0.0.1')
   const isFreshFacing = hostname.includes('freshfacing.com')
+  const isVercel = hostname.includes('.vercel.app')
 
-  if (!isLocalhost && !isFreshFacing) {
+  if (!isLocalhost && !isFreshFacing && !isVercel) {
     // Custom domain — rewrite to dynamic site route
     // The domain → slug mapping would come from a database lookup
     // For now, we pass the hostname as a header for the page to resolve
