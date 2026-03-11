@@ -139,7 +139,10 @@ export default function ClientAdminPage() {
     return (
       <div className="admin-login">
         <div className="admin-login-card">
-          <div className="admin-logo">fresh<span>facing</span></div>
+          <div className="admin-logo">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="5" fill="#5c7a5c"/><path d="M7 8.5h12M7 13h7.5M7 17.5h9.5" stroke="#faf7f2" strokeWidth="2" strokeLinecap="round"/><circle cx="20" cy="17.5" r="3" fill="#e8a830"/></svg>
+            fresh<span>facing</span>
+          </div>
           <h1>Log in to your site</h1>
           <form onSubmit={handleLogin}>
             <input
@@ -169,7 +172,10 @@ export default function ClientAdminPage() {
   if (loading) {
     return (
       <div className="admin-loading">
-        <div className="admin-logo">fresh<span>facing</span></div>
+        <div className="admin-logo">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="5" fill="#5c7a5c"/><path d="M7 8.5h12M7 13h7.5M7 17.5h9.5" stroke="#faf7f2" strokeWidth="2" strokeLinecap="round"/><circle cx="20" cy="17.5" r="3" fill="#e8a830"/></svg>
+          fresh<span>facing</span>
+        </div>
         <p>Loading your site...</p>
       </div>
     )
@@ -181,7 +187,10 @@ export default function ClientAdminPage() {
     <div className="admin-layout">
       {/* Sidebar */}
       <aside className="admin-sidebar">
-        <div className="admin-logo">fresh<span>facing</span></div>
+        <div className="admin-logo">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect width="26" height="26" rx="5" fill="#5c7a5c"/><path d="M7 8.5h12M7 13h7.5M7 17.5h9.5" stroke="#faf7f2" strokeWidth="2" strokeLinecap="round"/><circle cx="20" cy="17.5" r="3" fill="#e8a830"/></svg>
+          fresh<span>facing</span>
+        </div>
 
         <nav className="admin-nav">
           {[

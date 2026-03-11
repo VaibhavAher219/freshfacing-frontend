@@ -678,19 +678,11 @@ export default function HomePage() {
     link.href = '/css/styles.css'
     document.head.appendChild(link)
 
-    // Add the favicon
-    const favicon = document.createElement('link')
-    favicon.rel = 'icon'
-    favicon.type = 'image/svg+xml'
-    favicon.href = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%235c7a5c'/><text x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='%23faf7f2'>f</text></svg>"
-    document.head.appendChild(favicon)
-
     // Set the page title
     document.title = 'FreshFacing \u2014 A New Website for Your Business. In an Hour.'
 
     return () => {
       document.head.removeChild(link)
-      document.head.removeChild(favicon)
     }
   }, [])
 

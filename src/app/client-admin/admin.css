@@ -44,6 +44,9 @@
 
 /* Logo */
 .admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
   font-size: 1.4rem;
   font-weight: 700;
   color: var(--ink, #1c1810);
