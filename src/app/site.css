@@ -1,27 +1,27 @@
-/* Site-wide reset & base styles — scoped to avoid breaking Payload admin */
+/* Site-wide reset & base styles */
 
-/* Reset (only outside Payload admin) */
-body:not(:has([data-theme])) *,
-body:not(:has([data-theme])) *::before,
-body:not(:has([data-theme])) *::after {
+/* Low-specificity reset so page CSS can override */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body:not(:has([data-theme])) {
+body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   color: var(--ink);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
 }
 
-body:not(:has([data-theme])) a {
+a {
   color: inherit;
   text-decoration: none;
 }
 
-body:not(:has([data-theme])) img {
+img {
   max-width: 100%;
   height: auto;
 }
