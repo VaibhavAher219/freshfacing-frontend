@@ -20,7 +20,10 @@ const dirname = path.dirname(filename)
 const usePostgres = !!process.env.POSTGRES_URL
 
 const dbAdapter = usePostgres
-  ? postgresAdapter({ pool: { connectionString: process.env.POSTGRES_URL } })
+  ? postgresAdapter({
+      pool: { connectionString: process.env.POSTGRES_URL },
+      push: true, // Auto-create/sync tables — no migration files needed
+    })
   : sqliteAdapter({ client: { url: process.env.DATABASE_URL || `file:${path.resolve(dirname, 'freshfacing.db')}` } })
 
 export default buildConfig({
