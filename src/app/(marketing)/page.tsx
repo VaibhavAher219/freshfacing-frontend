@@ -1,193 +1,703 @@
-import Link from 'next/link'
+'use client'
 
-// Marketing homepage — placeholder that links to the key demo routes.
-// The full marketing site from _static_backup can be ported later.
-export default function HomePage() {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'var(--cream, #faf7f2)',
-      fontFamily: "'Plus Jakarta Sans', sans-serif",
-    }}>
-      {/* Nav */}
-      <nav style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '20px 40px',
-        maxWidth: 1100,
-        margin: '0 auto',
-      }}>
-        <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>
-          fresh<span style={{ color: '#5c7a5c' }}>facing</span>
-        </div>
-        <div style={{ display: 'flex', gap: 24, alignItems: 'center', fontSize: '0.9rem' }}>
-          <Link href="#how" style={{ color: '#7a6e60' }}>How It Works</Link>
-          <Link href="#pricing" style={{ color: '#7a6e60' }}>Pricing</Link>
-          <Link href="/admin" style={{
-            background: '#5c7a5c',
-            color: 'white',
-            padding: '8px 20px',
-            borderRadius: 6,
-            fontWeight: 600,
-          }}>Admin Login</Link>
-        </div>
-      </nav>
+import Script from 'next/script'
+import { useEffect } from 'react'
 
-      {/* Hero */}
-      <section style={{
-        maxWidth: 1100,
-        margin: '0 auto',
-        padding: '80px 40px',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 64,
-        alignItems: 'center',
-      }}>
-        <div>
-          <h1 style={{ fontSize: '3.2rem', fontWeight: 800, lineHeight: 1.1, marginBottom: 20 }}>
-            Time for a<br />fresh <span style={{ color: '#5c7a5c' }}>facing</span>
-          </h1>
-          <p style={{ fontSize: '1.15rem', color: '#7a6e60', lineHeight: 1.6, marginBottom: 32 }}>
-            We build modern, fast websites for local businesses. Your new site is ready in under an hour — starting at $20/month.
-          </p>
-          <div style={{ display: 'flex', gap: 12 }}>
-            <Link href="/preview/demo-dentist" style={{
-              background: '#e8a830',
-              color: '#1c1810',
-              padding: '14px 32px',
-              borderRadius: 8,
-              fontWeight: 700,
-              fontSize: '1rem',
-            }}>
-              See a Demo Site
-            </Link>
-            <Link href="/client-admin" style={{
-              background: 'transparent',
-              color: '#5c7a5c',
-              padding: '14px 32px',
-              borderRadius: 8,
-              fontWeight: 600,
-              fontSize: '1rem',
-              border: '2px solid #5c7a5c',
-            }}>
-              Try the Admin Panel
-            </Link>
+const bodyHTML = `
+<!-- NAV -->
+<nav>
+  <a href="#" style="display:flex;align-items:center;gap:0.55rem;text-decoration:none;">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="26" height="26" rx="5" fill="#5c7a5c"/>
+      <path d="M7 8.5h12M7 13h7.5M7 17.5h9.5" stroke="#faf7f2" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="20" cy="17.5" r="3" fill="#e8a830"/>
+    </svg>
+    <span class="logo">fresh<em>facing</em></span>
+  </a>
+  <div class="nav-links" id="nav-links">
+    <a href="#pain">Why It Matters</a>
+    <a href="#how">How It Works</a>
+    <a href="#diy">DIY vs. Us</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#claim" class="nav-claim">Already got your preview?</a>
+    <a href="#cta" class="nav-cta">Get My New Site &rarr;</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">&#127807; New site. In an hour. From $20/mo.</div>
+    <h1 class="hero-headline">
+      Time for a<br>
+      <span class="accent">fresh facing.</span>
+    </h1>
+    <p class="hero-sub">If your site looks like it was built in 2015, customers are already calling someone else. Drop your URL — we'll show you exactly what's wrong and build you a better one.</p>
+
+    <div class="url-form" id="audit-form-wrap">
+      <!-- STEP 1: URL entry -->
+      <div id="step-url">
+        <label class="url-form-label">See what's wrong with your site — free, instant</label>
+        <div class="url-input-row">
+          <input class="url-input" id="audit-url-input" type="text" placeholder="yourbusiness.com" autocomplete="off" />
+          <button class="url-btn" id="audit-btn" onclick="runAudit()">Scan My Site &rarr;</button>
+        </div>
+        <p class="form-note">No sign-up. Results in seconds.</p>
+      </div>
+
+      <!-- STEP 2: Scanning animation -->
+      <div id="step-scanning" style="display:none; text-align:center; padding:1.5rem 0;">
+        <div class="scan-spinner"></div>
+        <div id="scan-status" style="font-size:0.82rem;color:var(--mid);margin-top:0.75rem;">Checking mobile compatibility...</div>
+      </div>
+
+      <!-- STEP 3: Results -->
+      <div id="step-results" style="display:none;">
+        <div class="audit-results-header">
+          <div id="result-domain" style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;color:var(--mid);margin-bottom:0.25rem;"></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;">Site Health Report</div>
+            <div id="result-score" class="score-badge"></div>
           </div>
         </div>
-
-        <div style={{
-          background: 'white',
-          borderRadius: 16,
-          padding: 32,
-          boxShadow: '0 4px 30px rgba(0,0,0,0.06)',
-        }}>
-          <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#7a6e60', marginBottom: 12 }}>
-            DEMO WALKTHROUGH
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {[
-              { num: '1', label: 'Preview Site', href: '/preview/demo-dentist', desc: 'See the dentist demo site with purchase banner' },
-              { num: '2', label: 'Checkout Flow', href: '/checkout/demo-dentist', desc: 'Experience the subscription purchase page' },
-              { num: '3', label: 'Client Admin', href: '/client-admin', desc: 'Edit the site with the simple admin panel' },
-              { num: '4', label: 'Payload Admin', href: '/admin', desc: 'Internal CMS for the FreshFacing team' },
-            ].map((item) => (
-              <Link key={item.num} href={item.href} style={{
-                display: 'flex',
-                gap: 16,
-                alignItems: 'flex-start',
-                padding: 16,
-                borderRadius: 8,
-                border: '1px solid rgba(28,24,16,0.08)',
-                transition: 'background 0.15s',
-              }}>
-                <div style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: '50%',
-                  background: '#5c7a5c',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontWeight: 700,
-                  fontSize: '0.85rem',
-                  flexShrink: 0,
-                }}>
-                  {item.num}
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: 2 }}>{item.label}</div>
-                  <div style={{ fontSize: '0.8rem', color: '#7a6e60' }}>{item.desc}</div>
-                </div>
-              </Link>
-            ))}
+        <div id="audit-items-list" class="audit-items" style="margin-bottom:1.25rem;"></div>
+        <div style="background:var(--light);border-radius:6px;padding:1rem;margin-bottom:1rem;">
+          <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;">Want us to fix all of this?</div>
+          <div style="font-size:0.78rem;color:var(--mid);margin-bottom:0.75rem;">We'll build you a new site and send you the preview in under an hour.</div>
+          <div style="display:flex;gap:0;flex-wrap:wrap;">
+            <input class="email-input" id="result-email" type="email" placeholder="your@email.com" style="flex:1;min-width:0;border-right:none;border-radius:4px 0 0 4px;font-size:0.82rem;padding:0.65rem 0.85rem;" />
+            <button class="email-btn" style="font-size:0.78rem;padding:0.65rem 1rem;border-radius:0 4px 4px 0;" onclick="submitEmail()">Send Me My New Site</button>
           </div>
         </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" style={{
-        background: '#2e2416',
-        color: '#faf7f2',
-        padding: '80px 40px',
-      }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: 12 }}>Simple Pricing</h2>
-          <p style={{ color: 'rgba(250,247,242,0.6)', marginBottom: 48 }}>
-            Everything included. No hidden fees. Cancel anytime.
-          </p>
-          <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <div style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: 16,
-              padding: '40px 32px',
-              width: 280,
-            }}>
-              <div style={{ fontWeight: 600, marginBottom: 8 }}>Monthly</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: 800 }}>$20<span style={{ fontSize: '1rem', fontWeight: 400 }}>/mo</span></div>
-              <div style={{ fontSize: '0.85rem', color: 'rgba(250,247,242,0.5)', marginTop: 8 }}>$240/year</div>
-            </div>
-            <div style={{
-              background: 'rgba(232,168,48,0.1)',
-              border: '2px solid #e8a830',
-              borderRadius: 16,
-              padding: '40px 32px',
-              width: 280,
-              position: 'relative' as const,
-            }}>
-              <div style={{
-                position: 'absolute' as const,
-                top: -12,
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: '#e8a830',
-                color: '#1c1810',
-                padding: '4px 12px',
-                borderRadius: 4,
-                fontSize: '0.75rem',
-                fontWeight: 700,
-              }}>
-                SAVE $41
-              </div>
-              <div style={{ fontWeight: 600, marginBottom: 8 }}>Annual</div>
-              <div style={{ fontSize: '2.5rem', fontWeight: 800 }}>$199<span style={{ fontSize: '1rem', fontWeight: 400 }}>/yr</span></div>
-              <div style={{ fontSize: '0.85rem', color: 'rgba(250,247,242,0.5)', marginTop: 8 }}>~$16.58/mo</div>
-            </div>
-          </div>
+        <div style="text-align:center;">
+          <button onclick="resetAudit()" style="background:none;border:none;font-size:0.75rem;color:var(--mid);cursor:pointer;text-decoration:underline;">Check a different site</button>
         </div>
-      </section>
+      </div>
 
-      {/* Footer */}
-      <footer style={{
-        padding: '32px 40px',
-        textAlign: 'center',
-        fontSize: '0.85rem',
-        color: '#7a6e60',
-      }}>
-        &copy; {new Date().getFullYear()} FreshFacing. All rights reserved.
-      </footer>
+      <!-- STEP 4: Confirmation -->
+      <div id="step-confirm" style="display:none;text-align:center;padding:1.5rem 0;">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">&#127807;</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:0.5rem;">You're on the list.</div>
+        <div style="font-size:0.875rem;color:var(--mid);line-height:1.6;max-width:34ch;margin:0 auto 1rem;">We're building your site now. Check your inbox in about an hour — you'll get a live preview link.</div>
+        <div style="font-size:0.75rem;color:var(--mid);">No cost. No commitment. Just look.</div>
+      </div>
     </div>
+  </div>
+
+  <!-- Floating audit card -->
+  <div class="hero-right">
+    <div style="font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);margin-bottom:0.75rem;">What we find on most sites we check</div>
+    <div class="site-audit-card">
+      <div class="audit-topbar">
+        <div class="audit-dots">
+          <div class="dot dot-r"></div>
+          <div class="dot dot-y"></div>
+          <div class="dot dot-g"></div>
+        </div>
+        <div class="audit-url">yourbusiness.com</div>
+      </div>
+      <div class="audit-body">
+        <div class="audit-title">
+          Site Health Report
+          <span class="score">Score: 24/100</span>
+        </div>
+        <div class="audit-items">
+          <div class="audit-item fail">
+            <span class="audit-icon">&#128241;</span>
+            <span>Broken on mobile</span>
+            <span class="audit-stat">63% of visits</span>
+          </div>
+          <div class="audit-item fail">
+            <span class="audit-icon">&#128269;</span>
+            <span>Not indexed by Google</span>
+            <span class="audit-stat">0 pages found</span>
+          </div>
+          <div class="audit-item fail">
+            <span class="audit-icon">&#129302;</span>
+            <span>Invisible to AI search</span>
+            <span class="audit-stat">ChatGPT, Perplexity</span>
+          </div>
+          <div class="audit-item fail">
+            <span class="audit-icon">&#128279;</span>
+            <span>Broken links detected</span>
+            <span class="audit-stat">7 found</span>
+          </div>
+          <div class="audit-item warn">
+            <span class="audit-icon">&#9889;</span>
+            <span>Page load: 8.4 seconds</span>
+            <span class="audit-stat">Avg: 2.1s</span>
+          </div>
+          <div class="audit-item warn">
+            <span class="audit-icon">&#128222;</span>
+            <span>No click-to-call button</span>
+            <span class="audit-stat">&mdash;</span>
+          </div>
+          <div class="audit-item pass">
+            <span class="audit-icon">&#9989;</span>
+            <span>Domain is registered</span>
+            <span class="audit-stat">Good</span>
+          </div>
+        </div>
+        <div class="audit-footer">Your business is real. Your website isn't keeping up.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-block">
+      <div class="stat-num">63%</div>
+      <div class="stat-label">
+        <strong>of local searches happen on mobile.</strong>
+        If your site breaks on a phone, you're invisible to most of your market.
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">46%</div>
+      <div class="stat-label">
+        <strong>of all Google searches are looking for local businesses.</strong>
+        If your site isn't indexed, none of those people ever find you.
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">3 sec</div>
+      <div class="stat-label">
+        <strong>is all you get before a visitor leaves.</strong>
+        Most small business sites take 6–10 seconds to load. That's a customer lost.
+      </div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-num">&uarr;AI</div>
+      <div class="stat-label">
+        <strong>ChatGPT, Perplexity, and Google AI are now recommending businesses.</strong>
+        If your site isn't structured correctly, they can't find you either.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF -->
+<div class="proof-strip">
+  <div class="proof-inner">
+    <div class="proof-item">
+      <div class="proof-num">200+</div>
+      <div class="proof-label">sites built</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <div class="proof-num">&lt;1 hr</div>
+      <div class="proof-label">avg build time</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <div class="proof-num">4.9&#9733;</div>
+      <div class="proof-label">owner satisfaction</div>
+    </div>
+    <div class="proof-divider"></div>
+    <div class="proof-item">
+      <div class="proof-num">$0</div>
+      <div class="proof-label">upfront cost</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAIN -->
+<section class="pain" id="pain">
+  <div class="section-eyebrow">The honest stuff</div>
+  <h2 class="section-title">You already know something's wrong.</h2>
+  <p class="section-sub">You've just been too busy running your actual business to do anything about it. That's exactly why we exist.</p>
+
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-icon">&#128241;</div>
+      <h3>"It looks fine on my computer..."</h3>
+      <p>Most of your customers find you on their phone. If your site squishes, overlaps, or doesn't load right on mobile — that's almost certainly what they're seeing. And they're not calling to tell you.</p>
+      <span class="pain-stat">63% of local searches: mobile</span>
+    </div>
+
+    <div class="pain-card">
+      <div class="pain-icon">&#128269;</div>
+      <h3>"I thought I was on Google?"</h3>
+      <p>Being on Google and being <em>found</em> on Google are very different things. Outdated site structure, missing metadata, and slow load times push you down — or out completely. AI search tools like ChatGPT work the same way.</p>
+      <span class="pain-stat">Most SMB sites rank on page 4+</span>
+    </div>
+
+    <div class="pain-card">
+      <div class="pain-icon">&#128279;</div>
+      <h3>"I haven't touched it in years."</h3>
+      <p>Links rot. Plugins break. Photos disappear. The email form stops working. Customers try to reach you and can't. You never find out because nobody tells you — they just leave.</p>
+      <span class="pain-stat">Avg SMB site: 4+ broken elements</span>
+    </div>
+
+    <div class="pain-card">
+      <div class="pain-icon">&#128012;</div>
+      <h3>"It loads fine for me."</h3>
+      <p>Your browser has the site cached. For a new visitor on a 4G connection, an unoptimized site can take 8–12 seconds. Google penalizes this directly. Customers don't wait. They bounce.</p>
+      <span class="pain-stat">40% leave if it takes &gt;3 seconds</span>
+    </div>
+
+    <div class="pain-card">
+      <div class="pain-icon">&#128295;</div>
+      <h3>"I can never figure out how to update it."</h3>
+      <p>GoDaddy, Wix, Squarespace — great for someone who wants to spend their Saturdays on a website. You want to update your hours, not learn CSS. We handle all of that.</p>
+      <span class="pain-stat">Avg time to update a DIY site: 2+ hrs</span>
+    </div>
+
+    <div class="pain-card">
+      <div class="pain-icon">&#128184;</div>
+      <h3>"The agency wanted way too much."</h3>
+      <p>$3,000 upfront. 6-week timeline. Discovery calls and mood boards. You just need a site that works and looks like you know what you're doing. That shouldn't cost a fortune or take forever.</p>
+      <span class="pain-stat">Avg agency quote: $3–8K</span>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="section-eyebrow">No fluff</div>
+    <h2 class="section-title">Here's exactly how it works.</h2>
+    <p class="section-sub">We skip the discovery process. You drop your URL, we do the work, you see the result.</p>
+
+    <div class="how-layout">
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Drop your URL above.</h3>
+            <p>Just enter your current website address and your email. That's the whole intake process. No forms, no calls, no "we'll get back to you in 3-5 business days."</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>We build your new site.</h3>
+            <p>Within an hour, we design a complete replacement — custom to your business, your industry, and what your customers actually need to see. Mobile-first. Fast. Built for search engines and AI.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>You get a live preview link.</h3>
+            <p>We email you a live URL — just click it. See your business looking the way it should. No pressure. Take a day. Show your partner or your team.</p>
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Say yes and we take it from there.</h3>
+            <p>Reply and it's live within 24 hours. We handle hosting, maintenance, and updates. You get back to running your business. We keep the site working. That's the whole deal.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Before / after comparison cards -->
+      <div class="comparison">
+        <div>
+          <div class="compare-label old">What you have</div>
+          <div class="compare-card">
+            <div class="compare-bar">
+              <div class="bar-dot" style="background:#ff6b6b"></div>
+              yourbusiness.godaddysites.com
+            </div>
+            <div class="compare-content">
+              <div class="compare-rows">
+                <div class="compare-row"><span class="metric">Mobile friendly</span><span class="value-bad">&#10007; Broken</span></div>
+                <div class="compare-row"><span class="metric">Page speed</span><span class="value-bad">8.4 sec</span></div>
+                <div class="compare-row"><span class="metric">Google indexed</span><span class="value-bad">&#10007; No</span></div>
+                <div class="compare-row"><span class="metric">AI search visible</span><span class="value-bad">&#10007; No</span></div>
+                <div class="compare-row"><span class="metric">Working links</span><span class="value-bad">3 of 10</span></div>
+                <div class="compare-row"><span class="metric">Click-to-call</span><span class="value-bad">&#10007; Missing</span></div>
+                <div class="compare-row"><span class="metric">Last updated</span><span class="value-bad">4 years ago</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="compare-label new">What we build you</div>
+          <div class="compare-card new-card">
+            <div class="compare-bar" style="background:#f0fff4;border-color:rgba(92,122,92,0.15)">
+              <div class="bar-dot" style="background:#69db7c"></div>
+              yourbusiness.com
+            </div>
+            <div class="compare-content">
+              <div class="compare-rows">
+                <div class="compare-row"><span class="metric">Mobile friendly</span><span class="value-good">&#10003; Perfect</span></div>
+                <div class="compare-row"><span class="metric">Page speed</span><span class="value-good">&lt;1.5 sec</span></div>
+                <div class="compare-row"><span class="metric">Google indexed</span><span class="value-good">&#10003; Yes</span></div>
+                <div class="compare-row"><span class="metric">AI search visible</span><span class="value-good">&#10003; Structured</span></div>
+                <div class="compare-row"><span class="metric">Working links</span><span class="value-good">All of them</span></div>
+                <div class="compare-row"><span class="metric">Click-to-call</span><span class="value-good">&#10003; Front &amp; center</span></div>
+                <div class="compare-row"><span class="metric">Maintenance</span><span class="value-good">We handle it</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO / EXAMPLES -->
+<section class="portfolio" id="portfolio">
+  <div class="section-eyebrow">Real examples</div>
+  <h2 class="section-title">Sites we've already built.</h2>
+  <p class="section-sub">Not templates. Not mockups. Real sites for real businesses — built in under an hour.</p>
+
+  <div class="portfolio-grid">
+    <a href="https://claude.ai/public/artifacts/2559b27c-a90b-402d-a192-ed5c0166fb32" target="_blank" rel="noopener" class="portfolio-card">
+      <div class="portfolio-browser">
+        <div class="portfolio-topbar">
+          <div class="audit-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="portfolio-url">goldenneedletailorshop.com</div>
+        </div>
+        <div class="portfolio-img portfolio-golden-needle">
+          <div class="portfolio-preview-content">
+            <div class="preview-nav">GOLDEN <span style="color:#c8a96e;">NEEDLE</span></div>
+            <div class="preview-hero-dark">
+              <div class="preview-eyebrow">Downtown Kalamazoo &middot; Est. 1971</div>
+              <div class="preview-headline">The art of<br><em style="color:#c8a96e;">the perfect fit</em><br>since 1971.</div>
+            </div>
+          </div>
+          <div class="portfolio-hover-overlay">
+            <span>View Live Preview &rarr;</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-industry">Tailors &amp; Alterations</div>
+        <h3>Golden Needle Tailor Shop</h3>
+        <p>Serving Kalamazoo since 1971. We replaced a site with missing address, blank hours, and expired coupons with a premium presence that leads with their 53-year legacy.</p>
+      </div>
+    </a>
+
+    <a href="https://claude.ai/public/artifacts/b53b107d-5f4d-4f5e-adf9-69d2cea26dc1" target="_blank" rel="noopener" class="portfolio-card">
+      <div class="portfolio-browser">
+        <div class="portfolio-topbar">
+          <div class="audit-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+          <div class="portfolio-url">reeseair.com</div>
+        </div>
+        <div class="portfolio-img portfolio-reese-air">
+          <div class="portfolio-preview-content">
+            <div class="preview-nav" style="background:#1a3a1a;color:#fff;">Reese Heating &amp; Air <span style="color:#c8a96e;font-size:0.6em;">EST. 1916</span></div>
+            <div class="preview-hero-green">
+              <div class="preview-headline" style="color:#fff;">Nashville's HVAC<br><em style="color:#c8a96e;">family since</em><br><em style="color:#c8a96e;">1916.</em></div>
+            </div>
+          </div>
+          <div class="portfolio-hover-overlay">
+            <span>View Live Preview &rarr;</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-info">
+        <div class="portfolio-industry">HVAC &amp; Heating</div>
+        <h3>Reese Heating &amp; Air</h3>
+        <p>Nashville's oldest family-owned HVAC company — five generations since 1916. We built a site that puts their family photo and century of trust front and center.</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries">
+  <div class="section-eyebrow">We know your business</div>
+  <h2 class="section-title">Built for businesses that do real work.</h2>
+  <p class="section-sub">We specialize in the kinds of local businesses that deserve a better web presence than they've got.</p>
+
+  <div class="industry-grid">
+    <div class="industry-card">
+      <div class="industry-icon">&#128295;</div>
+      <h3>HVAC &amp; Heating</h3>
+      <p>Emergency availability, service areas, and financing front and center — what customers actually search for.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#129463;</div>
+      <h3>Dental Offices</h3>
+      <p>New patient booking, insurance info, and a face for the practice that builds trust before they walk in.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#129697;</div>
+      <h3>Tailors &amp; Alterations</h3>
+      <p>Craft, trust, and before/after work — the things that turn a search into a phone call.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#128663;</div>
+      <h3>Auto Repair</h3>
+      <p>Services, estimates, and reviews that make customers pick up the phone instead of scrolling past.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#127968;</div>
+      <h3>Flooring &amp; Tile</h3>
+      <p>Visual work deserves a visual site. Gallery-first layouts that let the craftsmanship sell itself.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#9878;&#65039;</div>
+      <h3>Law &amp; Accounting</h3>
+      <p>Authority and trust on first impression. Clear services, credentials, and a frictionless contact path.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#127869;&#65039;</div>
+      <h3>Restaurants &amp; Caf&eacute;s</h3>
+      <p>Hours, menu, location, and photos — the four things every customer wants immediately.</p>
+    </div>
+    <div class="industry-card">
+      <div class="industry-icon">&#127970;</div>
+      <h3>Your Industry</h3>
+      <p>If you run a local business and your website isn't working for you, drop your URL above. We'll take a look.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIY OBJECTION + CALCULATOR -->
+<section id="diy" style="padding:7rem 3rem;background:var(--light);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div class="section-eyebrow">Fair question</div>
+    <h2 class="section-title">"Couldn't I just do this myself?"</h2>
+    <p class="section-sub">Absolutely. Here's what that actually costs you.</p>
+
+    <!-- RATE SLIDER -->
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:2.5rem;margin-bottom:2.5rem;box-shadow:0 4px 24px rgba(28,24,16,0.07);">
+      <div style="display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.4rem;flex-wrap:wrap;">
+        <span style="font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--mid);">Your hourly rate</span>
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2rem;color:var(--ink);" id="rate-display">$75/hr</span>
+      </div>
+      <input type="range" id="rate-slider" min="25" max="300" value="75" step="5"
+        style="width:100%;height:6px;appearance:none;background:linear-gradient(to right,var(--sage) 0%,var(--sage) 20%,var(--border) 20%);border-radius:3px;outline:none;cursor:pointer;margin-bottom:0.5rem;"
+        oninput="updateCalc(this.value)">
+      <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--mid);">
+        <span>$25/hr</span><span>$300/hr</span>
+      </div>
+    </div>
+
+    <!-- TASKS TABLE -->
+    <div style="background:var(--white);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:2.5rem;box-shadow:0 4px 24px rgba(28,24,16,0.07);">
+      <div style="display:grid;grid-template-columns:1fr auto auto;background:var(--ink);padding:0.85rem 1.5rem;gap:1rem;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.5);">Task</div>
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.5);text-align:right;">Time</div>
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.5);text-align:right;min-width:80px;">Your cost</div>
+      </div>
+
+      <div id="task-rows">
+        <!-- Populated by JS -->
+      </div>
+
+      <!-- TOTAL ROW -->
+      <div style="display:grid;grid-template-columns:1fr auto auto;padding:1.25rem 1.5rem;gap:1rem;background:rgba(201,79,40,0.06);border-top:2px solid var(--rust);">
+        <div style="font-weight:700;font-size:0.95rem;color:var(--ink);">Total DIY cost <span style="font-weight:400;font-size:0.8rem;color:var(--mid);">(first year)</span></div>
+        <div style="font-weight:700;font-size:0.95rem;color:var(--rust);text-align:right;" id="total-hours">~24 hrs</div>
+        <div style="font-weight:800;font-size:1.1rem;color:var(--rust);text-align:right;min-width:80px;" id="total-cost">$1,800</div>
+      </div>
+    </div>
+
+    <!-- VS COMPARISON -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2.5rem;">
+      <div style="background:#fff5f2;border:1.5px solid rgba(201,79,40,0.2);border-radius:10px;padding:2rem;text-align:center;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--rust);margin-bottom:0.75rem;">DIY — Year 1</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.5rem;color:var(--rust);line-height:1;" id="vs-diy">$1,800+</div>
+        <div style="font-size:0.82rem;color:var(--mid);margin-top:0.4rem;">in lost billable time</div>
+        <div style="font-size:0.78rem;color:var(--mid);margin-top:0.25rem;">+ platform fees + your headaches</div>
+      </div>
+      <div style="background:#f0fff4;border:1.5px solid rgba(92,122,92,0.25);border-radius:10px;padding:2rem;text-align:center;">
+        <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--sage);margin-bottom:0.75rem;">FreshFacing — Year 1</div>
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.5rem;color:var(--sage);line-height:1;">$199</div>
+        <div style="font-size:0.82rem;color:var(--mid);margin-top:0.4rem;">hosting, maintenance, updates</div>
+        <div style="font-size:0.78rem;color:var(--mid);margin-top:0.25rem;">+ 0 hours of your time</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM LINE -->
+    <div style="background:var(--ink);border-radius:10px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.4);margin-bottom:0.5rem;">The bottom line</div>
+        <p style="font-family:'Newsreader',serif;font-style:italic;font-size:1.15rem;color:var(--cream);line-height:1.55;max-width:50ch;">This is the best-looking website you'll ever have — and it'll take you <strong style="font-style:normal;color:var(--amber);">zero hours</strong> to get it.</p>
+      </div>
+      <a href="#cta" style="display:inline-block;padding:1rem 2rem;background:var(--amber);color:var(--ink);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.875rem;letter-spacing:0.05em;border-radius:5px;white-space:nowrap;flex-shrink:0;">Scan My Site Free &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <div class="section-eyebrow">Honest pricing</div>
+      <h2 class="section-title">Less than your lunch.</h2>
+      <p class="section-sub">Looking is always free. You only pay if you want to keep it.</p>
+    </div>
+
+    <div class="plans-row">
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Monthly</div>
+        <div class="plan-price"><sup>$</sup>20</div>
+        <div class="plan-per">per month — cancel anytime</div>
+        <div class="plan-save">&nbsp;</div>
+        <ul class="plan-features">
+          <li>Hosting included — we handle it</li>
+          <li>Use your own domain</li>
+          <li>SSL + mobile-optimized</li>
+          <li>1 content update/month</li>
+          <li>Google Business sync</li>
+          <li>We handle all maintenance</li>
+        </ul>
+        <a href="#cta" class="plan-btn primary">Get My Site &rarr;</a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-name">Annual</div>
+        <div class="plan-price"><sup>$</sup>199</div>
+        <div class="plan-per">per year — best value</div>
+        <div class="plan-save">Save $41 vs monthly — that's 2 months free</div>
+        <ul class="plan-features">
+          <li>Hosting included — we handle it</li>
+          <li>Use your own domain</li>
+          <li>Everything in Monthly</li>
+          <li>Priority updates</li>
+          <li>Annual design refresh</li>
+          <li>SEO health report included</li>
+        </ul>
+        <a href="#cta" class="plan-btn ghost">Get My Site &rarr;</a>
+      </div>
+    </div>
+
+    <p class="pricing-note">No contracts. Cancel anytime. Looking at your new site is always free — no credit card needed.</p>
+  </div>
+</section>
+
+<!-- CLAIM YOUR SITE -->
+<section class="claim-section" id="claim">
+  <div class="claim-inner">
+    <div class="claim-badge">Already got your preview?</div>
+    <h2 class="section-title" style="color:var(--cream);">Claim your new site.</h2>
+    <p class="section-sub" style="color:rgba(250,247,242,0.6);margin-bottom:2.5rem;">We sent you an email with a preview of your new website. Ready to make it yours? Enter your business URL below and we'll take it from there.</p>
+    <div class="claim-form">
+      <input class="claim-input" id="claim-url" type="text" placeholder="yourbusiness.com" />
+      <button class="claim-btn" onclick="claimSite()">Claim My Site &rarr;</button>
+    </div>
+    <div id="claim-plans" style="display:none;margin-top:2.5rem;">
+      <p style="font-size:0.9rem;color:rgba(250,247,242,0.7);margin-bottom:1.5rem;text-align:center;">Choose your plan to go live:</p>
+      <div class="claim-plans-row">
+        <a href="#" class="claim-plan-card" onclick="event.preventDefault();">
+          <div class="claim-plan-name">Monthly</div>
+          <div class="claim-plan-price">$20<span>/mo</span></div>
+          <div class="claim-plan-note">Cancel anytime</div>
+        </a>
+        <a href="#" class="claim-plan-card featured" onclick="event.preventDefault();">
+          <div class="claim-plan-best">Best Value</div>
+          <div class="claim-plan-name">Annual</div>
+          <div class="claim-plan-price">$199<span>/yr</span></div>
+          <div class="claim-plan-note">2 months free</div>
+        </a>
+      </div>
+    </div>
+    <p class="claim-note">Questions? Email us at <a href="mailto:hello@freshfacing.com" style="color:var(--amber);">hello@freshfacing.com</a></p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div class="section-eyebrow">Common questions</div>
+    <h2 class="section-title">Before you ask.</h2>
+    <p class="section-sub">We've heard them all. Here are the straight answers.</p>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>Do I keep my domain?</h3>
+        <p>Yes. You keep your existing domain name. We point it at your new site — no disruption, no downtime. If you don't have a domain yet, we'll help you pick one.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I edit the site myself?</h3>
+        <p>You don't need to. That's the whole point. Need something changed? Just email us. One content update per month is included, and most requests are done the same day.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens if I cancel?</h3>
+        <p>Nothing dramatic. Your site goes down, you keep your domain, and we part as friends. No cancellation fees. No penalties. No contracts to break.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What platform do you build on?</h3>
+        <p>We build custom, lightweight sites — not WordPress, not Wix. That means faster load times, no plugin bloat, and nothing that breaks when you're not looking.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is the site preview really free?</h3>
+        <p>Completely. We build your preview with zero obligation. If you don't like it, you don't pay. We think once you see it, you'll want to keep it.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How is this only $20/month?</h3>
+        <p>We've built systems that let us create high-quality sites fast. No agency overhead, no project managers, no 6-week timelines. Just great sites for businesses that need them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-final" id="cta">
+  <div class="cta-final-inner">
+    <div class="cta-final-eyebrow">It's time.</div>
+    <h2 class="cta-final-title">Get your<br>fresh facing.</h2>
+    <p class="cta-final-sub">Drop your URL. We'll send you a new site in an hour. If you love it, it's $20 a month to keep it. If not, no hard feelings.</p>
+    <div class="cta-form">
+      <input class="cta-input" id="cta-url" type="text" placeholder="yourbusiness.com" />
+      <button class="cta-submit" onclick="document.getElementById('audit-url-input').value=document.getElementById('cta-url').value;window.scrollTo({top:0,behavior:'smooth'});setTimeout(runAudit,600);">Scan My Site Free &rarr;</button>
+    </div>
+    <p class="cta-footnote">Instant results. No sign-up. We'll email your new site preview in under an hour.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">fresh<em>facing</em>.com</div>
+  <div class="footer-links">
+    <a href="#pain">Why It Matters</a>
+    <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="mailto:hello@freshfacing.com">hello@freshfacing.com</a>
+  </div>
+  <div class="footer-copy">&copy; 2026 FreshFacing. All rights reserved.</div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-mobile-cta" id="sticky-cta">
+  <a href="#cta">Get My New Site &rarr;</a>
+</div>
+`
+
+export default function HomePage() {
+  useEffect(() => {
+    // Inject the CSS link into <head> on mount
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = '/css/styles.css'
+    document.head.appendChild(link)
+
+    // Add the favicon
+    const favicon = document.createElement('link')
+    favicon.rel = 'icon'
+    favicon.type = 'image/svg+xml'
+    favicon.href = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%235c7a5c'/><text x='16' y='23' text-anchor='middle' font-family='Georgia,serif' font-size='20' font-weight='bold' fill='%23faf7f2'>f</text></svg>"
+    document.head.appendChild(favicon)
+
+    // Set the page title
+    document.title = 'FreshFacing \u2014 A New Website for Your Business. In an Hour.'
+
+    return () => {
+      document.head.removeChild(link)
+      document.head.removeChild(favicon)
+    }
+  }, [])
+
+  return (
+    <>
+      <div dangerouslySetInnerHTML={{ __html: bodyHTML }} />
+      <Script src="/js/main.js" strategy="afterInteractive" />
+    </>
   )
 }
