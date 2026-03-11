@@ -351,7 +351,7 @@ const bodyHTML = `
   <p class="section-sub">Not templates. Not mockups. Real sites for real businesses — built in under an hour.</p>
 
   <div class="portfolio-grid">
-    <a href="https://claude.ai/public/artifacts/2559b27c-a90b-402d-a192-ed5c0166fb32" target="_blank" rel="noopener" class="portfolio-card">
+    <a href="/preview/demo-golden-needle" target="_blank" rel="noopener" class="portfolio-card">
       <div class="portfolio-browser">
         <div class="portfolio-topbar">
           <div class="audit-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
@@ -377,7 +377,7 @@ const bodyHTML = `
       </div>
     </a>
 
-    <a href="https://claude.ai/public/artifacts/b53b107d-5f4d-4f5e-adf9-69d2cea26dc1" target="_blank" rel="noopener" class="portfolio-card">
+    <a href="/preview/demo-reese-hvac" target="_blank" rel="noopener" class="portfolio-card">
       <div class="portfolio-browser">
         <div class="portfolio-topbar">
           <div class="audit-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>

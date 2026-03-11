@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reese Heating & Air — Nashville's HVAC Family Since 1916</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-dk:   #1C2E1E;
+    --green:      #2A4230;
+    --green-md:   #3A5C40;
+    --green-lt:   #4E7A55;
+    --brass:      #B8892A;
+    --brass-lt:   #D4A84B;
+    --brass-pale: #EDD98A;
+    --linen:      #F5F0E6;
+    --linen-dk:   #EDE5D2;
+    --cream:      #FAF7F0;
+    --charcoal:   #252320;
+    --ink:        #181614;
+    --muted:      #7A7060;
+    --border:     #D5C9B0;
+    --border-lt:  #E8DFCC;
+    --white:      #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 70px;
+    background: var(--green-dk);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 52px;
+    border-bottom: 2px solid var(--brass);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .nav-emblem {
+    width: 40px; height: 40px;
+    border: 2px solid var(--brass);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--brass);
+  }
+  .nav-name {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--linen);
+    line-height: 1.2;
+  }
+  .nav-since {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass-lt);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px;
+    color: rgba(245,240,230,0.65);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--brass-lt); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-phone {
+    font-size: 14px;
+    color: var(--linen);
+    font-weight: 600;
+  }
+  .nav-phone a { color: var(--brass-lt); text-decoration: none; }
+
+  .btn-nav {
+    background: var(--brass);
+    color: var(--ink);
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .btn-nav:hover { background: var(--brass-lt); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ── LEFT: Photo half ── */
+  .hero-photo-half {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* REPLACE src below with actual family photo URL from reeseair.com */
+  .hero-photo-half img.family-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* Dark overlay — heavier on left so headline text is readable */
+  .hero-photo-half::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      rgba(28,46,30,0.82) 0%,
+      rgba(28,46,30,0.65) 55%,
+      rgba(28,46,30,0.15) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Bottom brass rule */
+  .hero-photo-half::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--brass);
+    z-index: 3;
+  }
+
+  .hero-text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 52px 80px;
+  }
+
+  /* Big year watermark over photo */
+  .hero-text::after {
+    content: '1916';
+    position: absolute;
+    right: -10px;
+    bottom: 20px;
+    font-family: 'Lora', serif;
+    font-size: 220px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.06);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* ── RIGHT: Form half ── */
+  .hero-form-half {
+    background: var(--green-dk);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 52px 80px;
+    border-left: 2px solid var(--brass);
+    position: relative;
+  }
+
+  /* Diagonal texture lines on form half */
+  .hero-form-half::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(184,137,42,0.04) 40px,
+      rgba(184,137,42,0.04) 41px
+    );
+    pointer-events: none;
+  }
+
+  .hero-lineage {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass-lt);
+    margin-bottom: 24px;
+  }
+  .hero-lineage::before, .hero-lineage::after {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--brass);
+    opacity: 0.5;
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(44px, 6vw, 78px);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--linen);
+    margin-bottom: 10px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--brass-lt);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 19px;
+    color: rgba(245,240,230,0.5);
+    font-family: 'Lora', serif;
+    font-style: italic;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(245,240,230,0.6);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brass);
+    color: var(--ink);
+    padding: 15px 30px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+    border: 2px solid var(--brass);
+  }
+  .btn-primary:hover {
+    background: var(--brass-lt);
+    border-color: var(--brass-lt);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(184,137,42,0.4);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--linen);
+    padding: 15px 30px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid rgba(245,240,230,0.2);
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--linen);
+  }
+
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid rgba(184,137,42,0.2);
+  }
+  .hstat {
+    padding: 18px 16px;
+    text-align: center;
+    border-right: 1px solid rgba(184,137,42,0.15);
+  }
+  .hstat:last-child { border-right: none; }
+  .hstat-n {
+    font-family: 'Lora', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--brass-lt);
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hstat-l {
+    font-size: 11px;
+    color: rgba(245,240,230,0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Photo caption — bottom of photo half */
+  .hero-photo-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+    z-index: 3;
+    padding: 0 20px;
+  }
+  .hero-photo-caption span {
+    display: inline-block;
+    background: rgba(184,137,42,0.15);
+    border: 1px solid rgba(184,137,42,0.35);
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass-pale);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Hero right panel */
+  .hero-panel { position: relative; z-index: 1; width: 100%; }
+
+  .panel-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(184,137,42,0.2);
+    padding: 44px 40px;
+    position: relative;
+  }
+  .panel-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brass), transparent);
+  }
+
+  .panel-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--brass);
+    opacity: 0.25;
+  }
+
+  .service-request {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .sr-field label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,230,0.45);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .sr-field input,
+  .sr-field select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(245,240,230,0.12);
+    color: var(--linen);
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .sr-field input::placeholder { color: rgba(245,240,230,0.3); }
+  .sr-field input:focus,
+  .sr-field select:focus { border-color: var(--brass); }
+  .sr-field select option { background: var(--green-dk); color: var(--linen); }
+
+  .sr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .sr-submit {
+    width: 100%;
+    background: var(--brass);
+    color: var(--ink);
+    border: none;
+    padding: 15px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 4px;
+  }
+  .sr-submit:hover { background: var(--brass-lt); }
+
+  .emergency-strip {
+    margin-top: 16px;
+    background: rgba(255,80,60,0.12);
+    border: 1px solid rgba(255,80,60,0.2);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: rgba(245,240,230,0.7);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .emergency-strip a { color: #FF8C7A; font-weight: 700; text-decoration: none; }
+
+  /* ── TRUST STRIP ── */
+  .trust-strip {
+    background: var(--brass);
+    padding: 16px 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .trust-dot { width: 4px; height: 4px; background: var(--green-dk); border-radius: 50%; opacity: 0.5; }
+
+  /* ── SECTION BASE ── */
+  .section-wrap { padding: 100px 52px; }
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-md);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--green-md);
+    opacity: 0.5;
+  }
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  h2 em { font-style: italic; color: var(--green-md); }
+  .section-intro {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.75;
+    margin-bottom: 52px;
+  }
+
+  /* ── HISTORY ── */
+  #history { background: var(--linen-dk); }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    border-left: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 44px 32px;
+  }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -41px;
+    top: 6px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--brass);
+    border: 2px solid var(--linen-dk);
+  }
+
+  .tl-year {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--brass);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .tl-event {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-family: 'Lora', serif;
+  }
+  .tl-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 480px;
+  }
+
+  .history-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .gen-card {
+    background: var(--green-dk);
+    padding: 44px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .gen-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--brass);
+  }
+  .gen-card-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 16px;
+  }
+  .gen-number {
+    font-family: 'Lora', serif;
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(184,137,42,0.15);
+    line-height: 0.9;
+    margin-bottom: 16px;
+  }
+  .gen-title {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--linen);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .gen-desc {
+    font-size: 15px;
+    color: rgba(245,240,230,0.55);
+    line-height: 1.75;
+    margin-bottom: 28px;
+  }
+  .gen-president {
+    background: rgba(184,137,42,0.1);
+    border: 1px solid rgba(184,137,42,0.2);
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--brass-lt);
+  }
+  .gen-president strong { display: block; font-size: 16px; color: var(--linen); margin-bottom: 2px; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--cream); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .svc-card {
+    background: var(--white);
+    padding: 36px 32px;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .svc-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--green-md);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .svc-card:hover { background: var(--linen); }
+  .svc-card:hover::after { transform: scaleX(1); }
+
+  .svc-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+  .svc-name {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .svc-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .svc-note {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--green-md);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ── WHY REESE ── */
+  #why { background: var(--green-dk); }
+  #why h2 { color: var(--linen); }
+  #why .section-intro { color: rgba(245,240,230,0.5); }
+  #why .section-label { color: var(--brass-lt); }
+  #why .section-label::after { background: var(--brass); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .why-card {
+    background: rgba(255,255,255,0.03);
+    padding: 40px 36px;
+    transition: background 0.2s;
+  }
+  .why-card:hover { background: rgba(255,255,255,0.055); }
+
+  .why-icon { font-size: 32px; margin-bottom: 16px; display: block; }
+  .why-title {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--linen);
+    margin-bottom: 10px;
+  }
+  .why-desc { font-size: 14px; color: rgba(245,240,230,0.5); line-height: 1.75; }
+
+  /* ── QUOTE ── */
+  #quote {
+    background: var(--brass);
+    padding: 80px 52px;
+    text-align: center;
+  }
+
+  blockquote {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(20px, 2.8vw, 32px);
+    color: var(--ink);
+    line-height: 1.5;
+    max-width: 780px;
+    margin: 0 auto 20px;
+    font-weight: 500;
+    position: relative;
+  }
+  blockquote::before {
+    content: '\201C';
+    font-size: 80px;
+    color: rgba(0,0,0,0.12);
+    line-height: 0.7;
+    display: block;
+    margin-bottom: 12px;
+    font-family: Georgia, serif;
+    font-style: normal;
+  }
+  cite {
+    font-size: 12px;
+    color: rgba(24,22,20,0.55);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-style: normal;
+  }
+
+  /* ── SERVICE AREA ── */
+  #area { background: var(--linen-dk); }
+
+  .area-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .area-info h2 { margin-bottom: 16px; }
+  .area-info p {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .hours-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--green-md);
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .hours-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .hours-tbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .hours-tbl td { padding: 9px 0; border-bottom: 1px solid var(--border-lt); color: var(--muted); }
+  .hours-tbl td:first-child { color: var(--charcoal); font-weight: 500; width: 120px; }
+  .hours-tbl tr:last-child td { border-bottom: none; }
+
+  .contact-card {
+    background: var(--green-dk);
+    padding: 32px;
+  }
+  .contact-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--linen);
+    margin-bottom: 20px;
+  }
+  .contact-row {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    color: rgba(245,240,230,0.6);
+    align-items: flex-start;
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .c-icon { color: var(--brass); flex-shrink: 0; width: 18px; }
+  .contact-row a { color: var(--brass-lt); text-decoration: none; font-weight: 600; }
+
+  .counties-list {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 28px 32px;
+  }
+  .counties-list h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .town-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .town-tag {
+    background: var(--linen);
+    border: 1px solid var(--border-lt);
+    padding: 6px 10px;
+    font-size: 12px;
+    color: var(--charcoal);
+    font-weight: 500;
+    text-align: center;
+  }
+
+  /* ── FINANCING & BBB ── */
+  #trust { background: var(--cream); }
+
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .trust-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+  }
+  .trust-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-lt);
+  }
+  .trust-card p { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .badge {
+    background: var(--linen);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    border-top: 3px solid var(--brass);
+    padding: 60px 52px 36px;
+  }
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 52px;
+    margin-bottom: 44px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(245,240,230,0.4);
+    line-height: 1.75;
+    margin-top: 14px;
+    max-width: 260px;
+  }
+  .footer-col h4 {
+    font-family: 'Lora', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--linen);
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    color: rgba(245,240,230,0.4);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--brass-lt); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(245,240,230,0.25);
+    flex-wrap: wrap;
+    gap: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-text > * {
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-text > *:nth-child(1) { animation-delay: 0.05s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.15s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.25s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.35s; }
+  .hero-text > *:nth-child(5) { animation-delay: 0.45s; }
+  .hero-text > *:nth-child(6) { animation-delay: 0.55s; }
+  .hero-panel { animation: fadeUp 0.6s 0.4s ease both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+
+    #hero { grid-template-columns: 1fr; }
+    .hero-photo-half { min-height: 70vh; }
+    .hero-form-half { border-left: none; border-top: 2px solid var(--brass); padding: 60px 24px; }
+    .hero-text { padding: 100px 24px 60px; }
+    .hero-text::after { display: none; }
+
+    .history-layout, .area-inner { grid-template-columns: 1fr; gap: 40px; }
+    .why-grid, .services-grid { grid-template-columns: 1fr 1fr; }
+    .trust-grid { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .section-wrap { padding: 64px 24px; }
+    .trust-strip { padding: 14px 24px; gap: 20px; }
+    footer { padding: 48px 24px 28px; }
+    .hstat-n { font-size: 22px; }
+    .town-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-emblem">R</div>
+    <div class="nav-name">
+      Reese Heating & Air
+      <span class="nav-since">Nashville · Est. 1916</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#history">Our Story</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Reese</a></li>
+    <li><a href="#area">Service Area</a></li>
+    <li><a href="#trust">Financing</a></li>
+  </ul>
+  <div class="nav-cta">
+    <div class="nav-phone"><a href="tel:16153918000">(615) 391-8000</a></div>
+    <a href="#hero" class="btn-nav">Request Service</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+
+  <!-- LEFT: Family photo with copy overlaid -->
+  <div class="hero-photo-half">
+    <!-- ↓ REPLACE src with actual family photo URL from reeseair.com nebula CDN -->
+    <!-- Primary: wsrv.nl proxy adds CORS headers so image loads in iframes/artifacts too -->
+    <!-- Fallback: direct GoDaddy CDN URL for when viewing in Chrome directly -->
+    <img class="family-photo"
+         src="https://wsrv.nl/?url=nebula.wsimg.com/13eff60fb091215c38bf05c50183c953%3FAccessKeyId%3D8353C89A82FEDD53EBCE%26disposition%3D0%26alloworigin%3D1&output=jpg&q=85"
+         onerror="this.src='https://nebula.wsimg.com/13eff60fb091215c38bf05c50183c953?AccessKeyId=8353C89A82FEDD53EBCE&disposition=0&alloworigin=1';this.onerror=null;"
+         alt="The Reese Family — five generations of Nashville's trusted HVAC company">
+
+    <!-- Copy floats on top of the photo via ::after overlay -->
+    <div class="hero-text">
+      <div class="hero-lineage">Five Generations · Middle Tennessee</div>
+      <h1>Nashville's HVAC<em>family since 1916.</em></h1>
+      <p class="hero-sub">No franchise. No call center. Just the Reese family, same as always.</p>
+      <p class="hero-desc">C.H. Reese started as a tinsmith in 1899. His family has been keeping Nashville homes warm in winter and cool in summer for over a century — longer than any other HVAC company in Middle Tennessee.</p>
+      <div class="hero-btns">
+        <a href="tel:16153918000" class="btn-primary">Call (615) 391-8000 →</a>
+        <a href="#services" class="btn-secondary">View Services</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-n">1916</span>
+          <div class="hstat-l">Founded</div>
+        </div>
+        <div class="hstat">
+          <span class="hstat-n">5</span>
+          <div class="hstat-l">Generations</div>
+        </div>
+        <div class="hstat">
+          <span class="hstat-n">100+</span>
+          <div class="hstat-l">Years Serving</div>
+        </div>
+        <div class="hstat">
+          <span class="hstat-n">A+</span>
+          <div class="hstat-l">BBB Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo caption at bottom -->
+    <div class="hero-photo-caption">
+      <span>The Reese Family · Nashville's HVAC Family Since 1916</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: Request form -->
+  <div class="hero-form-half">
+    <div class="hero-panel">
+      <div class="panel-box">
+        <div class="panel-label">Request Service</div>
+        <div class="service-request">
+          <div class="sr-row">
+            <div class="sr-field">
+              <label>First Name</label>
+              <input type="text" placeholder="James">
+            </div>
+            <div class="sr-field">
+              <label>Last Name</label>
+              <input type="text" placeholder="Wilson">
+            </div>
+          </div>
+          <div class="sr-field">
+            <label>Phone Number</label>
+            <input type="tel" placeholder="(615) 000-0000">
+          </div>
+          <div class="sr-field">
+            <label>Service Needed</label>
+            <select>
+              <option>Heating Repair</option>
+              <option>Cooling / AC Repair</option>
+              <option>New System Installation</option>
+              <option>System Replacement</option>
+              <option>Maintenance / Tune-Up</option>
+              <option>Indoor Air Quality</option>
+              <option>Not Sure — Need Diagnosis</option>
+            </select>
+          </div>
+          <div class="sr-field">
+            <label>Residential or Commercial</label>
+            <select>
+              <option>Residential</option>
+              <option>Commercial</option>
+            </select>
+          </div>
+          <button class="sr-submit">Submit Service Request →</button>
+        </div>
+        <div class="emergency-strip">
+          🔴 Emergency? Call directly: <a href="tel:16153918000">(615) 391-8000</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-dot"></span> Family Owned & Operated Since 1916</div>
+  <div class="trust-item"><span class="trust-dot"></span> BBB Accredited — A+ Rating</div>
+  <div class="trust-item"><span class="trust-dot"></span> Residential & Commercial</div>
+  <div class="trust-item"><span class="trust-dot"></span> Financing Available</div>
+  <div class="trust-item"><span class="trust-dot"></span> No High-Pressure Sales</div>
+</div>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="section-wrap">
+    <div class="history-layout">
+      <div>
+        <div class="section-label">Our Story</div>
+        <h2>A century of <em>Reese craftsmanship</em></h2>
+        <p class="section-intro">Five generations. One family. The longest-running HVAC legacy in Nashville. This is not a franchise — it's a calling passed from parent to child for over 100 years.</p>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-year">1899</div>
+            <div class="tl-event">C.H. Reese begins as a Tinsmith</div>
+            <div class="tl-desc">The family trade starts with sheet metal work — roofing, guttering, and the beginnings of forced-air heating in Nashville homes.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1916</div>
+            <div class="tl-event">C.H. Reese opens his own business</div>
+            <div class="tl-desc">Providing roofing, guttering, and hot air heating services to Nashville — the foundation of what would become the region's oldest HVAC family business.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1979</div>
+            <div class="tl-event">Bobby Reese, Inc. formally incorporated</div>
+            <div class="tl-desc">The business expands into modern heating and air conditioning, incorporated under Bobby Reese with a full service and installation team.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">1995</div>
+            <div class="tl-event">BBB Accreditation earned</div>
+            <div class="tl-desc">Recognized by the Better Business Bureau for ethical business practices — an A+ rating that has been maintained ever since.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-year">Today</div>
+            <div class="tl-event">Joseph S. Reese leads the 5th generation</div>
+            <div class="tl-desc">The Reese family continues serving Nashville and all of Middle Tennessee — same values, same commitment, modern equipment and techniques.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gen-card">
+        <div class="gen-card-label">The Reese Family Legacy</div>
+        <div class="gen-number">5</div>
+        <div class="gen-title">Five generations of Nashville homeowners trust the Reese name.</div>
+        <p class="gen-desc">We don't have sales quotas. We don't upsell parts you don't need. We've built this business one honest service call at a time — because in a community this tight-knit, your reputation is everything.</p>
+        <p class="gen-desc">When our technician comes to your home, they're representing 100 years of family pride. That means something to us.</p>
+        <div class="gen-president">
+          <strong>Joseph S. Reese</strong>
+          President · Bobby Reese, Inc. · 5th Generation
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-wrap">
+    <div class="section-label">What We Do</div>
+    <h2>Full-Service HVAC,<br><em>Residential & Commercial</em></h2>
+    <p class="section-intro">From a furnace that won't fire on a January morning to a full commercial system installation — we handle it all, and we've handled it longer than anyone else in Middle Tennessee.</p>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <span class="svc-icon">🔥</span>
+        <div class="svc-name">Heating Repair</div>
+        <div class="svc-desc">Furnaces, heat pumps, boilers. When the heat goes out in a Nashville winter, you need someone who picks up the phone.</div>
+        <span class="svc-note">All Major Brands</span>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">❄️</span>
+        <div class="svc-name">Cooling / AC Repair</div>
+        <div class="svc-desc">Central air, heat pumps, ductless mini-splits. We diagnose fast and fix it right the first time.</div>
+        <span class="svc-note">All Major Brands</span>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🏠</span>
+        <div class="svc-name">New System Installation</div>
+        <div class="svc-desc">Full residential installation with honest system recommendations — no overselling, no unnecessary upgrades.</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🔄</span>
+        <div class="svc-name">System Replacement</div>
+        <div class="svc-desc">When your old system reaches end of life, we'll help you choose the right replacement for your home and budget.</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🔧</span>
+        <div class="svc-name">Maintenance & Tune-Ups</div>
+        <div class="svc-desc">Seasonal preventive maintenance to maximize efficiency, extend system life, and catch small problems before they become expensive ones.</div>
+        <span class="svc-note">Spring & Fall Service</span>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🌬️</span>
+        <div class="svc-name">Indoor Air Quality</div>
+        <div class="svc-desc">Air purifiers, humidifiers, dehumidifiers, UV systems. Nashville's humidity is real — we have solutions.</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">🏢</span>
+        <div class="svc-name">Commercial HVAC</div>
+        <div class="svc-desc">Full commercial service and installation for businesses throughout Middle Tennessee. Residential care, commercial capability.</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">💧</span>
+        <div class="svc-name">Heat Pump Service</div>
+        <div class="svc-desc">Specialized heat pump repair, maintenance, and installation. The most efficient heating and cooling option for Nashville's climate.</div>
+      </div>
+      <div class="svc-card">
+        <span class="svc-icon">📋</span>
+        <div class="svc-name">System Diagnostics</div>
+        <div class="svc-desc">Not sure what's wrong? Our technicians provide honest diagnoses with no pressure to buy more than you need.</div>
+        <span class="svc-note">No Pressure, Ever</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY REESE -->
+<section id="why">
+  <div class="section-wrap">
+    <div class="section-label">Why Choose Us</div>
+    <h2 style="color:var(--linen);">What makes <em>Reese different</em></h2>
+    <p class="section-intro">There are a lot of HVAC companies in Nashville. Here's why the Reese family has been the name people pass down to their kids.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">🤝</span>
+        <div class="why-title">No High-Pressure Sales</div>
+        <div class="why-desc">We don't pay our technicians on commission. They don't earn more by recommending repairs you don't need. You get an honest diagnosis and honest options — that's it.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">📞</span>
+        <div class="why-title">You Reach a Person</div>
+        <div class="why-desc">No call centers. No automated menus that go nowhere. When you call Reese Heating & Air, someone from the team answers. That's how we've operated for 100 years.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🏅</span>
+        <div class="why-title">BBB A+ Accredited Since 1995</div>
+        <div class="why-desc">The Better Business Bureau has recognized Bobby Reese, Inc. for ethical business practices for 30 consecutive years. An A+ rating maintained through decades of honest service calls.</div>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🌳</span>
+        <div class="why-title">Deep Nashville Roots</div>
+        <div class="why-desc">We aren't a national franchise that bought a local name. The Reese family has lived, worked, and raised their families in Middle Tennessee since 1899. This is home. Your neighbor is our neighbor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section id="quote">
+  <blockquote>We work hard to treat your family like our own. Our family has been in the industry longer than any other HVAC business in Nashville.</blockquote>
+  <cite>— The Reese Family · Bobby Reese, Inc.</cite>
+</section>
+
+<!-- SERVICE AREA & HOURS -->
+<section id="area">
+  <div class="section-wrap">
+    <div class="area-inner">
+      <div class="area-info">
+        <div class="section-label">Find Us</div>
+        <h2>Proudly Serving <em>Middle Tennessee</em></h2>
+        <p>From Belle Meade to Murfreesboro — if you're in Middle Tennessee, chances are a Reese has been to your neighborhood before. We serve all of Davidson County and most surrounding areas.</p>
+
+        <div class="hours-card">
+          <h3>Office Hours</h3>
+          <table class="hours-tbl">
+            <tr><td>Monday</td><td>7:30 AM – 4:00 PM</td></tr>
+            <tr><td>Tuesday</td><td>7:30 AM – 4:00 PM</td></tr>
+            <tr><td>Wednesday</td><td>7:30 AM – 4:00 PM</td></tr>
+            <tr><td>Thursday</td><td>7:30 AM – 4:00 PM</td></tr>
+            <tr><td>Friday</td><td>7:30 AM – 4:00 PM</td></tr>
+            <tr><td>Saturday</td><td>Closed</td></tr>
+            <tr><td>Sunday</td><td>Closed</td></tr>
+          </table>
+        </div>
+
+        <div class="contact-card">
+          <h3>Contact</h3>
+          <div class="contact-row">
+            <span class="c-icon">📞</span>
+            <a href="tel:16153918000">(615) 391-8000</a>
+          </div>
+          <div class="contact-row">
+            <span class="c-icon">✉️</span>
+            <a href="mailto:service@reeseair.com">service@reeseair.com</a>
+          </div>
+          <div class="contact-row">
+            <span class="c-icon">📍</span>
+            <span>205 Shady Grove Rd<br>Nashville, TN 37214</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="counties-list">
+          <h3>Communities We Serve</h3>
+          <div class="town-grid">
+            <div class="town-tag">Nashville</div>
+            <div class="town-tag">Belle Meade</div>
+            <div class="town-tag">Forest Hills</div>
+            <div class="town-tag">Berry Hill</div>
+            <div class="town-tag">Brentwood</div>
+            <div class="town-tag">Franklin</div>
+            <div class="town-tag">Thompson's Station</div>
+            <div class="town-tag">Mt. Juliet</div>
+            <div class="town-tag">Lebanon</div>
+            <div class="town-tag">Watertown</div>
+            <div class="town-tag">Hendersonville</div>
+            <div class="town-tag">Gallatin</div>
+            <div class="town-tag">Goodlettsville</div>
+            <div class="town-tag">Murfreesboro</div>
+            <div class="town-tag">Smyrna</div>
+            <div class="town-tag">LaVergne</div>
+            <div class="town-tag">+Surrounding Areas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCING & TRUST -->
+<section id="trust">
+  <div class="section-wrap">
+    <div class="section-label">Payment & Trust</div>
+    <h2>Honest Pricing,<br><em>Flexible Payment</em></h2>
+    <p class="section-intro">A new HVAC system is a significant investment. We work with you on financing so that a broken system in the middle of July doesn't have to be a financial crisis.</p>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <h3>Financing Available</h3>
+        <p>We offer financing options for new system installations and major repairs. Ask our team about current financing plans when you call — we'll find an option that works for your budget.</p>
+        <div class="badge-row">
+          <div class="badge">Flexible Plans</div>
+          <div class="badge">New Installs</div>
+          <div class="badge">Ask for Details</div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <h3>Accepted Payment</h3>
+        <p>We accept all major credit cards, checks, and cash. No surprise fees. We walk you through the full cost before any work begins.</p>
+        <div class="badge-row">
+          <div class="badge">💳 Visa</div>
+          <div class="badge">💳 MasterCard</div>
+          <div class="badge">💳 AmEx</div>
+          <div class="badge">💵 Check / Cash</div>
+        </div>
+      </div>
+      <div class="trust-card">
+        <h3>BBB Accredited — A+</h3>
+        <p>Accredited by the Better Business Bureau since 1995 with a continuous A+ rating. Thirty years of recognized ethical business practice in Nashville.</p>
+        <div class="badge-row">
+          <div class="badge">A+ Rating</div>
+          <div class="badge">Accredited 1995</div>
+          <div class="badge">30 Yrs Recognized</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo">
+        <div class="nav-emblem">R</div>
+        <div class="nav-name" style="color:var(--linen);">
+          Reese Heating & Air
+          <span class="nav-since">Nashville · Est. 1916</span>
+        </div>
+      </div>
+      <p>Five generations of the Reese family keeping Middle Tennessee comfortable. The oldest family-owned HVAC company in Nashville. Bobby Reese, Inc. — honest service since 1916.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Heating Repair</a></li>
+        <li><a href="#services">AC Repair</a></li>
+        <li><a href="#services">New Installation</a></li>
+        <li><a href="#services">System Replacement</a></li>
+        <li><a href="#services">Maintenance</a></li>
+        <li><a href="#services">Indoor Air Quality</a></li>
+        <li><a href="#services">Commercial HVAC</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#history">Our Story</a></li>
+        <li><a href="#why">Why Choose Reese</a></li>
+        <li><a href="#area">Service Area</a></li>
+        <li><a href="#trust">Financing</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:16153918000">(615) 391-8000</a></li>
+        <li><a href="mailto:service@reeseair.com">service@reeseair.com</a></li>
+        <li><a href="#area">205 Shady Grove Rd</a></li>
+        <li><a href="#area">Nashville, TN 37214</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Bobby Reese, Inc. d/b/a Reese Heating & Air. All rights reserved. Nashville, TN.</span>
+    <span>BBB Accredited · A+ Rating · Family Owned Since 1916</span>
+  </div>
+</footer>
+
+</body>
+</html>
