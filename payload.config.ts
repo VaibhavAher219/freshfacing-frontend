@@ -1,5 +1,5 @@
 import { buildConfig } from 'payload'
-import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { postgresAdapter } from '@payloadcms/db-postgres'
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import sharp from 'sharp'
@@ -20,7 +20,7 @@ const dirname = path.dirname(filename)
 const usePostgres = !!process.env.POSTGRES_URL
 
 const dbAdapter = usePostgres
-  ? vercelPostgresAdapter({ pool: { connectionString: process.env.POSTGRES_URL } })
+  ? postgresAdapter({ pool: { connectionString: process.env.POSTGRES_URL } })
   : sqliteAdapter({ client: { url: process.env.DATABASE_URL || `file:${path.resolve(dirname, 'freshfacing.db')}` } })
 
 export default buildConfig({
