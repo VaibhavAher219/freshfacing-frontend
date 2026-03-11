@@ -8,89 +8,15 @@ function toggleNav() {
   document.getElementById('hamburger').classList.toggle('open');
 }
 
-// === Audit Scanner ===
-const checks = [
-  {
-    key: 'mobile',
-    label: 'Mobile-friendly',
-    stat: val => val ? '✓ Looks good' : '63% of visitors use phones',
-    pass: () => Math.random() > 0.72,
-    fail_text: 'Broken or unreadable on smartphones',
-    pass_text: 'Renders correctly on mobile',
-    severity: 'fail'
-  },
-  {
-    key: 'speed',
-    label: 'Page load speed',
-    stat: val => val ? '<2 sec' : Math.floor(Math.random()*6+5)+' seconds',
-    pass: () => Math.random() > 0.65,
-    fail_text: 'Too slow — visitors leave after 3 seconds',
-    pass_text: 'Fast enough to keep visitors',
-    severity: 'fail'
-  },
-  {
-    key: 'ssl',
-    label: 'Secure (HTTPS)',
-    stat: val => val ? 'Active' : 'Missing',
-    pass: () => Math.random() > 0.35,
-    fail_text: 'No SSL — browsers warn visitors it\'s "not secure"',
-    pass_text: 'SSL certificate active',
-    severity: 'warn'
-  },
-  {
-    key: 'indexed',
-    label: 'Google indexing',
-    stat: val => val ? 'Indexed' : '0 pages found',
-    pass: () => Math.random() > 0.55,
-    fail_text: 'Google can\'t find your pages — you don\'t show up in search',
-    pass_text: 'Pages are indexed by Google',
-    severity: 'fail'
-  },
-  {
-    key: 'ai',
-    label: 'AI search visibility',
-    stat: val => val ? 'Structured' : 'Not structured',
-    pass: () => Math.random() > 0.82,
-    fail_text: 'ChatGPT & Perplexity can\'t recommend your business',
-    pass_text: 'Structured data present for AI search',
-    severity: 'warn'
-  },
-  {
-    key: 'links',
-    label: 'Broken links',
-    stat: val => val ? 'None found' : Math.floor(Math.random()*8+2)+' broken',
-    pass: () => Math.random() > 0.60,
-    fail_text: 'Customers hit dead ends — forms, menus, or pages that don\'t work',
-    pass_text: 'No broken links detected',
-    severity: 'fail'
-  },
-  {
-    key: 'contact',
-    label: 'Click-to-call on mobile',
-    stat: val => val ? 'Present' : 'Missing',
-    pass: () => Math.random() > 0.58,
-    fail_text: 'No tap-to-call — mobile visitors can\'t reach you easily',
-    pass_text: 'Tap-to-call button present',
-    severity: 'warn'
-  },
-  {
-    key: 'fresh',
-    label: 'Content freshness',
-    stat: val => val ? 'Up to date' : Math.floor(Math.random()*4+2)+' years old',
-    pass: () => Math.random() > 0.70,
-    fail_text: 'Outdated content signals an abandoned site to Google and visitors',
-    pass_text: 'Content appears reasonably current',
-    severity: 'warn'
-  }
-];
+// === Audit Scanner (Real API) ===
 
 const scanMessages = [
+  'Connecting to site...',
   'Checking mobile compatibility...',
   'Testing page load speed...',
   'Looking for SSL certificate...',
   'Checking Google index status...',
   'Scanning for AI search structure...',
-  'Following all links...',
   'Checking contact & call buttons...',
   'Reviewing content freshness...',
   'Calculating your score...'
@@ -102,6 +28,12 @@ function cleanUrl(raw) {
   try {
     return new URL(u).hostname.replace('www.','');
   } catch(e) { return raw.trim(); }
+}
+
+function buildFullUrl(raw) {
+  let u = raw.trim();
+  if (!u.startsWith('http')) u = 'https://' + u;
+  return u;
 }
 
 function show(id) {
@@ -117,27 +49,154 @@ function runAudit() {
     return;
   }
   const domain = cleanUrl(raw);
+  const fullUrl = buildFullUrl(raw);
   show('step-scanning');
 
+  // Start scanning animation
   let i = 0;
   const statusEl = document.getElementById('scan-status');
   const interval = setInterval(() => {
     if (i < scanMessages.length) {
       statusEl.textContent = scanMessages[i++];
-    } else {
-      clearInterval(interval);
     }
-  }, 380);
+  }, 800);
 
-  setTimeout(() => {
-    clearInterval(interval);
-    const results = checks.map(c => {
-      const passed = c.pass();
-      return { ...c, passed, statText: c.stat(passed) };
+  // Call Google PageSpeed Insights API (free, no key needed)
+  const apiUrl = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=' +
+    encodeURIComponent(fullUrl) + '&category=PERFORMANCE&category=ACCESSIBILITY&category=BEST_PRACTICES&category=SEO&strategy=MOBILE';
+
+  fetch(apiUrl)
+    .then(r => r.json())
+    .then(data => {
+      clearInterval(interval);
+      const results = parsePageSpeedResults(data, fullUrl);
+      renderResults(domain, results);
+      show('step-results');
+    })
+    .catch(err => {
+      clearInterval(interval);
+      // Fallback: if API fails, show what we can determine
+      const results = buildFallbackResults(fullUrl);
+      renderResults(domain, results);
+      show('step-results');
     });
-    renderResults(domain, results);
-    show('step-results');
-  }, scanMessages.length * 380 + 400);
+}
+
+function parsePageSpeedResults(data, url) {
+  const results = [];
+  const lhr = data.lighthouseResult || {};
+  const categories = lhr.categories || {};
+  const audits = lhr.audits || {};
+
+  // 1. Mobile-friendly (from SEO + viewport audit)
+  const seoScore = categories.seo ? categories.seo.score * 100 : null;
+  const viewport = audits['viewport'] ? audits['viewport'].score === 1 : false;
+  const fontSizes = audits['font-size'] ? audits['font-size'].score === 1 : true;
+  const mobilePassed = viewport && fontSizes;
+  results.push({
+    passed: mobilePassed,
+    severity: 'fail',
+    pass_text: 'Renders correctly on mobile',
+    fail_text: 'Broken or hard to use on smartphones',
+    statText: mobilePassed ? '✓ Looks good' : '63% of visits are mobile'
+  });
+
+  // 2. Page speed
+  const perfScore = categories.performance ? Math.round(categories.performance.score * 100) : 0;
+  const fcp = audits['first-contentful-paint'] ? audits['first-contentful-paint'].numericValue : 0;
+  const speedSec = (fcp / 1000).toFixed(1);
+  const speedPassed = fcp < 3000;
+  results.push({
+    passed: speedPassed,
+    severity: 'fail',
+    pass_text: 'Loads in ' + speedSec + ' seconds',
+    fail_text: 'Takes ' + speedSec + ' seconds to load — visitors leave after 3',
+    statText: speedSec + ' sec'
+  });
+
+  // 3. HTTPS
+  const isHttps = audits['is-on-https'] ? audits['is-on-https'].score === 1 : url.startsWith('https');
+  results.push({
+    passed: isHttps,
+    severity: 'warn',
+    pass_text: 'SSL certificate active',
+    fail_text: 'No SSL — browsers warn visitors it\'s "not secure"',
+    statText: isHttps ? 'Active' : 'Missing'
+  });
+
+  // 4. SEO / Indexing
+  const seoPassed = seoScore !== null ? seoScore >= 70 : false;
+  const robotsTxt = audits['robots-txt'] ? audits['robots-txt'].score === 1 : false;
+  const isCrawlable = audits['is-crawlable'] ? audits['is-crawlable'].score === 1 : true;
+  const indexable = isCrawlable && robotsTxt;
+  results.push({
+    passed: indexable || seoPassed,
+    severity: 'fail',
+    pass_text: 'Site is indexable by Google',
+    fail_text: 'Google may not be able to find your pages',
+    statText: seoPassed ? 'SEO: ' + seoScore + '/100' : 'Needs work'
+  });
+
+  // 5. AI search visibility (structured data)
+  const structuredData = audits['structured-data-item'] ? audits['structured-data-item'].score === 1 : false;
+  // Most small sites don't have structured data
+  results.push({
+    passed: structuredData,
+    severity: 'warn',
+    pass_text: 'Structured data present for AI search',
+    fail_text: 'ChatGPT & Perplexity can\'t recommend your business',
+    statText: structuredData ? 'Structured' : 'Not structured'
+  });
+
+  // 6. Broken links (from link audit if available)
+  const linkAudit = audits['link-text'] ? audits['link-text'].score === 1 : true;
+  const crawlableAnchors = audits['crawlable-anchors'] ? audits['crawlable-anchors'].score === 1 : true;
+  const linksPassed = linkAudit && crawlableAnchors;
+  results.push({
+    passed: linksPassed,
+    severity: 'fail',
+    pass_text: 'Links are properly configured',
+    fail_text: 'Links are misconfigured — visitors may hit dead ends',
+    statText: linksPassed ? 'Good' : 'Issues found'
+  });
+
+  // 7. Tap targets (click-to-call proxy)
+  const tapTargets = audits['tap-targets'] ? audits['tap-targets'].score === 1 : true;
+  results.push({
+    passed: tapTargets,
+    severity: 'warn',
+    pass_text: 'Mobile tap targets properly sized',
+    fail_text: 'Buttons and links too small to tap on mobile',
+    statText: tapTargets ? 'Good' : 'Too small'
+  });
+
+  // 8. Image optimization (as content quality proxy)
+  const images = audits['uses-optimized-images'] ? audits['uses-optimized-images'].score === 1 :
+                 audits['offscreen-images'] ? audits['offscreen-images'].score === 1 : true;
+  results.push({
+    passed: images,
+    severity: 'warn',
+    pass_text: 'Images are optimized',
+    fail_text: 'Unoptimized images slow your site and frustrate visitors',
+    statText: images ? 'Optimized' : 'Needs work'
+  });
+
+  return results;
+}
+
+function buildFallbackResults(url) {
+  // Minimal fallback when API is unavailable — check what we can client-side
+  const isHttps = url.startsWith('https');
+  return [
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'Could not fully test mobile compatibility', statText: 'Test needed' },
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'Could not measure page speed remotely', statText: 'Test needed' },
+    { passed: isHttps, severity: 'warn', pass_text: 'URL uses HTTPS', fail_text: 'Site doesn\'t use HTTPS — visitors see a security warning', statText: isHttps ? 'Active' : 'Missing' },
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'Google indexing status unknown — we\'ll check manually', statText: 'Pending' },
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'AI search visibility needs manual review', statText: 'Pending' },
+    { passed: true, severity: 'warn', pass_text: 'Full link check requires manual scan', fail_text: '', statText: 'Pending' },
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'Tap target sizing needs device test', statText: 'Pending' },
+    { passed: false, severity: 'warn', pass_text: '', fail_text: 'Image optimization check pending', statText: 'Pending' },
+  ];
 }
 
 function renderResults(domain, results) {
@@ -145,7 +204,9 @@ function renderResults(domain, results) {
 
   const failures = results.filter(r => !r.passed && r.severity === 'fail').length;
   const warnings = results.filter(r => !r.passed && r.severity === 'warn').length;
-  const score = Math.max(5, 100 - (failures * 14) - (warnings * 7));
+  const total = results.length;
+  const passed = results.filter(r => r.passed).length;
+  const score = Math.max(5, Math.round((passed / total) * 100));
 
   const scoreBadge = document.getElementById('result-score');
   scoreBadge.textContent = 'Score: ' + score + '/100';
@@ -237,6 +298,19 @@ function initPricingToggle() {
   });
 }
 
+// === Claim Your Site ===
+function claimSite() {
+  const url = document.getElementById('claim-url').value;
+  if (!url.trim()) {
+    document.getElementById('claim-url').focus();
+    return;
+  }
+  // Show plan selection
+  document.getElementById('claim-plans').style.display = 'block';
+  // Smooth scroll to plans
+  document.getElementById('claim-plans').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
 // === Init on DOM Ready ===
 document.addEventListener('DOMContentLoaded', () => {
   // Nav: close menu on link click (mobile)
@@ -261,4 +335,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Pricing toggle
   initPricingToggle();
+
+  // Claim: Enter key
+  const claimInput = document.getElementById('claim-url');
+  if (claimInput) {
+    claimInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') claimSite();
+    });
+  }
+
+  // Sticky mobile CTA: show after scrolling past hero
+  const stickyCta = document.getElementById('sticky-cta');
+  if (stickyCta) {
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const heroHeight = document.querySelector('.hero') ? document.querySelector('.hero').offsetHeight : 600;
+      if (scrollY > heroHeight && scrollY > lastScroll) {
+        stickyCta.style.transform = 'translateY(0)';
+      } else if (scrollY <= heroHeight) {
+        stickyCta.style.transform = 'translateY(100%)';
+      }
+      lastScroll = scrollY;
+    }, { passive: true });
+    // Start hidden
+    stickyCta.style.transform = 'translateY(100%)';
+    stickyCta.style.transition = 'transform 0.3s ease';
+  }
 });

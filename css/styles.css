@@ -54,7 +54,7 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
@@ -1188,4 +1188,420 @@ footer .logo em { color: var(--sage); }
   .task-row { grid-template-columns: 1fr auto; padding: 0.85rem 1rem; }
   .task-hours { display: none; }
   .task-cost { min-width: 60px; }
+}
+
+/* ── NAV CLAIM LINK ── */
+.nav-claim {
+  color: var(--amber) !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  border: 1px solid var(--amber);
+  padding: 0.35rem 0.7rem;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+.nav-claim:hover {
+  background: var(--amber);
+  color: var(--ink) !important;
+}
+
+/* ── SOCIAL PROOF STRIP ── */
+.proof-strip {
+  background: var(--cream);
+  padding: 2.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+}
+.proof-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+.proof-item { text-align: center; }
+.proof-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.proof-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--mid);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.proof-divider {
+  width: 1px;
+  height: 2.5rem;
+  background: var(--border);
+}
+
+/* ── PORTFOLIO ── */
+.portfolio {
+  padding: 7rem 3rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.portfolio-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.portfolio-card:hover {
+  box-shadow: 0 12px 48px rgba(28,24,16,0.12);
+  transform: translateY(-3px);
+}
+.portfolio-browser { position: relative; }
+.portfolio-topbar {
+  background: #f0ebe2;
+  padding: 0.6rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.portfolio-url {
+  flex: 1;
+  background: var(--cream);
+  border-radius: 4px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.72rem;
+  color: var(--mid);
+  border: 1px solid var(--border);
+  font-family: monospace;
+}
+.portfolio-img {
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.portfolio-preview-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.preview-nav {
+  padding: 0.75rem 1.25rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.portfolio-golden-needle .preview-nav {
+  background: #faf5ef;
+  color: #2e2416;
+}
+.preview-hero-dark {
+  flex: 1;
+  background: #2e2416;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.preview-hero-green {
+  flex: 1;
+  background: linear-gradient(135deg, #1a3a1a 0%, #2a4a2a 100%);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.preview-eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(200,169,110,0.7);
+  margin-bottom: 0.75rem;
+}
+.preview-headline {
+  font-family: 'Newsreader', serif;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  color: #faf5ef;
+}
+.portfolio-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(28,24,16,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.portfolio-hover-overlay span {
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.5rem;
+  background: var(--amber);
+  color: var(--ink);
+  border-radius: 5px;
+}
+.portfolio-card:hover .portfolio-hover-overlay { opacity: 1; }
+.portfolio-info { padding: 1.5rem; }
+.portfolio-industry {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 0.4rem;
+}
+.portfolio-info h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+.portfolio-info p {
+  font-size: 0.85rem;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── CLAIM SECTION ── */
+.claim-section {
+  background: var(--ink);
+  padding: 5rem 3rem;
+  text-align: center;
+}
+.claim-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.claim-badge {
+  display: inline-block;
+  background: var(--amber);
+  color: var(--ink);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+.claim-form {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.claim-input {
+  flex: 1;
+  padding: 1rem 1.25rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  border: 2px solid rgba(255,255,255,0.15);
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  background: rgba(255,255,255,0.07);
+  color: var(--cream);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.claim-input:focus { border-color: var(--amber); }
+.claim-input::placeholder { color: rgba(250,247,242,0.35); }
+.claim-btn {
+  background: var(--amber);
+  color: var(--ink);
+  padding: 1rem 1.75rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.claim-btn:hover { background: #d4972a; }
+.claim-plans-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  max-width: 440px;
+  margin: 0 auto;
+}
+.claim-plan-card {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 1.75rem 1.5rem;
+  text-decoration: none;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+.claim-plan-card:hover {
+  border-color: var(--amber);
+  background: rgba(232,168,48,0.08);
+}
+.claim-plan-card.featured {
+  border-color: var(--amber);
+  background: rgba(232,168,48,0.1);
+}
+.claim-plan-best {
+  position: absolute;
+  top: -0.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--amber);
+  color: var(--ink);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.6rem;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+.claim-plan-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.5rem;
+}
+.claim-plan-price {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--cream);
+  line-height: 1;
+}
+.claim-plan-price span {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(250,247,242,0.5);
+}
+.claim-plan-note {
+  font-size: 0.78rem;
+  color: rgba(250,247,242,0.45);
+  margin-top: 0.35rem;
+}
+.claim-note {
+  font-size: 0.8rem;
+  color: rgba(250,247,242,0.4);
+  margin-top: 2rem;
+}
+
+/* ── FAQ ── */
+.faq {
+  padding: 7rem 3rem;
+  background: var(--light);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.faq-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+.faq-item {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 2rem;
+}
+.faq-item h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+.faq-item p {
+  font-size: 0.875rem;
+  color: var(--mid);
+  line-height: 1.65;
+}
+
+/* ── STICKY MOBILE CTA ── */
+.sticky-mobile-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  padding: 0.75rem 1.25rem;
+  background: rgba(250,247,242,0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -4px 20px rgba(28,24,16,0.1);
+}
+.sticky-mobile-cta a {
+  display: block;
+  text-align: center;
+  padding: 0.9rem;
+  background: var(--amber);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  border-radius: 5px;
+}
+
+/* ── RESPONSIVE: New sections ── */
+@media (max-width: 1024px) {
+  .portfolio-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+}
+
+@media (max-width: 640px) {
+  .proof-strip { padding: 2rem 1.25rem; }
+  .proof-inner { gap: 1.5rem; flex-wrap: wrap; }
+  .proof-num { font-size: 1.25rem; }
+  .proof-divider { display: none; }
+  .proof-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .proof-item { text-align: center; }
+
+  .portfolio { padding: 4rem 1.25rem; }
+  .portfolio-img { height: 220px; }
+
+  .claim-section { padding: 4rem 1.25rem; }
+  .claim-form { flex-direction: column; gap: 0.5rem; }
+  .claim-input { border-right: 2px solid rgba(255,255,255,0.15); border-radius: 5px; }
+  .claim-btn { border-radius: 5px; width: 100%; }
+  .claim-plans-row { flex-direction: column; }
+
+  .faq { padding: 4rem 1.25rem; }
+  .faq-grid { grid-template-columns: 1fr; }
+
+  .sticky-mobile-cta { display: block; }
+
+  /* Add bottom padding to footer so sticky CTA doesn't overlap */
+  footer { padding-bottom: 5rem; }
 }

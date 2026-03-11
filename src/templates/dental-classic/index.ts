@@ -1,0 +1,1 @@
+export { DentalTemplate } from './DentalTemplate'

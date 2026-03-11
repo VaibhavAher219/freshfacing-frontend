@@ -1,2 +1,13 @@
 .claude/
 freshfacing_sitev1.html
+node_modules/
+.next/
+.env
+.env.local
+.env.production.local
+*.db
+public/media/
+payload-types.ts
+_static_backup/
+next-env.d.ts
+.vercel/

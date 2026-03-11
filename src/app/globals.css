@@ -1,0 +1,36 @@
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --cream: #faf7f2;
+  --ink: #1c1810;
+  --brown: #2e2416;
+  --amber: #e8a830;
+  --sage: #5c7a5c;
+  --rust: #c94f28;
+  --mid: #7a6e60;
+  --light: #f0ebe2;
+  --white: #ffffff;
+  --border: rgba(28,24,16,0.1);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

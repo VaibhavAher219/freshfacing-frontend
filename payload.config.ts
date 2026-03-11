@@ -1,0 +1,46 @@
+import { buildConfig } from 'payload'
+import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import sharp from 'sharp'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import { Users } from '@/collections/Users'
+import { Tenants } from '@/collections/Tenants'
+import { SiteContent } from '@/collections/SiteContent'
+import { Media } from '@/collections/Media'
+import { Leads } from '@/collections/Leads'
+import { Upsells } from '@/collections/Upsells'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
+
+// Use PostgreSQL in production (Neon/Vercel), SQLite for local dev
+const usePostgres = !!process.env.POSTGRES_URL
+
+const dbAdapter = usePostgres
+  ? vercelPostgresAdapter({ pool: { connectionString: process.env.POSTGRES_URL } })
+  : sqliteAdapter({ client: { url: process.env.DATABASE_URL || `file:${path.resolve(dirname, 'freshfacing.db')}` } })
+
+export default buildConfig({
+  admin: {
+    user: Users.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+  },
+  collections: [Users, Tenants, SiteContent, Media, Leads, Upsells],
+  editor: lexicalEditor(),
+  secret: process.env.PAYLOAD_SECRET || 'CHANGE-ME-IN-PRODUCTION-super-secret-key-12345',
+  typescript: {
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
+  },
+  db: dbAdapter,
+  sharp,
+  upload: {
+    limits: {
+      fileSize: 5000000, // 5MB
+    },
+  },
+})
