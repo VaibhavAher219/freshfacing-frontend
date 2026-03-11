@@ -1,7 +1,6 @@
 'use client'
 
 import Script from 'next/script'
-import { useEffect } from 'react'
 
 const bodyHTML = `
 <!-- NAV -->
@@ -671,21 +670,6 @@ const bodyHTML = `
 `
 
 export default function HomePage() {
-  useEffect(() => {
-    // Inject the CSS link into <head> on mount
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = '/css/styles.css'
-    document.head.appendChild(link)
-
-    // Set the page title
-    document.title = 'FreshFacing \u2014 A New Website for Your Business. In an Hour.'
-
-    return () => {
-      document.head.removeChild(link)
-    }
-  }, [])
-
   return (
     <>
       <div dangerouslySetInnerHTML={{ __html: bodyHTML }} />
