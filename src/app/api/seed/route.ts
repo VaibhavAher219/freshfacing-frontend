@@ -2,10 +2,14 @@ import { NextResponse } from 'next/server'
 import { getPayloadClient } from '@/lib/payload'
 
 // GET /api/seed — creates demo data for the walkthrough
-// Only works in development mode
-export async function GET() {
+// In production, requires ?key=PAYLOAD_SECRET for safety
+export async function GET(request: Request) {
   if (process.env.NODE_ENV === 'production') {
-    return NextResponse.json({ error: 'Seed disabled in production' }, { status: 403 })
+    const url = new URL(request.url)
+    const key = url.searchParams.get('key')
+    if (!key || key !== process.env.PAYLOAD_SECRET) {
+      return NextResponse.json({ error: 'Seed requires ?key=PAYLOAD_SECRET in production' }, { status: 403 })
+    }
   }
 
   const payload = await getPayloadClient()
@@ -126,13 +130,14 @@ export async function GET() {
 }
 
 function getUrls() {
+  const base = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
   return {
-    marketing: 'http://localhost:3000',
-    preview: 'http://localhost:3000/preview/demo-dentist',
-    clientSite: 'http://localhost:3000/demo-dentist',
-    checkout: 'http://localhost:3000/checkout/demo-dentist',
-    clientAdmin: 'http://localhost:3000/client-admin',
-    payloadAdmin: 'http://localhost:3000/admin',
+    marketing: base,
+    preview: `${base}/preview/demo-dentist`,
+    clientSite: `${base}/demo-dentist`,
+    checkout: `${base}/checkout/demo-dentist`,
+    clientAdmin: `${base}/client-admin`,
+    payloadAdmin: `${base}/admin`,
   }
 }
 
