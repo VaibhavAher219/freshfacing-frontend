@@ -29,6 +29,18 @@ const dbAdapter = usePostgres
 export default buildConfig({
   admin: {
     user: Users.slug,
+    theme: 'light',
+    meta: {
+      titleSuffix: ' | FreshFacing Admin',
+    },
+    components: {
+      graphics: {
+        Logo: '/src/components/admin/Logo',
+        Icon: '/src/components/admin/Icon',
+      },
+      beforeLogin: ['/src/components/admin/BeforeLogin'],
+      beforeDashboard: ['/src/components/admin/BeforeDashboard'],
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },

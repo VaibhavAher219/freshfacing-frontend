@@ -1,0 +1,862 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap');
+
+@layer payload {
+  :root {
+    /* Font */
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-serif: 'Newsreader', Georgia, serif;
+
+    /* Rounder corners */
+    --style-radius-s: 6px;
+    --style-radius-m: 8px;
+    --style-radius-l: 12px;
+
+    /* Warm base color ramp: cream (#faf7f2) → ink (#1c1810) */
+    --color-base-0: #faf7f2;
+    --color-base-50: #f5f0e8;
+    --color-base-100: #f0ebe2;
+    --color-base-150: #e8e1d5;
+    --color-base-200: #ddd4c5;
+    --color-base-250: #cfc4b2;
+    --color-base-300: #bfb29e;
+    --color-base-350: #ad9f8a;
+    --color-base-400: #9a8e78;
+    --color-base-450: #8a7e6a;
+    --color-base-500: #7a6e60;
+    --color-base-550: #6a5e50;
+    --color-base-600: #5c5040;
+    --color-base-650: #4e4234;
+    --color-base-700: #443828;
+    --color-base-750: #3a2e20;
+    --color-base-800: #2e2416;
+    --color-base-850: #261e12;
+    --color-base-900: #1c1810;
+    --color-base-950: #12100a;
+    --color-base-1000: #0a0806;
+
+    /* Success: sage (#5c7a5c) ramp */
+    --color-success-50: #f0f4f0;
+    --color-success-100: #dfe8df;
+    --color-success-150: #cddccd;
+    --color-success-200: #b8ceb8;
+    --color-success-250: #a3c0a3;
+    --color-success-300: #8eb28e;
+    --color-success-350: #7aa47a;
+    --color-success-400: #6b966b;
+    --color-success-450: #5c885c;
+    --color-success-500: #5c7a5c;
+    --color-success-550: #4f6c4f;
+    --color-success-600: #436043;
+    --color-success-650: #3a5438;
+    --color-success-700: #314830;
+    --color-success-750: #283c28;
+    --color-success-800: #203220;
+    --color-success-850: #182818;
+    --color-success-900: #121e12;
+    --color-success-950: #0c140c;
+
+    /* Warning: amber (#e8a830) ramp */
+    --color-warning-50: #fdf6e8;
+    --color-warning-100: #fcecd0;
+    --color-warning-150: #fadcb0;
+    --color-warning-200: #f6cc90;
+    --color-warning-250: #f2bc70;
+    --color-warning-300: #eeac50;
+    --color-warning-350: #ecb040;
+    --color-warning-400: #e8a830;
+    --color-warning-450: #d49828;
+    --color-warning-500: #c08820;
+    --color-warning-550: #ac7a1c;
+    --color-warning-600: #986c18;
+    --color-warning-650: #845e14;
+    --color-warning-700: #705010;
+    --color-warning-750: #5c420e;
+    --color-warning-800: #48340c;
+    --color-warning-850: #36280a;
+    --color-warning-900: #241c08;
+    --color-warning-950: #141006;
+
+    /* Error: rust (#c94f28) ramp */
+    --color-error-50: #faf0ec;
+    --color-error-100: #f6ddd4;
+    --color-error-150: #f0c8ba;
+    --color-error-200: #eab3a0;
+    --color-error-250: #e49e86;
+    --color-error-300: #de886c;
+    --color-error-350: #d87454;
+    --color-error-400: #d26040;
+    --color-error-450: #cc5430;
+    --color-error-500: #c94f28;
+    --color-error-550: #b44624;
+    --color-error-600: #a03e20;
+    --color-error-650: #8c361c;
+    --color-error-700: #782e18;
+    --color-error-750: #642814;
+    --color-error-800: #502010;
+    --color-error-850: #3c180c;
+    --color-error-900: #2a1208;
+    --color-error-950: #180c06;
+  }
+
+  /* ============================================================
+     GLOBAL
+     ============================================================ */
+
+  ::selection {
+    background: var(--color-success-100);
+    color: var(--color-base-900);
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ============================================================
+     SIDEBAR NAVIGATION — Force persistent sidebar on desktop
+     ============================================================ */
+
+  /* On desktop (>= 1024px): make the nav a persistent sidebar */
+  @media (min-width: 1024px) {
+    .template-default {
+      display: flex !important;
+      flex-direction: row !important;
+      min-height: 100vh !important;
+    }
+
+    aside.nav {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      bottom: 0 !important;
+      width: 260px !important;
+      background: var(--color-base-50) !important;
+      border-right: 1px solid rgba(28, 24, 16, 0.08) !important;
+      z-index: 100 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      transform: none !important;
+    }
+
+    /* Push main content right to account for fixed sidebar */
+    .template-default__wrap {
+      margin-left: 260px !important;
+      width: calc(100% - 260px) !important;
+    }
+
+    /* Hide hamburger on desktop — sidebar is always visible */
+    .hamburger,
+    button[aria-label="Open Menu"] {
+      display: none !important;
+    }
+
+    /* Hide mobile close button on desktop */
+    .nav__mobile-close {
+      display: none !important;
+    }
+
+    /* Nav scroll container fills the sidebar */
+    .nav__scroll {
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      overflow-y: auto !important;
+    }
+
+    .nav__wrap {
+      display: flex !important;
+      flex-direction: column !important;
+      flex: 1 !important;
+      padding: 16px 0 !important;
+    }
+  }
+
+  /* Sidebar background for all sizes */
+  aside.nav {
+    background: var(--color-base-50) !important;
+  }
+
+  /* Nav group toggle (section headers like COLLECTIONS, BUSINESSES) */
+  .nav-group__toggle {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--color-base-400) !important;
+    padding: 12px 20px 4px !important;
+  }
+
+  /* Nav links */
+  .nav__link {
+    display: block !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--color-base-650) !important;
+    border-radius: 6px !important;
+    padding: 8px 14px !important;
+    margin: 1px 10px !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+  }
+
+  .nav__link:hover {
+    background: var(--color-base-100) !important;
+    color: var(--color-base-900) !important;
+  }
+
+  .nav__link[aria-current="page"],
+  .nav__link.active {
+    background: var(--color-success-50) !important;
+    color: var(--color-success-700) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Logout link — style as a clear, labeled button with text */
+  .nav__log-out {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 8px 10px !important;
+    padding: 10px 14px !important;
+    border-radius: 6px !important;
+    color: var(--color-base-500) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease !important;
+    text-decoration: none !important;
+  }
+
+  .nav__log-out::after {
+    content: 'Log out' !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+
+  .nav__log-out:hover {
+    background: var(--color-error-50) !important;
+    color: var(--color-error-500) !important;
+  }
+
+  /* Sidebar top spacing for the logo/branding area */
+  @media (min-width: 1024px) {
+    aside.nav .nav__scroll {
+      padding-top: 8px !important;
+    }
+  }
+
+  /* ============================================================
+     APP HEADER
+     ============================================================ */
+
+  .app-header {
+    background: var(--color-base-0) !important;
+    border-bottom: 1px solid rgba(28, 24, 16, 0.06) !important;
+    box-shadow: none !important;
+  }
+
+  /* ============================================================
+     DASHBOARD
+     ============================================================ */
+
+  /* Dashboard group labels — only target Payload's own group headings, not custom components */
+  .dashboard__label {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1em !important;
+    color: var(--color-base-400) !important;
+    margin-bottom: 12px !important;
+    font-family: var(--font-body) !important;
+  }
+
+  /* Dashboard card grid */
+  .dashboard__card-list {
+    gap: 16px !important;
+  }
+
+  /* Dashboard cards */
+  .dashboard .card,
+  .card {
+    background: #ffffff !important;
+    border: 1.5px solid rgba(28, 24, 16, 0.1) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 3px rgba(28, 24, 16, 0.04), 0 4px 16px rgba(28, 24, 16, 0.03) !important;
+    transition: all 0.2s ease !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard .card:hover,
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(28, 24, 16, 0.06), 0 8px 32px rgba(28, 24, 16, 0.06) !important;
+    border-color: rgba(92, 122, 92, 0.25) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  /* Card title row */
+  .card__content {
+    padding: 18px 20px !important;
+  }
+
+  .card__title {
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    color: var(--color-base-800) !important;
+  }
+
+  .card__actions {
+    transition: color 0.15s ease !important;
+  }
+
+  .card__actions:hover {
+    color: var(--color-success-500) !important;
+  }
+
+  /* ============================================================
+     FORM FIELDS & INPUTS
+     ============================================================ */
+
+  /* Field labels */
+  .field-type .field-label,
+  .field-label,
+  label {
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.02em !important;
+    color: var(--color-base-700) !important;
+  }
+
+  /* Field descriptions */
+  .field-description,
+  .field-description-value {
+    font-size: 12px !important;
+    color: var(--color-base-400) !important;
+  }
+
+  /* Text inputs, selects, textareas */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  select,
+  textarea,
+  .text-input,
+  .textarea-input {
+    border: 1.5px solid var(--color-base-150) !important;
+    border-radius: 8px !important;
+    font-size: 14px !important;
+    font-family: var(--font-body) !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  input[type="url"]:focus,
+  input[type="search"]:focus,
+  input[type="tel"]:focus,
+  select:focus,
+  textarea:focus,
+  .text-input:focus,
+  .textarea-input:focus {
+    border-color: var(--color-success-400) !important;
+    box-shadow: 0 0 0 3px rgba(92, 122, 92, 0.1) !important;
+    outline: none !important;
+  }
+
+  /* Checkboxes */
+  input[type="checkbox"] {
+    accent-color: var(--color-success-500) !important;
+  }
+
+  /* Select dropdown styling */
+  .react-select__control {
+    border: 1.5px solid var(--color-base-150) !important;
+    border-radius: 8px !important;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+  }
+
+  .react-select__control--is-focused {
+    border-color: var(--color-success-400) !important;
+    box-shadow: 0 0 0 3px rgba(92, 122, 92, 0.1) !important;
+  }
+
+  .react-select__option--is-focused {
+    background: var(--color-base-50) !important;
+  }
+
+  .react-select__option--is-selected {
+    background: var(--color-success-500) !important;
+    color: #ffffff !important;
+  }
+
+  /* ============================================================
+     BUTTONS
+     ============================================================ */
+
+  .btn {
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    font-family: var(--font-body) !important;
+    letter-spacing: 0.01em !important;
+    transition: all 0.15s ease !important;
+  }
+
+  /* Primary / Save button */
+  .btn--style-primary,
+  .btn--icon-style-with-border.btn--style-primary {
+    background: var(--color-success-500) !important;
+    color: #ffffff !important;
+    border: none !important;
+  }
+
+  .btn--style-primary:hover {
+    background: var(--color-success-600) !important;
+    transform: translateY(-0.5px) !important;
+    box-shadow: 0 2px 8px rgba(92, 122, 92, 0.25) !important;
+  }
+
+  /* Secondary buttons */
+  .btn--style-secondary {
+    border: 1.5px solid var(--color-base-200) !important;
+    color: var(--color-base-700) !important;
+    background: transparent !important;
+  }
+
+  .btn--style-secondary:hover {
+    border-color: var(--color-success-300) !important;
+    color: var(--color-success-600) !important;
+    background: var(--color-success-50) !important;
+  }
+
+  /* Pill buttons */
+  .btn--size-small,
+  .pill {
+    border-radius: 100px !important;
+  }
+
+  /* ============================================================
+     COLLECTION LIST / TABLE VIEWS
+     ============================================================ */
+
+  /* Table header */
+  .table .row--header,
+  .collection-list .table-header,
+  .table th {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: var(--color-base-450) !important;
+  }
+
+  /* Table rows */
+  .table .row,
+  .collection-list .row {
+    border-bottom: 1px solid var(--color-base-100) !important;
+    transition: background-color 0.1s ease !important;
+  }
+
+  .table .row:hover,
+  .collection-list .row:hover {
+    background: var(--color-base-50) !important;
+  }
+
+  /* Table cells */
+  .table .cell,
+  .table td {
+    font-size: 13px !important;
+    color: var(--color-base-700) !important;
+  }
+
+  /* Pagination */
+  .collection-list__page-info {
+    font-size: 12px !important;
+    color: var(--color-base-400) !important;
+  }
+
+  /* ============================================================
+     LOGIN PAGE
+     ============================================================ */
+
+  .template-minimal {
+    background: var(--color-base-50) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 100vh !important;
+    padding: 20px !important;
+  }
+
+  .template-minimal__wrap {
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 40px rgba(28, 24, 16, 0.08) !important;
+    border: 1.5px solid rgba(28, 24, 16, 0.06) !important;
+    padding: 40px !important;
+    max-width: 420px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Login form button full width */
+  .template-minimal .btn--style-primary {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 12px 24px !important;
+    font-size: 14px !important;
+    margin-top: 8px !important;
+  }
+
+  /* Login form inputs larger */
+  .template-minimal input[type="text"],
+  .template-minimal input[type="email"],
+  .template-minimal input[type="password"] {
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+  }
+
+  /* ============================================================
+     BREADCRUMBS / STEP NAV
+     ============================================================ */
+
+  .step-nav {
+    font-size: 12px !important;
+    color: var(--color-base-400) !important;
+  }
+
+  .step-nav a {
+    color: var(--color-base-500) !important;
+    transition: color 0.15s ease !important;
+  }
+
+  .step-nav a:hover {
+    color: var(--color-success-500) !important;
+  }
+
+  /* ============================================================
+     MODALS & DRAWERS
+     ============================================================ */
+
+  .drawer__content,
+  [class*="modal"] [class*="content"],
+  .modal__wrap-content {
+    border-radius: 12px !important;
+  }
+
+  .drawer__header {
+    border-bottom: 1px solid var(--color-base-100) !important;
+  }
+
+  /* ============================================================
+     UPLOAD / MEDIA
+     ============================================================ */
+
+  .upload__dropzone {
+    border: 2px dashed var(--color-base-200) !important;
+    border-radius: 10px !important;
+    background: var(--color-base-50) !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .upload__dropzone:hover {
+    border-color: var(--color-success-300) !important;
+    background: var(--color-success-50) !important;
+  }
+
+  /* ============================================================
+     STATUS PILLS / BADGES
+     ============================================================ */
+
+  .status-indicator,
+  .select-cell .pill,
+  .cell-pill {
+    border-radius: 100px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* ============================================================
+     RICH TEXT EDITOR
+     ============================================================ */
+
+  .rich-text {
+    border: 1.5px solid var(--color-base-150) !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .rich-text:focus-within {
+    border-color: var(--color-success-400) !important;
+    box-shadow: 0 0 0 3px rgba(92, 122, 92, 0.1) !important;
+  }
+
+  .rich-text__toolbar {
+    border-bottom: 1px solid var(--color-base-100) !important;
+    background: var(--color-base-50) !important;
+  }
+
+  /* ============================================================
+     SCROLLBAR (Webkit)
+     ============================================================ */
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-base-200);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-base-300);
+  }
+
+  /* ============================================================
+     GROUPS / TABS / COLLAPSIBLES
+     ============================================================ */
+
+  .group-field__wrap {
+    border: 1.5px solid var(--color-base-100) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+  }
+
+  .group-field__wrap > .group-field__header {
+    background: var(--color-base-50) !important;
+    border-bottom: 1px solid var(--color-base-100) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+  }
+
+  /* Tabs */
+  .tabs-field__tabs {
+    border-bottom: 1.5px solid var(--color-base-100) !important;
+  }
+
+  .tabs-field__tab-button {
+    font-weight: 500 !important;
+    font-size: 13px !important;
+    color: var(--color-base-500) !important;
+    transition: all 0.15s ease !important;
+  }
+
+  .tabs-field__tab-button--active {
+    color: var(--color-success-600) !important;
+    border-bottom-color: var(--color-success-500) !important;
+    font-weight: 600 !important;
+  }
+
+  /* Collapsibles */
+  .collapsible__toggle-wrap {
+    font-weight: 600 !important;
+    font-size: 13px !important;
+  }
+
+  /* ============================================================
+     ARRAY FIELD ROWS
+     ============================================================ */
+
+  .array-field .array-field__row {
+    border: 1.5px solid var(--color-base-100) !important;
+    border-radius: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .array-field .array-field__row-header {
+    background: var(--color-base-50) !important;
+    border-bottom: 1px solid var(--color-base-100) !important;
+  }
+
+  /* ============================================================
+     RELATIONSHIP FIELD
+     ============================================================ */
+
+  .relationship--single-value .relationship--single-value__text {
+    font-size: 13px !important;
+    font-weight: 500 !important;
+  }
+
+  /* ============================================================
+     DOCUMENT HEADER (Edit View)
+     ============================================================ */
+
+  .doc-header {
+    padding-bottom: 20px !important;
+    margin-bottom: 24px !important;
+    border-bottom: 1.5px solid var(--color-base-100) !important;
+  }
+
+  .doc-header__title h1 {
+    font-weight: 700 !important;
+    font-size: 24px !important;
+    color: var(--color-base-900) !important;
+    letter-spacing: -0.02em !important;
+  }
+
+  /* ============================================================
+     SIDEBAR (Edit view sidebar)
+     ============================================================ */
+
+  .doc-fields__sidebar {
+    border-left: 1px solid var(--color-base-100) !important;
+  }
+
+  /* ============================================================
+     SEARCH / FILTER BAR
+     ============================================================ */
+
+  .search-filter__input,
+  .search-filter input {
+    border-radius: 8px !important;
+    border: 1.5px solid var(--color-base-150) !important;
+    font-size: 13px !important;
+  }
+
+  .where-builder__add-first-filter {
+    color: var(--color-success-500) !important;
+  }
+
+  /* ============================================================
+     TOAST NOTIFICATIONS
+     ============================================================ */
+
+  .toast {
+    border-radius: 10px !important;
+    box-shadow: 0 8px 32px rgba(28, 24, 16, 0.12) !important;
+    font-size: 13px !important;
+  }
+
+  /* ============================================================
+     EMPTY STATE
+     ============================================================ */
+
+  .no-results {
+    color: var(--color-base-400) !important;
+    font-size: 14px !important;
+  }
+
+  /* ============================================================
+     CUSTOM: FreshFacing Logo in Nav/Login
+     ============================================================ */
+
+  .freshfacing-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .freshfacing-logo__icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .freshfacing-logo__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-base-900);
+    letter-spacing: -0.02em;
+  }
+
+  .freshfacing-logo__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: var(--color-success-500);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    line-height: 1.6;
+  }
+
+  /* ============================================================
+     CUSTOM: BeforeLogin branding
+     ============================================================ */
+
+  .freshfacing-login-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 24px;
+    margin-bottom: 8px;
+    border-bottom: 1.5px solid var(--color-base-100);
+  }
+
+  .freshfacing-login-header__tagline {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-base-400);
+    text-align: center;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     CUSTOM: BeforeDashboard welcome
+     ============================================================ */
+
+  .freshfacing-welcome {
+    padding: 24px 0 8px;
+  }
+
+  .freshfacing-welcome__card {
+    background: linear-gradient(135deg, var(--color-success-50) 0%, var(--color-base-50) 100%);
+    border: 1.5px solid var(--color-success-100);
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .freshfacing-welcome__greeting {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-base-900);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+  }
+
+  .freshfacing-welcome__subtitle {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--color-base-450);
+    margin: 0;
+  }
+
+  .freshfacing-welcome__accent {
+    width: 48px;
+    height: 48px;
+    background: var(--color-success-500);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+}

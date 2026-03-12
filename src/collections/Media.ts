@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: { singular: 'Image', plural: 'Images & Files' },
+  admin: {
+    group: 'Businesses',
+  },
   upload: {
     mimeTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'],
     staticDir: 'public/media',

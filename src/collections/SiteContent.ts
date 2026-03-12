@@ -2,8 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const SiteContent: CollectionConfig = {
   slug: 'site-content',
+  labels: { singular: 'Website Content', plural: 'Website Content' },
   admin: {
     defaultColumns: ['tenant'],
+    group: 'Businesses',
   },
   access: {
     read: () => true,

@@ -2,9 +2,11 @@ import type { CollectionConfig } from 'payload'
 
 export const Tenants: CollectionConfig = {
   slug: 'tenants',
+  labels: { singular: 'Business', plural: 'Businesses' },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'status', 'industry'],
+    group: 'Businesses',
   },
   access: {
     read: () => true,

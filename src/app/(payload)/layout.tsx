@@ -1,5 +1,6 @@
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 import config from '@payload-config'
+import './custom.css'
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import React from 'react'
 import { importMap } from './admin/importMap'

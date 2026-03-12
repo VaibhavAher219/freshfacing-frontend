@@ -2,8 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Upsells: CollectionConfig = {
   slug: 'upsells',
+  labels: { singular: 'Add-On', plural: 'Add-Ons' },
   admin: {
     defaultColumns: ['tenant', 'service', 'status', 'price'],
+    group: 'Growth',
   },
   access: {
     read: ({ req: { user } }) => {
