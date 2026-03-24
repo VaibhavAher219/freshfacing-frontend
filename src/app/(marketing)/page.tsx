@@ -19,7 +19,7 @@ const bodyHTML = `
     <a href="#diy">DIY vs. Us</a>
     <a href="#pricing">Pricing</a>
     <a href="#claim" class="nav-claim">Already got your preview?</a>
-    <a href="#cta" class="nav-cta">Get My New Site &rarr;</a>
+    <a href="/scan" class="nav-cta">Get My New Site &rarr;</a>
   </div>
   <button class="hamburger" id="hamburger" onclick="toggleNav()" aria-label="Open menu">
     <span></span><span></span><span></span>
@@ -42,7 +42,7 @@ const bodyHTML = `
         <label class="url-form-label">See what's wrong with your site — free, instant</label>
         <div class="url-input-row">
           <input class="url-input" id="audit-url-input" type="text" placeholder="yourbusiness.com" autocomplete="off" />
-          <button type="button" class="url-btn" id="audit-btn" onclick="runAudit()">Scan My Site &rarr;</button>
+          <button type="button" class="url-btn" id="audit-btn" onclick="window.location.href='/scan?url='+encodeURIComponent(document.getElementById('audit-url-input').value)">Scan My Site &rarr;</button>
         </div>
         <p class="form-note">No sign-up. Results in seconds.</p>
       </div>
@@ -522,7 +522,7 @@ const bodyHTML = `
         <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.4);margin-bottom:0.5rem;">The bottom line</div>
         <p style="font-family:'Newsreader',serif;font-style:italic;font-size:1.15rem;color:var(--cream);line-height:1.55;max-width:50ch;">This is the best-looking website you'll ever have — and it'll take you <strong style="font-style:normal;color:var(--amber);">zero hours</strong> to get it.</p>
       </div>
-      <a href="#cta" style="display:inline-block;padding:1rem 2rem;background:var(--amber);color:var(--ink);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.875rem;letter-spacing:0.05em;border-radius:5px;white-space:nowrap;flex-shrink:0;">Scan My Site Free &rarr;</a>
+      <a href="/scan" style="display:inline-block;padding:1rem 2rem;background:var(--amber);color:var(--ink);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.875rem;letter-spacing:0.05em;border-radius:5px;white-space:nowrap;flex-shrink:0;">Scan My Site Free &rarr;</a>
     </div>
 
   </div>
@@ -552,7 +552,7 @@ const bodyHTML = `
           <li>Google Business sync</li>
           <li>We handle all maintenance</li>
         </ul>
-        <a href="#cta" class="plan-btn primary">Get My Site &rarr;</a>
+        <a href="/scan" class="plan-btn primary">Get My Site &rarr;</a>
       </div>
 
       <div class="plan">
@@ -568,7 +568,7 @@ const bodyHTML = `
           <li>Annual design refresh</li>
           <li>SEO health report included</li>
         </ul>
-        <a href="#cta" class="plan-btn ghost">Get My Site &rarr;</a>
+        <a href="/scan" class="plan-btn ghost">Get My Site &rarr;</a>
       </div>
     </div>
 
@@ -650,7 +650,7 @@ const bodyHTML = `
     <p class="cta-final-sub">Drop your URL. We'll send you a new site in an hour. If you love it, it's $20 a month to keep it. If not, no hard feelings.</p>
     <div class="cta-form">
       <input class="cta-input" id="cta-url" type="text" placeholder="yourbusiness.com" />
-      <button type="button" class="cta-submit" onclick="document.getElementById('audit-url-input').value=document.getElementById('cta-url').value;document.getElementById('audit-form-wrap').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(runAudit,400);">Scan My Site Free &rarr;</button>
+      <button type="button" class="cta-submit" onclick="window.location.href='/scan?url='+encodeURIComponent(document.getElementById('cta-url').value)">Scan My Site Free &rarr;</button>
     </div>
     <p class="cta-footnote">Instant results. No sign-up. We'll email your new site preview in under an hour.</p>
   </div>
@@ -670,7 +670,7 @@ const bodyHTML = `
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-mobile-cta" id="sticky-cta">
-  <a href="#cta">Get My New Site &rarr;</a>
+  <a href="/scan">Get My New Site &rarr;</a>
 </div>
 `;
 
