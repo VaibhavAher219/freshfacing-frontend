@@ -65,10 +65,15 @@ const bodyHTML = `
         <div id="audit-items-list" class="audit-items" style="margin-bottom:1.25rem;"></div>
         <div style="background:var(--light);border-radius:6px;padding:1rem;margin-bottom:1rem;">
           <div style="font-size:0.78rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;">Want us to fix all of this?</div>
-          <div style="font-size:0.78rem;color:var(--mid);margin-bottom:0.75rem;">We'll build you a new site and send you the preview in under an hour.</div>
+          <div style="font-size:0.78rem;color:var(--mid);margin-bottom:0.75rem;">We'll build you a free preview — no credit card, no commitment.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px;">
+            <input id="intake-first" type="text" placeholder="First name" style="background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:4px;padding:0.6rem 0.75rem;font-size:0.82rem;font-family:inherit;outline:none;" />
+            <input id="intake-last" type="text" placeholder="Last name" style="background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:4px;padding:0.6rem 0.75rem;font-size:0.82rem;font-family:inherit;outline:none;" />
+          </div>
+          <input id="intake-business" type="text" placeholder="Business name" style="width:100%;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:4px;padding:0.6rem 0.75rem;font-size:0.82rem;font-family:inherit;outline:none;margin-bottom:6px;box-sizing:border-box;" />
           <div style="display:flex;gap:0;flex-wrap:wrap;">
             <input class="email-input" id="result-email" type="email" placeholder="your@email.com" style="flex:1;min-width:0;border-right:none;border-radius:4px 0 0 4px;font-size:0.82rem;padding:0.65rem 0.85rem;" />
-            <button class="email-btn" style="font-size:0.78rem;padding:0.65rem 1rem;border-radius:0 4px 4px 0;" onclick="submitEmail()">Send Me My New Site</button>
+            <button type="button" class="email-btn" style="font-size:0.78rem;padding:0.65rem 1rem;border-radius:0 4px 4px 0;" onclick="submitEmail()">Get My Free Preview →</button>
           </div>
         </div>
         <div style="text-align:center;">

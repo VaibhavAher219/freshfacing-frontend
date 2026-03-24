@@ -325,7 +325,20 @@ function renderResults(domain, results) {
 
 function submitEmail() {
   const email = document.getElementById("result-email").value;
+  const firstName = (document.getElementById("intake-first") || {}).value || "";
+  const lastName = (document.getElementById("intake-last") || {}).value || "";
+  const businessName =
+    (document.getElementById("intake-business") || {}).value || "";
   const url = buildFullUrl(document.getElementById("audit-url-input").value);
+
+  if (!firstName.trim()) {
+    document.getElementById("intake-first").focus();
+    return;
+  }
+  if (!businessName.trim()) {
+    document.getElementById("intake-business").focus();
+    return;
+  }
   if (!email || !email.includes("@")) {
     document.getElementById("result-email").focus();
     return;
@@ -334,14 +347,19 @@ function submitEmail() {
   const btn = document.querySelector(".email-btn");
   if (btn) {
     btn.disabled = true;
-    btn.textContent = "Building your preview…";
+    btn.textContent = "Building…";
   }
 
-  // Step 1: trigger pipeline immediately (free preview)
   fetch("/api/leads", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, email }),
+    body: JSON.stringify({
+      url,
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      business_name: businessName,
+    }),
   })
     .then((r) => r.json())
     .then(({ job_id }) => {
@@ -350,33 +368,38 @@ function submitEmail() {
         return;
       }
 
-      // Show "building" state
       const confirmEl = document.getElementById("step-confirm");
       if (confirmEl) {
         confirmEl.innerHTML =
-          '<div class="confirm-headline">Building your preview…</div>' +
-          '<p class="confirm-sub">We\'re scraping your site, running AI analysis, and generating a premium redesign. Usually takes 2–3 minutes.</p>' +
-          '<div id="gen-status" style="margin-top:16px;font-size:13px;color:#6b7c6b;">Analyzing your site…</div>';
+          '<div class="confirm-headline">We\'re on it.</div>' +
+          '<p class="confirm-sub">Your preview will appear right here when it\'s ready.</p>' +
+          '<div id="gen-status" style="margin-top:20px;display:flex;gap:6px;justify-content:center;">' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#5c7a5c;animation:ff-pulse 1.2s ease-in-out 0s infinite;"></div>' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#5c7a5c;animation:ff-pulse 1.2s ease-in-out 0.2s infinite;"></div>' +
+          '<div style="width:8px;height:8px;border-radius:50%;background:#5c7a5c;animation:ff-pulse 1.2s ease-in-out 0.4s infinite;"></div>' +
+          "</div>" +
+          "<style>@keyframes ff-pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1)}}</style>";
       }
       show("step-confirm");
 
-      // Step 2: poll until preview is ready
       const poll = setInterval(() => {
         fetch("/api/jobs/" + job_id)
           .then((r) => r.json())
           .then((job) => {
-            const el = document.getElementById("gen-status");
             if (job.status === "done" && job.public_url) {
               clearInterval(poll);
-              // Show preview + claim CTA
               if (confirmEl) {
                 confirmEl.innerHTML =
-                  '<div class="confirm-headline">Your preview is ready.</div>' +
-                  '<p class="confirm-sub">See what your new site looks like — then claim it for $20/mo.</p>' +
-                  '<div style="display:flex;flex-direction:column;gap:12px;margin-top:20px;">' +
+                  '<div class="confirm-headline" style="margin-bottom:12px;">Your new site is ready.</div>' +
+                  '<div style="border:2px solid #5c7a5c;border-radius:8px;overflow:hidden;">' +
+                  '<iframe src="' +
+                  job.public_url +
+                  '" style="width:100%;height:480px;border:none;" loading="lazy"></iframe>' +
+                  "</div>" +
+                  '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">' +
                   '<a href="' +
                   job.public_url +
-                  '" target="_blank" style="display:block;padding:14px;border:1.5px solid #5c7a5c;border-radius:8px;color:#5c7a5c;font-weight:600;font-size:14px;text-decoration:none;text-align:center;">View Preview →</a>' +
+                  '" target="_blank" style="flex:1;min-width:120px;display:block;padding:12px;border:1.5px solid #5c7a5c;border-radius:6px;color:#5c7a5c;font-weight:600;font-size:13px;text-decoration:none;text-align:center;">Full Screen →</a>' +
                   "<button onclick=\"claimSite('" +
                   url +
                   "','" +
@@ -385,11 +408,12 @@ function submitEmail() {
                   job_id +
                   "','" +
                   job.public_url +
-                  '\')" style="padding:14px;background:#5c7a5c;border:none;border-radius:8px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Claim This Site — $20/mo →</button>' +
+                  '\')" style="flex:2;min-width:160px;padding:12px;background:#5c7a5c;border:none;border-radius:6px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;">Claim This Site — $20/mo →</button>' +
                   "</div>";
               }
             } else if (job.status === "failed") {
               clearInterval(poll);
+              const el = document.getElementById("gen-status");
               if (el)
                 el.textContent =
                   "Something went wrong — our team has been notified.";
