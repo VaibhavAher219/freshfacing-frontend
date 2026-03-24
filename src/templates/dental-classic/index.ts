@@ -1,1 +1,0 @@
-export { DentalTemplate } from './DentalTemplate'
