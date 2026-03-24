@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import Script from 'next/script'
+import Script from "next/script";
 
 const bodyHTML = `
 <!-- NAV -->
@@ -42,7 +42,7 @@ const bodyHTML = `
         <label class="url-form-label">See what's wrong with your site — free, instant</label>
         <div class="url-input-row">
           <input class="url-input" id="audit-url-input" type="text" placeholder="yourbusiness.com" autocomplete="off" />
-          <button class="url-btn" id="audit-btn" onclick="runAudit()">Scan My Site &rarr;</button>
+          <button type="button" class="url-btn" id="audit-btn" onclick="runAudit()">Scan My Site &rarr;</button>
         </div>
         <p class="form-note">No sign-up. Results in seconds.</p>
       </div>
@@ -645,7 +645,7 @@ const bodyHTML = `
     <p class="cta-final-sub">Drop your URL. We'll send you a new site in an hour. If you love it, it's $20 a month to keep it. If not, no hard feelings.</p>
     <div class="cta-form">
       <input class="cta-input" id="cta-url" type="text" placeholder="yourbusiness.com" />
-      <button class="cta-submit" onclick="document.getElementById('audit-url-input').value=document.getElementById('cta-url').value;window.scrollTo({top:0,behavior:'smooth'});setTimeout(runAudit,600);">Scan My Site Free &rarr;</button>
+      <button type="button" class="cta-submit" onclick="document.getElementById('audit-url-input').value=document.getElementById('cta-url').value;document.getElementById('audit-form-wrap').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(runAudit,400);">Scan My Site Free &rarr;</button>
     </div>
     <p class="cta-footnote">Instant results. No sign-up. We'll email your new site preview in under an hour.</p>
   </div>
@@ -667,7 +667,7 @@ const bodyHTML = `
 <div class="sticky-mobile-cta" id="sticky-cta">
   <a href="#cta">Get My New Site &rarr;</a>
 </div>
-`
+`;
 
 export default function HomePage() {
   return (
@@ -675,5 +675,5 @@ export default function HomePage() {
       <div dangerouslySetInnerHTML={{ __html: bodyHTML }} />
       <Script src="/js/main.js" strategy="afterInteractive" />
     </>
-  )
+  );
 }
