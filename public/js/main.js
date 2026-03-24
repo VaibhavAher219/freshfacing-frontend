@@ -334,52 +334,31 @@ function submitEmail() {
   const btn = document.querySelector(".email-btn");
   if (btn) {
     btn.disabled = true;
-    btn.textContent = "Generating your site…";
+    btn.textContent = "Redirecting to checkout…";
   }
 
-  fetch("/api/leads", {
+  fetch("/api/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url, email }),
   })
     .then((r) => r.json())
-    .then(({ job_id }) => {
-      if (!job_id) {
-        show("step-confirm");
+    .then(({ checkout_url, error }) => {
+      if (error || !checkout_url) {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = "Get My New Site →";
+        }
         return;
       }
-      const confirmEl = document.getElementById("step-confirm");
-      if (confirmEl) {
-        confirmEl.innerHTML =
-          '<div class="confirm-headline">You\'re on the list.</div>' +
-          "<p class=\"confirm-sub\">We're building your site right now — usually takes 2-3 minutes. We'll email you the link.</p>" +
-          '<div id="gen-status" style="margin-top:12px;font-size:13px;color:#6b7c6b;">Building…</div>';
-      }
-      show("step-confirm");
-
-      // poll for completion
-      const poll = setInterval(() => {
-        fetch("/api/jobs/" + job_id)
-          .then((r) => r.json())
-          .then((job) => {
-            const el = document.getElementById("gen-status");
-            if (job.status === "done" && job.public_url) {
-              clearInterval(poll);
-              if (el)
-                el.innerHTML =
-                  'Done! <a href="' +
-                  job.public_url +
-                  '" target="_blank" style="color:#5c7a5c;font-weight:700;">View your new site →</a>';
-            } else if (job.status === "failed") {
-              clearInterval(poll);
-              if (el)
-                el.textContent =
-                  "Something went wrong — our team has been notified.";
-            }
-          });
-      }, 5000);
+      window.location.href = checkout_url;
     })
-    .catch(() => show("step-confirm"));
+    .catch(() => {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Get My New Site →";
+      }
+    });
 }
 
 function resetAudit() {
