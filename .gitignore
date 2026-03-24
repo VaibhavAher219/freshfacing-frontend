@@ -12,3 +12,4 @@ _static_backup/
 next-env.d.ts
 .vercel/
 Sample Websites/
+.vercel

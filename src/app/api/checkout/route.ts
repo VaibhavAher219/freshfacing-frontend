@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com";
 
   try {
-    const { url, email } = await request.json();
+    const { url, email, job_id, public_url } = await request.json();
     if (!url || !email) {
       return NextResponse.json(
         { error: "url and email required" },
@@ -21,7 +21,12 @@ export async function POST(request: NextRequest) {
       payment_method_types: ["card"],
       customer_email: email,
       line_items: [{ price: PRICE_ID, quantity: 1 }],
-      metadata: { url, email },
+      metadata: {
+        url,
+        email,
+        job_id: job_id || "",
+        public_url: public_url || "",
+      },
       success_url: `${BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${BASE_URL}/`,
     });

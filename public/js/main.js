@@ -334,30 +334,81 @@ function submitEmail() {
   const btn = document.querySelector(".email-btn");
   if (btn) {
     btn.disabled = true;
-    btn.textContent = "Redirecting to checkout…";
+    btn.textContent = "Building your preview…";
   }
 
-  fetch("/api/checkout", {
+  // Step 1: trigger pipeline immediately (free preview)
+  fetch("/api/leads", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ url, email }),
   })
     .then((r) => r.json())
-    .then(({ checkout_url, error }) => {
-      if (error || !checkout_url) {
-        if (btn) {
-          btn.disabled = false;
-          btn.textContent = "Get My New Site →";
-        }
+    .then(({ job_id }) => {
+      if (!job_id) {
+        show("step-confirm");
         return;
       }
-      window.location.href = checkout_url;
-    })
-    .catch(() => {
-      if (btn) {
-        btn.disabled = false;
-        btn.textContent = "Get My New Site →";
+
+      // Show "building" state
+      const confirmEl = document.getElementById("step-confirm");
+      if (confirmEl) {
+        confirmEl.innerHTML =
+          '<div class="confirm-headline">Building your preview…</div>' +
+          '<p class="confirm-sub">We\'re scraping your site, running AI analysis, and generating a premium redesign. Usually takes 2–3 minutes.</p>' +
+          '<div id="gen-status" style="margin-top:16px;font-size:13px;color:#6b7c6b;">Analyzing your site…</div>';
       }
+      show("step-confirm");
+
+      // Step 2: poll until preview is ready
+      const poll = setInterval(() => {
+        fetch("/api/jobs/" + job_id)
+          .then((r) => r.json())
+          .then((job) => {
+            const el = document.getElementById("gen-status");
+            if (job.status === "done" && job.public_url) {
+              clearInterval(poll);
+              // Show preview + claim CTA
+              if (confirmEl) {
+                confirmEl.innerHTML =
+                  '<div class="confirm-headline">Your preview is ready.</div>' +
+                  '<p class="confirm-sub">See what your new site looks like — then claim it for $20/mo.</p>' +
+                  '<div style="display:flex;flex-direction:column;gap:12px;margin-top:20px;">' +
+                  '<a href="' +
+                  job.public_url +
+                  '" target="_blank" style="display:block;padding:14px;border:1.5px solid #5c7a5c;border-radius:8px;color:#5c7a5c;font-weight:600;font-size:14px;text-decoration:none;text-align:center;">View Preview →</a>' +
+                  "<button onclick=\"claimSite('" +
+                  url +
+                  "','" +
+                  email +
+                  "','" +
+                  job_id +
+                  "','" +
+                  job.public_url +
+                  '\')" style="padding:14px;background:#5c7a5c;border:none;border-radius:8px;color:#fff;font-weight:600;font-size:14px;cursor:pointer;">Claim This Site — $20/mo →</button>' +
+                  "</div>";
+              }
+            } else if (job.status === "failed") {
+              clearInterval(poll);
+              if (el)
+                el.textContent =
+                  "Something went wrong — our team has been notified.";
+            }
+          });
+      }, 5000);
+    })
+    .catch(() => show("step-confirm"));
+}
+
+function claimSite(url, email, jobId, publicUrl) {
+  fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url, email, job_id: jobId, public_url: publicUrl }),
+  })
+    .then((r) => r.json())
+    .then(({ checkout_url }) => {
+      if (checkout_url) window.location.href = checkout_url;
     });
 }
 
