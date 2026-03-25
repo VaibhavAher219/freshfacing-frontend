@@ -14,7 +14,9 @@ function sbHeaders() {
 }
 
 export async function GET(request: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim(), {
+    httpClient: Stripe.createNodeHttpClient(),
+  });
 
   try {
     const sessionId = request.nextUrl.searchParams.get("session_id");
