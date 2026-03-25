@@ -13,16 +13,23 @@ function getPriceId(plan: string) {
   return (process.env.STRIPE_PRICE_ID ?? "").trim();
 }
 
-/** Extract slug from a freshfacing.com/slug URL or fallback to hostname */
+/** Extract slug from a freshfacing.com/slug or freshfacing-{slug}.pages.dev URL */
 function slugFromPublicUrl(publicUrl: string): string {
   try {
     const u = new URL(
       publicUrl.startsWith("http") ? publicUrl : "https://" + publicUrl,
     );
+    // freshfacing.com/slug → slug
     const parts = u.pathname.replace(/^\//, "").split("/");
     if (parts[0]) return parts[0];
-    // fallback: derive from hostname of source site
-    return u.hostname.replace("www.", "").replace(/\./g, "-");
+    // freshfacing-{slug}.pages.dev → slug
+    const host = u.hostname;
+    if (host.endsWith(".pages.dev")) {
+      const sub = host.replace(".pages.dev", "");
+      if (sub.startsWith("freshfacing-"))
+        return sub.replace("freshfacing-", "");
+    }
+    return host.replace("www.", "").replace(/\./g, "-");
   } catch {
     return "";
   }
