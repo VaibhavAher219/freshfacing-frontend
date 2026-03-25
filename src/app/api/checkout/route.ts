@@ -11,9 +11,10 @@ function makeStripe() {
 
 export async function GET(request: NextRequest) {
   const stripe = makeStripe();
-  const PRICE_ID = process.env.STRIPE_PRICE_ID!;
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com";
+  const PRICE_ID = (process.env.STRIPE_PRICE_ID ?? "").trim();
+  const BASE_URL = (
+    process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com"
+  ).trim();
 
   const site = request.nextUrl.searchParams.get("site") || "";
 
@@ -40,9 +41,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const stripe = makeStripe();
-  const PRICE_ID = process.env.STRIPE_PRICE_ID!;
-  const BASE_URL =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com";
+  const PRICE_ID = (process.env.STRIPE_PRICE_ID ?? "").trim();
+  const BASE_URL = (
+    process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com"
+  ).trim();
 
   try {
     const { url, email, job_id, public_url } = await request.json();
