@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
         state: "",
         first_name: first_name || "",
         last_name: last_name || "",
+        email,
       }),
     });
     const { job_id } = await railwayRes.json();
