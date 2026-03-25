@@ -3,8 +3,9 @@ freshfacing_sitev1.html
 node_modules/
 .next/
 .env
-.env.local
-.env.production.local
+.env*
+*.env
+freshfacing-all.env
 *.db
 public/media/
 payload-types.ts
