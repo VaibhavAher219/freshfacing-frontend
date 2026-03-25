@@ -23,9 +23,10 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.redirect(session.url!, { status: 303 });
   } catch (error) {
-    console.error("Checkout GET error:", error);
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("Checkout GET error:", msg);
     return NextResponse.json(
-      { error: "Failed to create checkout" },
+      { error: "Failed to create checkout", detail: msg },
       { status: 500 },
     );
   }
@@ -63,9 +64,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ checkout_url: session.url });
   } catch (error) {
-    console.error("Checkout error:", error);
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("Checkout POST error:", msg);
     return NextResponse.json(
-      { error: "Failed to create checkout" },
+      { error: "Failed to create checkout", detail: msg },
       { status: 500 },
     );
   }
