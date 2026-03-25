@@ -533,8 +533,8 @@ const bodyHTML = `
   <div class="pricing-inner">
     <div class="pricing-header">
       <div class="section-eyebrow">Honest pricing</div>
-      <h2 class="section-title">Less than your lunch.</h2>
-      <p class="section-sub">Looking is always free. You only pay if you want to keep it.</p>
+      <h2 class="section-title">One flat fee. We handle everything.</h2>
+      <p class="section-sub">No setup fee. No surprise bills. Looking at your new site is always free — you only pay when you're ready to go live.</p>
     </div>
 
     <div class="plans-row">
@@ -545,34 +545,55 @@ const bodyHTML = `
         <div class="plan-per">per month — cancel anytime</div>
         <div class="plan-save">&nbsp;</div>
         <ul class="plan-features">
-          <li>Hosting included — we handle it</li>
-          <li>Use your own domain</li>
-          <li>SSL + mobile-optimized</li>
-          <li>1 content update/month</li>
-          <li>Google Business sync</li>
-          <li>We handle all maintenance</li>
+          <li><strong>Custom website</strong> built from your existing site</li>
+          <li><strong>Hosting included</strong> — fast, reliable, we handle it</li>
+          <li><strong>Your own domain</strong> connected (or we help you get one)</li>
+          <li><strong>SSL certificate</strong> — secure by default</li>
+          <li><strong>Mobile-optimized</strong> — looks great on every device</li>
+          <li><strong>1 content update/month</strong> — hours, staff, specials, anything</li>
+          <li><strong>All maintenance</strong> — zero tech headaches for you</li>
         </ul>
-        <a href="/scan" class="plan-btn primary">Get My Site &rarr;</a>
+        <a href="/scan" class="plan-btn primary">See My New Site Free &rarr;</a>
+        <p style="text-align:center;font-size:0.72rem;color:var(--mid);margin-top:0.75rem;">No credit card to preview. Pay only to go live.</p>
       </div>
 
       <div class="plan">
+        <div class="plan-badge" style="background:var(--amber);color:#fff;">Save $41</div>
         <div class="plan-name">Annual</div>
         <div class="plan-price"><sup>$</sup>199</div>
-        <div class="plan-per">per year — best value</div>
-        <div class="plan-save">Save $41 vs monthly — that's 2 months free</div>
+        <div class="plan-per">per year — 2 months free</div>
+        <div class="plan-save">$16.58/mo billed once a year</div>
         <ul class="plan-features">
-          <li>Hosting included — we handle it</li>
-          <li>Use your own domain</li>
-          <li>Everything in Monthly</li>
-          <li>Priority updates</li>
-          <li>Annual design refresh</li>
-          <li>SEO health report included</li>
+          <li><strong>Everything in Monthly</strong></li>
+          <li><strong>Priority updates</strong> — moved to front of queue</li>
+          <li><strong>Annual design refresh</strong> — we modernize your site each year</li>
+          <li><strong>SEO health report</strong> — what's ranking, what's not</li>
+          <li><strong>Google Business Profile sync</strong> — hours, photos, reviews</li>
+          <li><strong>Dedicated support</strong> — email us, we actually reply</li>
         </ul>
-        <a href="/scan" class="plan-btn ghost">Get My Site &rarr;</a>
+        <a href="/scan" class="plan-btn ghost">See My New Site Free &rarr;</a>
+        <p style="text-align:center;font-size:0.72rem;color:var(--mid);margin-top:0.75rem;">No credit card to preview. Pay only to go live.</p>
       </div>
     </div>
 
-    <p class="pricing-note">No contracts. Cancel anytime. Looking at your new site is always free — no credit card needed.</p>
+    <div style="display:flex;justify-content:center;gap:2rem;margin-top:2rem;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--mid);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="var(--sage)" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        No setup fee
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--mid);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="var(--sage)" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Cancel anytime
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--mid);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="var(--sage)" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        No contracts
+      </div>
+      <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.82rem;color:var(--mid);">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7.5" stroke="var(--sage)" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="var(--sage)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Free preview — no card needed
+      </div>
+    </div>
   </div>
 </section>
 
@@ -589,16 +610,30 @@ const bodyHTML = `
     <div id="claim-plans" style="display:none;margin-top:2.5rem;">
       <p style="font-size:0.9rem;color:rgba(250,247,242,0.7);margin-bottom:1.5rem;text-align:center;">Choose your plan to go live:</p>
       <div class="claim-plans-row">
-        <a href="#" class="claim-plan-card" onclick="event.preventDefault();">
+        <a href="#" class="claim-plan-card" onclick="event.preventDefault();startCheckoutWithUrl('monthly');">
           <div class="claim-plan-name">Monthly</div>
           <div class="claim-plan-price">$20<span>/mo</span></div>
           <div class="claim-plan-note">Cancel anytime</div>
+          <ul style="font-size:0.75rem;color:var(--mid);margin:0.75rem 0 0;padding-left:1rem;text-align:left;line-height:1.7;">
+            <li>Custom site + hosting</li>
+            <li>Your own domain</li>
+            <li>SSL + mobile-ready</li>
+            <li>1 update/month</li>
+            <li>All maintenance included</li>
+          </ul>
         </a>
-        <a href="#" class="claim-plan-card featured" onclick="event.preventDefault();">
-          <div class="claim-plan-best">Best Value</div>
+        <a href="#" class="claim-plan-card featured" onclick="event.preventDefault();startCheckoutWithUrl('annual');">
+          <div class="claim-plan-best">Best Value — Save $41</div>
           <div class="claim-plan-name">Annual</div>
           <div class="claim-plan-price">$199<span>/yr</span></div>
-          <div class="claim-plan-note">2 months free</div>
+          <div class="claim-plan-note">$16.58/mo — 2 months free</div>
+          <ul style="font-size:0.75rem;color:var(--mid);margin:0.75rem 0 0;padding-left:1rem;text-align:left;line-height:1.7;">
+            <li>Everything in Monthly</li>
+            <li>Priority updates</li>
+            <li>Annual design refresh</li>
+            <li>SEO health report</li>
+            <li>Google Business sync</li>
+          </ul>
         </a>
       </div>
     </div>

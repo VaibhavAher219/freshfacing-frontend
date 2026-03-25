@@ -408,7 +408,16 @@ function submitEmail() {
                   job_id +
                   "','" +
                   job.public_url +
-                  '\')" style="flex:2;min-width:160px;padding:12px;background:#5c7a5c;border:none;border-radius:6px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;">Claim This Site — $20/mo →</button>' +
+                  "','monthly')\" style=\"flex:2;min-width:140px;padding:12px;background:#5c7a5c;border:none;border-radius:6px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;\">Claim — $20/mo →</button>" +
+                  "<button onclick=\"claimSite('" +
+                  url +
+                  "','" +
+                  email +
+                  "','" +
+                  job_id +
+                  "','" +
+                  job.public_url +
+                  "','annual')\" style=\"flex:2;min-width:140px;padding:12px;background:#e8a830;border:none;border-radius:6px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;\">Claim — $199/yr (save $41) →</button>" +
                   "</div>";
               }
             } else if (job.status === "failed") {
@@ -424,16 +433,33 @@ function submitEmail() {
     .catch(() => show("step-confirm"));
 }
 
-function claimSite(url, email, jobId, publicUrl) {
+function claimSite(url, email, jobId, publicUrl, plan) {
   fetch("/api/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, email, job_id: jobId, public_url: publicUrl }),
+    body: JSON.stringify({
+      url,
+      email,
+      job_id: jobId,
+      public_url: publicUrl,
+      plan: plan || "monthly",
+    }),
   })
     .then((r) => r.json())
     .then(({ checkout_url }) => {
       if (checkout_url) window.location.href = checkout_url;
     });
+}
+
+function startCheckoutWithUrl(plan) {
+  const rawUrl = document.getElementById("claim-url").value.trim();
+  if (!rawUrl) {
+    document.getElementById("claim-url").focus();
+    return;
+  }
+  const url = rawUrl.startsWith("http") ? rawUrl : "https://" + rawUrl;
+  window.location.href =
+    "/api/checkout?site=" + encodeURIComponent(url) + "&plan=" + plan;
 }
 
 function resetAudit() {

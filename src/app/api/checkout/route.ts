@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-// GET /api/checkout?site=<cloudflare_url>
+// GET /api/checkout?site=<cloudflare_url>&plan=monthly|annual
 // Used by "Get Started" buttons on generated sites — no email needed, Stripe collects it
 function makeStripe() {
   return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim(), {
@@ -9,21 +9,29 @@ function makeStripe() {
   });
 }
 
+function getPriceId(plan: string) {
+  if (plan === "annual") {
+    return (process.env.STRIPE_ANNUAL_PRICE_ID ?? "").trim();
+  }
+  return (process.env.STRIPE_PRICE_ID ?? "").trim();
+}
+
 export async function GET(request: NextRequest) {
   const stripe = makeStripe();
-  const PRICE_ID = (process.env.STRIPE_PRICE_ID ?? "").trim();
   const BASE_URL = (
     process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com"
   ).trim();
 
   const site = request.nextUrl.searchParams.get("site") || "";
+  const plan = request.nextUrl.searchParams.get("plan") || "monthly";
+  const PRICE_ID = getPriceId(plan);
 
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: PRICE_ID, quantity: 1 }],
-      metadata: { public_url: site },
+      metadata: { public_url: site, plan },
       success_url: `${BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: site || `${BASE_URL}/`,
     });
@@ -41,19 +49,20 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const stripe = makeStripe();
-  const PRICE_ID = (process.env.STRIPE_PRICE_ID ?? "").trim();
   const BASE_URL = (
     process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com"
   ).trim();
 
   try {
-    const { url, email, job_id, public_url } = await request.json();
+    const { url, email, job_id, public_url, plan } = await request.json();
     if (!url || !email) {
       return NextResponse.json(
         { error: "url and email required" },
         { status: 400 },
       );
     }
+
+    const PRICE_ID = getPriceId(plan || "monthly");
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -65,6 +74,7 @@ export async function POST(request: NextRequest) {
         email,
         job_id: job_id || "",
         public_url: public_url || "",
+        plan: plan || "monthly",
       },
       success_url: `${BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${BASE_URL}/`,
