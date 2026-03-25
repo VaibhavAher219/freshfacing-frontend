@@ -3,8 +3,14 @@ import Stripe from "stripe";
 
 // GET /api/checkout?site=<cloudflare_url>
 // Used by "Get Started" buttons on generated sites — no email needed, Stripe collects it
+function makeStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    httpClient: Stripe.createNodeHttpClient(),
+  });
+}
+
 export async function GET(request: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = makeStripe();
   const PRICE_ID = process.env.STRIPE_PRICE_ID!;
   const BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com";
@@ -33,7 +39,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const stripe = makeStripe();
   const PRICE_ID = process.env.STRIPE_PRICE_ID!;
   const BASE_URL =
     process.env.NEXT_PUBLIC_BASE_URL || "https://freshfacing.com";
