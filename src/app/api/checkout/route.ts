@@ -4,7 +4,7 @@ import Stripe from "stripe";
 // GET /api/checkout?site=<cloudflare_url>
 // Used by "Get Started" buttons on generated sites — no email needed, Stripe collects it
 function makeStripe() {
-  return new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim(), {
     httpClient: Stripe.createNodeHttpClient(),
   });
 }
