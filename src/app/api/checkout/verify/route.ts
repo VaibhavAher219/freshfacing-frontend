@@ -35,20 +35,11 @@ export async function GET(request: NextRequest) {
 
     const job_id = session.metadata?.job_id;
     const public_url = session.metadata?.public_url;
+    const slug = session.metadata?.slug || "";
+    const email =
+      session.metadata?.email || session.customer_details?.email || "";
 
-    // mark lead as paid in Supabase
-    if (SUPABASE_KEY && job_id) {
-      fetch(`${SUPABASE_URL}/rest/v1/leads?job_id=eq.${job_id}`, {
-        method: "PATCH",
-        headers: sbHeaders(),
-        body: JSON.stringify({
-          stripe_session_id: sessionId,
-          paid_at: new Date().toISOString(),
-        }),
-      }).catch(() => {});
-    }
-
-    return NextResponse.json({ job_id, public_url });
+    return NextResponse.json({ job_id, public_url, slug, email });
   } catch (error) {
     console.error("Verify error:", error);
     return NextResponse.json({ error: "Failed to verify" }, { status: 500 });
