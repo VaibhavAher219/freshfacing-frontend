@@ -190,6 +190,23 @@ function ScanFlow() {
   const [lastName, setLastName] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [email, setEmail] = useState("");
+  const [prefilling, setPrefilling] = useState(false);
+
+  async function prefillBusinessName(raw: string) {
+    if (!raw.trim() || businessName.trim()) return;
+    setPrefilling(true);
+    try {
+      const res = await fetch(
+        `/api/prefill?url=${encodeURIComponent(raw.trim())}`,
+      );
+      const data = await res.json();
+      if (data.name && !businessName.trim()) setBusinessName(data.name);
+    } catch {
+      /* ignore */
+    } finally {
+      setPrefilling(false);
+    }
+  }
 
   const [jobId, setJobId] = useState("");
   const [publicUrl, setPublicUrl] = useState("");
@@ -445,6 +462,7 @@ function ScanFlow() {
                   type="text"
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
+                  onBlur={(e) => prefillBusinessName(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && runScan()}
                   placeholder="yourbusiness.com"
                   autoFocus
@@ -698,7 +716,9 @@ function ScanFlow() {
                 <input
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
-                  placeholder="Business name"
+                  placeholder={
+                    prefilling ? "Fetching business name…" : "Business name"
+                  }
                   style={{
                     width: "100%",
                     background: "#111",
