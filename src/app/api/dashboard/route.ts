@@ -158,12 +158,21 @@ export async function GET() {
     }),
   );
 
-  return NextResponse.json({
-    leads,
-    stripe: {
-      active,
-      totalRevenue: totalRevenue / 100,
-      subscriptions: stripeRows,
+  return NextResponse.json(
+    {
+      leads,
+      stripe: {
+        active,
+        totalRevenue: totalRevenue / 100,
+        subscriptions: stripeRows,
+      },
     },
-  });
+    {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "CDN-Cache-Control": "no-store",
+        "Cloudflare-CDN-Cache-Control": "no-store",
+      },
+    },
+  );
 }
