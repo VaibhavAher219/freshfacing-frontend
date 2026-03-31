@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -23,7 +26,7 @@ export async function GET() {
   // Fetch leads from Supabase
   const leadsRes = await fetch(
     `${SUPABASE_URL}/rest/v1/leads?select=*&order=created_at.desc&limit=200`,
-    { headers: sbHeaders() },
+    { headers: sbHeaders(), cache: "no-store" },
   );
   const rawLeads = leadsRes.ok ? await leadsRes.json() : [];
 

@@ -33,9 +33,14 @@ type DashData = {
 };
 
 const STATUS_COLOR: Record<string, string> = {
+  // pipeline statuses
+  site_built: "#2d6a4f",
+  converted: "#1a5c8a",
+  new: "#b07d00",
   done: "#2d6a4f",
   running: "#b07d00",
   failed: "#c0392b",
+  // stripe statuses
   active: "#2d6a4f",
   canceled: "#888",
   past_due: "#c0392b",
@@ -145,7 +150,9 @@ export default function Dashboard() {
               { label: "Total Leads", value: data.leads.length },
               {
                 label: "Sites Generated",
-                value: data.leads.filter((l) => l.status === "done").length,
+                value: data.leads.filter((l) =>
+                  ["site_built", "converted", "done"].includes(l.status),
+                ).length,
               },
               { label: "Active Subscriptions", value: data.stripe.active },
               {
