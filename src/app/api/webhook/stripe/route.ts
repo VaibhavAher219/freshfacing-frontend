@@ -4,6 +4,7 @@ import Stripe from "stripe";
 const RAILWAY_URL =
   process.env.RAILWAY_URL ||
   "https://freshfacing-pipeline-production.up.railway.app";
+const FULFILL_SECRET = process.env.FULFILL_SECRET || "";
 
 function makeStripe() {
   return new Stripe((process.env.STRIPE_SECRET_KEY ?? "").trim(), {
@@ -45,7 +46,10 @@ export async function POST(request: NextRequest) {
     // Fire-and-forget — Railway handles watermark removal + email
     fetch(`${RAILWAY_URL}/fulfill-payment`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(FULFILL_SECRET ? { "X-Fulfill-Secret": FULFILL_SECRET } : {}),
+      },
       body: JSON.stringify({ slug, email, public_url, session_id }),
     }).catch((e) => console.error("[webhook] fulfill call failed:", e));
   }
