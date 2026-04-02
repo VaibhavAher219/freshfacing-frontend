@@ -150,9 +150,7 @@ export default function Dashboard() {
               { label: "Total Leads", value: data.leads.length },
               {
                 label: "Sites Generated",
-                value: data.leads.filter((l) =>
-                  ["site_built", "converted", "done"].includes(l.status),
-                ).length,
+                value: data.leads.filter((l) => !!l.public_url).length,
               },
               { label: "Active Subscriptions", value: data.stripe.active },
               {
