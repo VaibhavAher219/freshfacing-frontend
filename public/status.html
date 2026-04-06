@@ -1,0 +1,3792 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>FreshFacing — Status & Roadmap</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --bg: #ffffff;
+        --s1: #f7f7f7;
+        --s2: #f0f0f0;
+        --s3: #e8e8e8;
+        --border: #e5e5e5;
+        --border2: #d0d0d0;
+        --green: #16a34a;
+        --green-light: #dcfce7;
+        --green-border: #bbf7d0;
+        --blue: #4f46e5;
+        --blue-light: #ede9fe;
+        --blue-border: #c4b5fd;
+        --orange: #ea580c;
+        --orange-light: #fff7ed;
+        --orange-border: #fed7aa;
+        --red: #dc2626;
+        --red-light: #fef2f2;
+        --yellow: #ca8a04;
+        --yellow-light: #fefce8;
+        --text: #111111;
+        --text2: #444444;
+        --text3: #888888;
+        --font: "Inter", sans-serif;
+        --mono: "JetBrains Mono", monospace;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--font);
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* NAV */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 52px;
+        gap: 16px;
+      }
+      .nav-logo {
+        font-size: 15px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        white-space: nowrap;
+      }
+      .nav-logo span {
+        color: var(--green);
+      }
+      .nav-links {
+        display: flex;
+        gap: 20px;
+      }
+      .nav-links a {
+        color: var(--text3);
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.15s;
+        white-space: nowrap;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .live-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--green);
+        background: var(--green-light);
+        border: 1px solid var(--green-border);
+        padding: 4px 10px;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
+      .live-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+        animation: blink 2s infinite;
+        flex-shrink: 0;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.3;
+        }
+      }
+
+      /* HERO */
+      .hero {
+        padding: 60px 0 48px;
+        border-bottom: 1px solid var(--border);
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 16px;
+      }
+      .eyebrow::before {
+        content: "";
+        display: block;
+        width: 20px;
+        height: 1px;
+        background: var(--green);
+      }
+      .hero h1 {
+        font-size: 44px;
+        font-weight: 900;
+        letter-spacing: -2px;
+        line-height: 1.05;
+        margin-bottom: 14px;
+      }
+      .hero h1 .dim {
+        color: var(--text3);
+      }
+      .hero h1 .hi {
+        color: var(--green);
+      }
+      .hero-sub {
+        font-size: 16px;
+        color: var(--text2);
+        max-width: 580px;
+        line-height: 1.7;
+        margin-bottom: 24px;
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 11px;
+        color: var(--text2);
+        font-family: var(--mono);
+      }
+      .hero-meta span {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        padding: 3px 10px;
+        border-radius: 100px;
+      }
+
+      /* STATS */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 28px 0;
+      }
+      .stat {
+        background: var(--bg);
+        padding: 20px 16px;
+      }
+      .stat-n {
+        font-size: 30px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        line-height: 1;
+      }
+      .g {
+        color: var(--green);
+      }
+      .b {
+        color: var(--blue);
+      }
+      .o {
+        color: var(--orange);
+      }
+      .y {
+        color: var(--yellow);
+      }
+      .r {
+        color: var(--red);
+      }
+      .stat-l {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--text3);
+        margin-top: 4px;
+      }
+      .stat-s {
+        font-size: 11px;
+        color: var(--text3);
+        margin-top: 2px;
+      }
+
+      /* SECTION */
+      .section {
+        padding: 52px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .sh {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+      .sh-num {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text3);
+        white-space: nowrap;
+        font-family: var(--mono);
+      }
+      .sh-title {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        white-space: nowrap;
+      }
+      .sh-line {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+        min-width: 20px;
+      }
+
+      /* PIPELINE */
+      .pipe-scroll {
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      .pipe-scroll::-webkit-scrollbar {
+        height: 3px;
+      }
+      .pipe-scroll::-webkit-scrollbar-thumb {
+        background: var(--border2);
+        border-radius: 2px;
+      }
+      .pipeline {
+        display: flex;
+        align-items: stretch;
+        min-width: max-content;
+      }
+      .ps {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        padding: 13px 15px;
+        min-width: 140px;
+      }
+      .ps:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      .ps:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+      .ps-n {
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--text3);
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .ps-name {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 3px;
+      }
+      .ps-tool {
+        font-size: 11px;
+        font-weight: 500;
+      }
+      .ps-tool.g {
+        color: var(--green);
+      }
+      .ps-tool.b {
+        color: var(--blue);
+      }
+      .ps-tool.o {
+        color: var(--orange);
+      }
+      .pa {
+        display: flex;
+        align-items: center;
+        color: var(--border2);
+        font-size: 18px;
+        padding: 0 2px;
+        margin: 0 -1px;
+        z-index: 1;
+        background: var(--bg);
+      }
+      .sub-steps {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .ss {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px;
+      }
+      .ss-n {
+        font-size: 9px;
+        font-family: var(--mono);
+        color: var(--text3);
+        margin-bottom: 3px;
+        text-transform: uppercase;
+      }
+      .ss-name {
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .ss-role {
+        font-size: 11px;
+        color: var(--text3);
+      }
+
+      /* EMAIL PREVIEW */
+      .email-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        align-items: start;
+      }
+      .email-mock {
+        background: #1a1a2e;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+      .email-mock-bar {
+        background: #2a2a3e;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .email-mock-dots {
+        display: flex;
+        gap: 5px;
+      }
+      .email-mock-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: block;
+      }
+      .email-mock-dots span:nth-child(1) {
+        background: #ff5f57;
+      }
+      .email-mock-dots span:nth-child(2) {
+        background: #ffbd2e;
+      }
+      .email-mock-dots span:nth-child(3) {
+        background: #28c840;
+      }
+      .email-mock-subject {
+        font-size: 11px;
+        color: #888;
+        font-family: var(--mono);
+        margin-left: 8px;
+      }
+      .email-mock-body {
+        background: #1e1e2e;
+        padding: 24px;
+      }
+      .email-mock-label {
+        font-size: 10px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 4px;
+        font-family: var(--mono);
+      }
+      .email-mock-field {
+        font-size: 12px;
+        color: #aaa;
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #2a2a3e;
+      }
+      .email-text {
+        font-size: 13px;
+        color: #ddd;
+        line-height: 1.75;
+        margin-bottom: 16px;
+      }
+      .email-text strong {
+        color: #fff;
+      }
+      .email-img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #333;
+        display: block;
+        margin: 12px 0;
+      }
+      .email-copy-box {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 24px;
+      }
+      .email-copy-label {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 16px;
+      }
+      .email-subject {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border);
+        color: var(--text);
+      }
+      .email-body-text {
+        font-size: 13px;
+        color: var(--text2);
+        line-height: 1.8;
+      }
+      .email-body-text strong {
+        color: var(--text);
+      }
+      .email-var {
+        display: inline-block;
+        background: var(--blue-light);
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 600;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-family: var(--mono);
+      }
+      .email-img-placeholder {
+        background: var(--s2);
+        border: 2px dashed var(--border2);
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        margin: 12px 0;
+        font-size: 12px;
+        color: var(--text3);
+      }
+
+      /* FEATURES */
+      .feats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .feat {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 18px;
+        transition: box-shadow 0.2s;
+      }
+      .feat:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      }
+      .feat-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        gap: 8px;
+      }
+      .feat-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+      .fi-g {
+        background: var(--green-light);
+      }
+      .fi-b {
+        background: var(--blue-light);
+      }
+      .fi-o {
+        background: var(--orange-light);
+      }
+      .fi-y {
+        background: var(--yellow-light);
+      }
+      .badge {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        padding: 2px 7px;
+        border-radius: 100px;
+        white-space: nowrap;
+      }
+      .bd-done {
+        color: var(--green);
+        background: var(--green-light);
+        border: 1px solid var(--green-border);
+      }
+      .bd-pause {
+        color: var(--blue);
+        background: var(--blue-light);
+        border: 1px solid var(--blue-border);
+      }
+      .feat-name {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .feat-desc {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.65;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 10px;
+      }
+      .chip {
+        font-size: 10px;
+        font-weight: 500;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text3);
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-family: var(--mono);
+      }
+
+      /* TIMELINE */
+      .tl {
+        position: relative;
+        padding-left: 40px;
+      }
+      .tl::before {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 8px;
+        bottom: 8px;
+        width: 1px;
+        background: var(--border);
+      }
+      .tli {
+        position: relative;
+        padding-bottom: 36px;
+      }
+      .tli:last-child {
+        padding-bottom: 0;
+      }
+      .tl-dot {
+        position: absolute;
+        left: -33px;
+        top: 4px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: 2px solid var(--bg);
+      }
+      .dot-done {
+        background: var(--green);
+      }
+      .dot-today {
+        background: var(--blue);
+        box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+      }
+      .dot-future {
+        background: var(--s3);
+        border-color: var(--border2);
+      }
+      .dot-goal {
+        background: var(--orange);
+      }
+      .tl-date {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text3);
+        margin-bottom: 4px;
+      }
+      .tl-title {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+      .tl-today-title {
+        color: var(--blue);
+      }
+      .tl-future-title {
+        color: var(--text2);
+      }
+      .tl-body {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.7;
+        max-width: 680px;
+      }
+      .tl-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+      }
+      .tt {
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .tt-g {
+        color: var(--green);
+        background: var(--green-light);
+      }
+      .tt-b {
+        color: var(--blue);
+        background: var(--blue-light);
+      }
+      .tt-o {
+        color: var(--orange);
+        background: var(--orange-light);
+      }
+      .tt-y {
+        color: var(--yellow);
+        background: var(--yellow-light);
+      }
+
+      /* OPEN ITEMS */
+      .open-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .oi {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px 18px;
+        display: flex;
+        gap: 12px;
+      }
+      .oi.crit {
+        border-left: 3px solid var(--red);
+      }
+      .oi.warn {
+        border-left: 3px solid var(--orange);
+      }
+      .oi.low {
+        border-left: 3px solid var(--border2);
+      }
+      .oi-num {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--text3);
+        flex-shrink: 0;
+        padding-top: 1px;
+        min-width: 18px;
+      }
+      .oi-title {
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .oi-body {
+        font-size: 12px;
+        color: var(--text2);
+        line-height: 1.6;
+      }
+      .oi-fix {
+        font-size: 11px;
+        font-family: var(--mono);
+        color: var(--green);
+        margin-top: 8px;
+        padding: 5px 8px;
+        background: var(--green-light);
+        border-radius: 4px;
+      }
+
+      /* GOALS */
+      .goals {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .goal {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+      .goal::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+      }
+      .g1::before {
+        background: var(--green);
+      }
+      .g2::before {
+        background: var(--blue);
+      }
+      .g3::before {
+        background: var(--orange);
+      }
+      .goal-when {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+      }
+      .goal-mrr {
+        font-size: 28px;
+        font-weight: 900;
+        letter-spacing: -1px;
+        margin-bottom: 2px;
+      }
+      .goal-sub {
+        font-size: 12px;
+        color: var(--text2);
+        margin-bottom: 14px;
+      }
+      .gl {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .gl li {
+        font-size: 12px;
+        color: var(--text2);
+        display: flex;
+        align-items: baseline;
+        gap: 7px;
+      }
+      .gl li::before {
+        content: "→";
+        color: var(--text3);
+        font-size: 10px;
+        flex-shrink: 0;
+      }
+
+      /* STACK */
+      .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .sg {
+        background: var(--s1);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px;
+      }
+      .sg-cat {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 12px;
+      }
+      .sg-items {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+      }
+      .sg-name {
+        font-size: 12px;
+        font-weight: 600;
+      }
+      .sg-role {
+        font-size: 11px;
+        color: var(--text3);
+      }
+
+      /* ENDPOINTS */
+      .ep-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .ep-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text3);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .ep-tag {
+        background: var(--s2);
+        border: 1px solid var(--border);
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-family: var(--mono);
+        text-transform: none;
+        letter-spacing: 0;
+        font-size: 11px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th {
+        text-align: left;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text3);
+        border-bottom: 1px solid var(--border);
+        padding: 8px 10px;
+      }
+      td {
+        font-size: 12px;
+        padding: 9px 10px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+      tr:last-child td {
+        border-bottom: none;
+      }
+      tr:hover td {
+        background: var(--s1);
+      }
+      .m {
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 3px;
+      }
+      .m-post {
+        color: var(--green);
+        background: var(--green-light);
+      }
+      .m-get {
+        color: var(--blue);
+        background: var(--blue-light);
+      }
+      .ep {
+        font-family: var(--mono);
+        font-size: 11px;
+      }
+      .ed {
+        color: var(--text2);
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 28px 0;
+      }
+      .fi {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .fl {
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .fl span {
+        color: var(--green);
+      }
+      .fr {
+        font-size: 11px;
+        color: var(--text3);
+        font-family: var(--mono);
+      }
+
+      /* MOBILE */
+      @media (max-width: 900px) {
+        .stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .feats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .stack-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .goals {
+          grid-template-columns: 1fr;
+        }
+        .open-grid {
+          grid-template-columns: 1fr;
+        }
+        .ep-wrap {
+          grid-template-columns: 1fr;
+        }
+        .hero h1 {
+          font-size: 34px;
+        }
+        .sub-steps {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .email-section {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 640px) {
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .feats {
+          grid-template-columns: 1fr;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero h1 {
+          font-size: 28px;
+          letter-spacing: -1px;
+        }
+        .hero-sub {
+          font-size: 14px;
+        }
+        .sub-steps {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .tl {
+          padding-left: 32px;
+        }
+        .stack-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .sh-title {
+          font-size: 17px;
+        }
+      }
+      @media (max-width: 400px) {
+        .stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .stack-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="wrap">
+        <div class="nav-inner">
+          <div class="nav-logo">Fresh<span>Facing</span></div>
+          <div class="nav-links">
+            <a href="#agent">OpenClaw</a>
+            <a href="#pipeline">Pipeline</a>
+            <a href="#email">Email</a>
+            <a href="#shipped">Shipped</a>
+            <a href="#timeline">Timeline</a>
+            <a href="#open">Issues</a>
+            <a href="#roadmap">Roadmap</a>
+            <a href="#costs">Costs</a>
+          </div>
+          <div class="live-badge"><span class="live-dot"></span>Live</div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <div class="hero">
+        <div class="eyebrow">Internal Status — April 3, 2026</div>
+        <h1>
+          <span class="dim">Where we are with</span><br /><span class="hi"
+            >FreshFacing</span
+          >
+        </h1>
+        <p class="hero-sub">
+          A background agent runs 24/7, scans local businesses, scores their
+          websites, and fires hot leads into a fully automated pipeline. Site
+          gets built, screenshot taken, email sent. Zero human involvement from
+          lead discovery to inbox.
+        </p>
+        <div class="hero-meta">
+          <span>OpenClaw agent running 24/7</span>
+          <span>1,362 hot leads identified</span>
+          <span>19 emailed so far</span>
+          <span>16+ sites live</span>
+          <span>Campaign ready to launch</span>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-n g">1,362</div>
+          <div class="stat-l">Hot Leads</div>
+          <div class="stat-s">Score ≤40 · OpenClaw</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n b">2,643</div>
+          <div class="stat-l">Scanned</div>
+          <div class="stat-s">1,915 analyzed (72%)</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n o">16+</div>
+          <div class="stat-l">Sites Live</div>
+          <div class="stat-s">Cloudflare Pages</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n y">19</div>
+          <div class="stat-l">In Campaign</div>
+          <div class="stat-s">Ready to activate</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n r">$0</div>
+          <div class="stat-l">MRR</div>
+          <div class="stat-s">Campaign not live yet</div>
+        </div>
+      </div>
+
+      <!-- OPENCLAW AGENT -->
+      <div class="section" id="agent">
+        <div class="sh">
+          <div class="sh-num">01</div>
+          <div class="sh-title">OpenClaw — Autonomous Lead Agent</div>
+          <div class="sh-line"></div>
+        </div>
+        <div
+          style="
+            background: var(--green-light);
+            border: 1px solid var(--green-border);
+            border-radius: 12px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin-bottom: 14px;
+            "
+          >
+            <div
+              style="
+                width: 10px;
+                height: 10px;
+                background: var(--green);
+                border-radius: 50%;
+                animation: blink 2s infinite;
+                flex-shrink: 0;
+              "
+            ></div>
+            <div
+              style="
+                font-size: 13px;
+                font-weight: 800;
+                color: var(--green);
+                letter-spacing: -0.2px;
+              "
+            >
+              Background agent running 24/7. No humans involved.
+            </div>
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: var(--text2);
+              line-height: 1.75;
+              max-width: 820px;
+            "
+          >
+            OpenClaw continuously scrapes Google Maps and local business
+            directories, visits each website, and scores it 0-100 on quality.
+            Businesses with broken sites, missing sites, or score ≤40 get
+            flagged as hot leads and automatically fired into the FreshFacing
+            pipeline. The pipeline builds a custom site, takes a screenshot,
+            adds the owner to Instantly, and sends a personalized email with
+            their redesign inline. The business owner gets an email that looks
+            hand-crafted. We never touched anything.
+          </div>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(5, 1fr);
+              gap: 8px;
+              margin-top: 20px;
+            "
+          >
+            <div
+              style="
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 14px 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 22px;
+                  font-weight: 900;
+                  color: var(--green);
+                  letter-spacing: -1px;
+                "
+              >
+                2,643
+              </div>
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                  color: var(--text3);
+                  margin-top: 3px;
+                "
+              >
+                Businesses
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text3); margin-top: 2px"
+              >
+                Total in dataset
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 14px 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 22px;
+                  font-weight: 900;
+                  color: var(--blue);
+                  letter-spacing: -1px;
+                "
+              >
+                1,915
+              </div>
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                  color: var(--text3);
+                  margin-top: 3px;
+                "
+              >
+                Analyzed
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text3); margin-top: 2px"
+              >
+                72.5% complete
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 14px 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 22px;
+                  font-weight: 900;
+                  color: var(--red);
+                  letter-spacing: -1px;
+                "
+              >
+                1,340
+              </div>
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                  color: var(--text3);
+                  margin-top: 3px;
+                "
+              >
+                Score 0
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text3); margin-top: 2px"
+              >
+                No site / broken
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 14px 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 22px;
+                  font-weight: 900;
+                  color: var(--orange);
+                  letter-spacing: -1px;
+                "
+              >
+                22
+              </div>
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                  color: var(--text3);
+                  margin-top: 3px;
+                "
+              >
+                Score 1-40
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text3); margin-top: 2px"
+              >
+                Fixable poor sites
+              </div>
+            </div>
+            <div
+              style="
+                background: var(--bg);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                padding: 14px 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 22px;
+                  font-weight: 900;
+                  color: var(--green);
+                  letter-spacing: -1px;
+                  font-size: 18px;
+                "
+              >
+                84.6%
+              </div>
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  letter-spacing: 0.8px;
+                  color: var(--text3);
+                  margin-top: 3px;
+                "
+              >
+                Hot Lead Rate
+              </div>
+              <div
+                style="font-size: 11px; color: var(--text3); margin-top: 2px"
+              >
+                Of analyzed biz
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 24px;
+          "
+        >
+          <div
+            style="
+              font-size: 10px;
+              font-weight: 700;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+              color: var(--text3);
+              margin-bottom: 16px;
+            "
+          >
+            How the autonomous loop works
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0">
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                padding-bottom: 16px;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                1
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  OpenClaw discovers businesses
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Scrapes Google Maps, Yelp, and directories for local
+                  businesses in target categories. Dental, legal, medical,
+                  restaurants, real estate. Stores URL + contact data.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                2
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  Agent scores each website 0-100
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Visits every URL. Checks for broken DNS, missing site, no
+                  HTTPS, poor mobile, outdated design. Outputs a quality score.
+                  83% of scanned businesses score 0 (no site or error).
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                3
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  Hot leads fired into pipeline
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Score ≤40 triggers automatic webhook to Railway. Pipeline
+                  queues the job, scrapes their existing site (if any), runs
+                  Gemini 10-step analysis, and generates a full replacement in
+                  Claude Opus 4.6.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                4
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  Site built and deployed
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Custom HTML site ships to Cloudflare Pages at
+                  freshfacing.com/{slug}. Watermarked. Apify takes a 1440px
+                  screenshot, PIL compresses it to ~200KB, uploaded to Supabase
+                  Storage.
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                padding: 16px 0;
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                5
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  Owner added to Instantly campaign
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Lead added with companyName, category, area, and
+                  screenshot_url pre-filled. Instantly sends the 1-step email
+                  sequence: personalized copy + inline screenshot of their new
+                  site.
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; padding-top: 16px">
+              <div
+                style="
+                  width: 28px;
+                  height: 28px;
+                  background: var(--green-light);
+                  border: 1px solid var(--green-border);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 11px;
+                  font-weight: 800;
+                  color: var(--green);
+                  flex-shrink: 0;
+                "
+              >
+                6
+              </div>
+              <div>
+                <div
+                  style="font-size: 13px; font-weight: 700; margin-bottom: 3px"
+                >
+                  Owner pays, watermark removed
+                </div>
+                <div style="font-size: 12px; color: var(--text2)">
+                  Stripe Checkout → webhook → Railway /fulfill-payment. HTML
+                  pulled from Supabase Storage, watermark stripped, site
+                  redeployed clean. Confirmation email sent. $20/month
+                  recurring. We never log in.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PIPELINE -->
+      <div class="section" id="pipeline">
+        <div class="sh">
+          <div class="sh-num">02</div>
+          <div class="sh-title">End-to-End Pipeline</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="pipe-scroll">
+          <div class="pipeline">
+            <div
+              class="ps"
+              style="
+                border-color: var(--green-border);
+                background: var(--green-light);
+              "
+            >
+              <div class="ps-n" style="color: var(--green)">00 Agent</div>
+              <div class="ps-name">OpenClaw</div>
+              <div class="ps-tool g">Scores + fires leads</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">01 Intake</div>
+              <div class="ps-name">Lead Input</div>
+              <div class="ps-tool g">Webhook</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">02 Scrape</div>
+              <div class="ps-name">Scrape Site</div>
+              <div class="ps-tool o">Firecrawl + Apify</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">03 Analyze</div>
+              <div class="ps-name">Classify + Audit</div>
+              <div class="ps-tool b">Gemini 2.0 Flash</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">04 Generate</div>
+              <div class="ps-name">Generate HTML</div>
+              <div class="ps-tool g">Claude Opus 4.6</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">05 Deploy</div>
+              <div class="ps-name">Deploy to CF</div>
+              <div class="ps-tool o">Cloudflare Pages</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">06 Capture</div>
+              <div class="ps-name">Screenshot</div>
+              <div class="ps-tool b">Apify → PIL → Supabase</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">07 Outbound</div>
+              <div class="ps-name">Add to Instantly</div>
+              <div class="ps-tool g">Instantly API v2</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">08 Email</div>
+              <div class="ps-name">Email Sent</div>
+              <div class="ps-tool o">Inline screenshot</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">09 Payment</div>
+              <div class="ps-name">Stripe $20/mo</div>
+              <div class="ps-tool g">No contracts</div>
+            </div>
+            <div class="pa">›</div>
+            <div class="ps">
+              <div class="ps-n">10 Fulfill</div>
+              <div class="ps-name">Watermark Off</div>
+              <div class="ps-tool b">Railway → Resend</div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            margin-top: 16px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+          "
+        >
+          <div
+            style="
+              font-size: 10px;
+              font-weight: 700;
+              letter-spacing: 1px;
+              text-transform: uppercase;
+              color: var(--text3);
+              margin-bottom: 12px;
+            "
+          >
+            Gemini Analysis Sub-Steps (Phase 03)
+          </div>
+          <div class="sub-steps">
+            <div class="ss">
+              <div class="ss-n">1B</div>
+              <div class="ss-name">Image Classify</div>
+              <div class="ss-role">Logo, heroes, team, services</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1C</div>
+              <div class="ss-name">Text Extraction</div>
+              <div class="ss-role">Services, team, membership</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1D</div>
+              <div class="ss-name">Color Palette</div>
+              <div class="ss-role">From logo via Gemini Vision</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1D2</div>
+              <div class="ss-name">Vibe Capture</div>
+              <div class="ss-role">Brand tone from screenshot</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1E–F</div>
+              <div class="ss-name">Review Mining</div>
+              <div class="ss-role">Exa + Gemini synthesis</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1G</div>
+              <div class="ss-name">Demographics</div>
+              <div class="ss-role">Market profile via Exa</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1H</div>
+              <div class="ss-name">Competitors</div>
+              <div class="ss-role">5 local comps researched</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1I</div>
+              <div class="ss-name">Market Analysis</div>
+              <div class="ss-role">Local positioning</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">1J</div>
+              <div class="ss-name">Site Audit</div>
+              <div class="ss-role">5 issues, 5 fixes, score</div>
+            </div>
+            <div class="ss">
+              <div class="ss-n">2</div>
+              <div class="ss-name">HTML Gen</div>
+              <div class="ss-role">Claude Opus — 3 attempts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL PREVIEW -->
+      <div class="section" id="email">
+        <div class="sh">
+          <div class="sh-num">02</div>
+          <div class="sh-title">Outbound Email</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="email-section">
+          <div>
+            <div class="email-mock">
+              <div class="email-mock-bar">
+                <div class="email-mock-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="email-mock-subject">
+                  Subject: I redesigned your website
+                </div>
+              </div>
+              <div class="email-mock-body">
+                <div class="email-mock-label">From</div>
+                <div class="email-mock-field" style="color: #ccc">
+                  you@freshfacing.com
+                </div>
+                <div class="email-text">Hey,</div>
+                <div class="email-text">
+                  I came across <strong>Bussey Smiles</strong> and spent some
+                  time redesigning your website from scratch. Wanted to show you
+                  what it could look like.
+                </div>
+                <div class="email-text">
+                  Honestly it is one of the best looking
+                  <strong>dental practice</strong> websites in
+                  <strong>Richmond, VA</strong> right now. Clean, fast, and the
+                  kind of thing that makes people actually call.
+                </div>
+                <div class="email-text">
+                  It is live right now. <strong>$20/month</strong> to keep it
+                  up. No contracts, cancel any time.
+                </div>
+                <div class="email-text">Worth a look?</div>
+                <img
+                  class="email-img"
+                  src="https://xfshkmpmdvfnphtornwe.supabase.co/storage/v1/object/public/site-html/screenshots/bussey-smiles.jpg"
+                  alt="Bussey Smiles redesign"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="email-copy-box">
+              <div class="email-copy-label">Email Copy — 1 Step, No Links</div>
+              <div class="email-subject">
+                Subject: I redesigned your website
+              </div>
+              <div class="email-body-text">
+                <p style="margin-bottom: 12px">Hey,</p>
+                <p style="margin-bottom: 12px">
+                  I came across
+                  <span class="email-var">{{companyName}}</span> and spent some
+                  time redesigning your website from scratch. Wanted to show you
+                  what it could look like.
+                </p>
+                <p style="margin-bottom: 12px">
+                  Honestly it is one of the best looking
+                  <span class="email-var">{{category}}</span> websites in
+                  <span class="email-var">{{area}}</span> right now. Clean,
+                  fast, and the kind of thing that makes people actually call.
+                </p>
+                <p style="margin-bottom: 12px">
+                  It is live right now. <strong>$20/month</strong> to keep it
+                  up. No contracts, cancel any time.
+                </p>
+                <p style="margin-bottom: 12px">Worth a look?</p>
+                <div class="email-img-placeholder">
+                  📸 Inline screenshot of redesigned site<br /><span
+                    style="font-size: 10px; display: block; margin-top: 4px"
+                    >~200KB JPEG · Compressed via PIL · Hosted on Supabase</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              style="
+                margin-top: 12px;
+                background: var(--s1);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 16px;
+              "
+            >
+              <div
+                style="
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 1px;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  margin-bottom: 12px;
+                "
+              >
+                Custom Variables per Lead
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 12px;
+                  "
+                >
+                  <span class="email-var">{{companyName}}</span
+                  ><span style="color: var(--text2)">e.g. Bussey Smiles</span>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 12px;
+                  "
+                >
+                  <span class="email-var">{{category}}</span
+                  ><span style="color: var(--text2)">e.g. dental practice</span>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 12px;
+                  "
+                >
+                  <span class="email-var">{{area}}</span
+                  ><span style="color: var(--text2)">e.g. Richmond, VA</span>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 12px;
+                  "
+                >
+                  <span class="email-var">{{screenshot_url}}</span
+                  ><span style="color: var(--text2)"
+                    >Supabase Storage JPEG</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 12px;
+                  "
+                >
+                  <span class="email-var">{{preview_url}}</span
+                  ><span style="color: var(--text2)"
+                    >freshfacing.com/{slug}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIPPED -->
+      <div class="section" id="shipped">
+        <div class="sh">
+          <div class="sh-num">03</div>
+          <div class="sh-title">What's Shipped</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="feats">
+          <div
+            class="feat"
+            style="
+              border-color: var(--green-border);
+              background: var(--green-light);
+            "
+          >
+            <div class="feat-top">
+              <div class="feat-icon fi-g">🔍</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">OpenClaw — Autonomous Lead Agent</div>
+            <div class="feat-desc">
+              Runs 24/7 in the background. Scans 2,643+ local businesses, visits
+              every website, scores quality 0-100. Score ≤40 automatically fires
+              a webhook into FreshFacing pipeline. 1,362 hot leads identified.
+              83% of scanned businesses have no site or a broken one.
+            </div>
+            <div class="chips">
+              <span class="chip">2,643 businesses</span
+              ><span class="chip">1,362 hot leads</span
+              ><span class="chip">84.6% hit rate</span
+              ><span class="chip">Fully autonomous</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-g">🤖</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">AI Site Generation</div>
+            <div class="feat-desc">
+              Firecrawl scrapes 6+ subpages. Gemini runs 10 analysis steps:
+              image classify, text extract, color detection, vibe capture,
+              review mining via Exa, competitor research, demographics, market
+              analysis, site audit. Claude Opus 4.6 generates full HTML with
+              real brand assets — not a template.
+            </div>
+            <div class="chips">
+              <span class="chip">Firecrawl</span
+              ><span class="chip">Gemini 2.0</span
+              ><span class="chip">Claude Opus 4.6</span
+              ><span class="chip">Exa</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-o">⚡</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Cloudflare Pages Deploy</div>
+            <div class="feat-desc">
+              Every site auto-deploys to freshfacing-{slug}.pages.dev via
+              wrangler, aliased to freshfacing.com/{slug}. HTML persisted to
+              Supabase Storage — survives Railway container restarts. Critical
+              fix for paid customers. DNS CNAME auto-created on payment via
+              Cloudflare Zone API.
+            </div>
+            <div class="chips">
+              <span class="chip">Cloudflare Pages</span
+              ><span class="chip">Supabase Storage</span
+              ><span class="chip">wrangler</span
+              ><span class="chip">CF DNS API</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-g">🔒</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Watermark + Fulfillment</div>
+            <div class="feat-desc">
+              Sites deploy with ff-meta-bar (top) and ff-preview-watermark
+              (bottom). On payment, Stripe webhook → Railway /fulfill-payment →
+              redeploy clean. Built div-depth counter algorithm to fix critical
+              bug: greedy regex was deleting the entire hero section during
+              watermark removal.
+            </div>
+            <div class="chips">
+              <span class="chip">Stripe webhook</span
+              ><span class="chip">Div-depth counter</span
+              ><span class="chip">Railway</span><span class="chip">Resend</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-b">📡</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Outbound Pipeline</div>
+            <div class="feat-desc">
+              POST /webhook/email-enriched accepts Clay payloads. Extracts URL,
+              email, business_name, city, state, category, area. Queued behind
+              Semaphore(1) to prevent Gemini 429s. Full flow runs automatically
+              — site → screenshot → Instantly. Zero manual steps after webhook
+              fires.
+            </div>
+            <div class="chips">
+              <span class="chip">Clay webhook</span
+              ><span class="chip">Semaphore queue</span
+              ><span class="chip">Instantly v2</span
+              ><span class="chip">Auto end-to-end</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-o">📸</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Screenshot Automation</div>
+            <div class="feat-desc">
+              Apify captures 1440px JPEG after every deploy. PIL compresses
+              400–900KB → ~200KB, quality 80→20 until under 200KB. Uploaded to
+              public Supabase Storage bucket as screenshots/{slug}.jpg. URL set
+              as screenshot_url in Instantly — inline in email, no redirect.
+            </div>
+            <div class="chips">
+              <span class="chip">Apify actor</span
+              ><span class="chip">Pillow</span
+              ><span class="chip">Supabase Storage</span
+              ><span class="chip">Public bucket</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-b">📧</div>
+              <div class="badge bd-pause">Paused — Ready</div>
+            </div>
+            <div class="feat-name">Instantly Email Campaign</div>
+            <div class="feat-desc">
+              1-step sequence. Inline screenshot only — no links, no redirects.
+              19 leads loaded with real company names, city-level area, and
+              correct category. Screenshots compressed and loading. Campaign
+              paused — activate from Instantly dashboard to go live.
+            </div>
+            <div class="chips">
+              <span class="chip">1 email step</span
+              ><span class="chip">No links</span
+              ><span class="chip">19 leads ready</span
+              ><span class="chip">All variables set</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-g">🌐</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Self-Serve Inbound</div>
+            <div class="feat-desc">
+              Anyone can enter a URL at freshfacing.com. Full pipeline runs,
+              watermarked preview published. Stripe Checkout for $20/mo or
+              $199/yr. On payment: watermark removed, CNAME created,
+              confirmation email sent. Zero manual steps required.
+            </div>
+            <div class="chips">
+              <span class="chip">Next.js</span
+              ><span class="chip">Stripe Checkout</span
+              ><span class="chip">Resend</span
+              ><span class="chip">Full self-serve</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-o">📊</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Ops Dashboard (/ff-ops)</div>
+            <div class="feat-desc">
+              Merges three sources: Cloudflare Pages API (deployed sites),
+              Supabase (lead data), Stripe SDK (subscriptions + MRR). Shows all
+              sites, statuses, revenue. Sorted by created_at desc, no-cache
+              headers on all responses.
+            </div>
+            <div class="chips">
+              <span class="chip">Next.js</span
+              ><span class="chip">CF Pages API</span
+              ><span class="chip">Supabase</span
+              ><span class="chip">Stripe SDK</span>
+            </div>
+          </div>
+          <div class="feat">
+            <div class="feat-top">
+              <div class="feat-icon fi-y">✉️</div>
+              <div class="badge bd-done">Shipped</div>
+            </div>
+            <div class="feat-name">Email Notifications</div>
+            <div class="feat-desc">
+              Internal alert to vaibhav@betterfuturelabs.com when any site
+              builds. Customer confirmation on payment with live URL. All from
+              hello@freshfacing.com with DKIM verified on Resend.
+            </div>
+            <div class="chips">
+              <span class="chip">Resend API</span
+              ><span class="chip">DKIM verified</span
+              ><span class="chip">hello@freshfacing.com</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENDPOINTS -->
+      <div class="section">
+        <div class="sh">
+          <div class="sh-num">04</div>
+          <div class="sh-title">API Endpoints</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="ep-wrap">
+          <div>
+            <div class="ep-label">
+              <span class="ep-tag">railway.app</span> Python Backend
+            </div>
+            <table>
+              <tr>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Purpose</th>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/generate</td>
+                <td class="ed">Kick off pipeline, returns job_id</td>
+              </tr>
+              <tr>
+                <td><span class="m m-get">GET</span></td>
+                <td class="ep">/jobs/{id}</td>
+                <td class="ed">Poll job status</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/webhook/email-enriched</td>
+                <td class="ed">Clay outbound intake</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/fulfill-payment</td>
+                <td class="ed">Post-payment watermark removal</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/claim-domain</td>
+                <td class="ed">Attach custom domain</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/regenerate</td>
+                <td class="ed">Regenerate existing site by slug</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <div class="ep-label">
+              <span class="ep-tag">freshfacing.com</span> Next.js Frontend
+            </div>
+            <table>
+              <tr>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Purpose</th>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/api/leads</td>
+                <td class="ed">Capture inbound lead</td>
+              </tr>
+              <tr>
+                <td><span class="m m-get">GET</span></td>
+                <td class="ep">/api/checkout</td>
+                <td class="ed">Create Stripe session</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/api/webhook/stripe</td>
+                <td class="ed">Handle checkout.session.completed</td>
+              </tr>
+              <tr>
+                <td><span class="m m-get">GET</span></td>
+                <td class="ep">/api/dashboard</td>
+                <td class="ed">CF + Supabase + Stripe merged data</td>
+              </tr>
+              <tr>
+                <td><span class="m m-get">GET</span></td>
+                <td class="ep">/api/jobs/{id}</td>
+                <td class="ed">Poll Railway job (proxy)</td>
+              </tr>
+              <tr>
+                <td><span class="m m-post">POST</span></td>
+                <td class="ep">/api/claim-domain</td>
+                <td class="ed">Forward to Railway</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="section" id="timeline">
+        <div class="sh">
+          <div class="sh-num">05</div>
+          <div class="sh-title">Timeline</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="tl">
+          <div class="tli">
+            <div class="tl-dot dot-done"></div>
+            <div class="tl-date">Early March 2026</div>
+            <div class="tl-title">Infrastructure Setup</div>
+            <div class="tl-body">
+              Railway Python server, Vercel Next.js, Supabase PostgreSQL.
+              Cloudflare Pages + DNS zone configured. Stripe subscriptions
+              ($20/mo + $199/yr) connected. DKIM-verified hello@freshfacing.com
+              on Resend. First end-to-end test passed.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-g">Railway</span
+              ><span class="tt tt-g">Stripe connected</span
+              ><span class="tt tt-g">Cloudflare configured</span
+              ><span class="tt tt-g">Supabase up</span
+              ><span class="tt tt-g">Resend DKIM</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-done"></div>
+            <div class="tl-date">Mid March 2026</div>
+            <div class="tl-title">
+              Pipeline v1 — Gemini 10-Step + Claude Opus
+            </div>
+            <div class="tl-body">
+              Full Gemini analysis pipeline: image classification, text
+              extraction, color detection, vibe capture, review mining (Exa),
+              competitor research, demographics, market analysis, site audit.
+              Claude Opus 4.6 generates full HTML with real brand assets.
+              Watermark system with ff-meta-bar and ff-preview-watermark built.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-g">Pipeline v1</span
+              ><span class="tt tt-g">Gemini 10 steps</span
+              ><span class="tt tt-g">Claude Opus 4.6</span
+              ><span class="tt tt-g">Exa</span
+              ><span class="tt tt-g">Watermark system</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-done"></div>
+            <div class="tl-date">Late March 2026</div>
+            <div class="tl-title">
+              Fulfillment Flow + Self-Serve + Dashboard
+            </div>
+            <div class="tl-body">
+              Stripe webhook → Railway /fulfill-payment → redeploy clean → CNAME
+              → customer email. Discovered critical silent bug: Railway
+              container restarts clear /output, watermark removal fails for paid
+              customers. Fixed by uploading HTML to Supabase Storage on every
+              generation. /ff-ops dashboard + self-serve inbound live.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-g">Fulfillment live</span
+              ><span class="tt tt-g">Supabase Storage fix</span
+              ><span class="tt tt-g">Self-serve inbound</span
+              ><span class="tt tt-g">/ff-ops dashboard</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-done"></div>
+            <div class="tl-date">March 31</div>
+            <div class="tl-title">
+              First Outbound Batch — 10 Dental Practices
+            </div>
+            <div class="tl-body">
+              10 sites generated for Richmond VA dental practices. Instantly
+              campaign created. /webhook/email-enriched built for Clay. Railway
+              auto-deploy was broken (2hr stale) — force deployed. Critical bug:
+              westoverdentistry's entire hero section deleted by greedy regex
+              during watermark removal. Fixed with character-by-character
+              div-depth counter. Comment markers moved from Claude prompt to
+              Python injection — Claude was misplacing them.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-g">10 sites live</span
+              ><span class="tt tt-g">Instantly campaign</span
+              ><span class="tt tt-g">Div-depth fix</span
+              ><span class="tt tt-g">Clay webhook</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-done"></div>
+            <div class="tl-date">April 2</div>
+            <div class="tl-title">
+              Screenshot Automation + 19 Leads + Email Finalized
+            </div>
+            <div class="tl-body">
+              Full screenshot pipeline automated: Apify → PIL compress
+              800KB→200KB → Supabase public upload → screenshot_url in
+              Instantly. Email sequence: 3 steps → 1 step, no links, inline
+              screenshot only. Added category + area custom variables. Updated
+              all 19 leads with real cities and business names (was sending raw
+              URLs). Made Supabase bucket public — screenshots weren't loading.
+              Scraped 6 more dental practices and added to pipeline.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-g">Screenshot auto</span
+              ><span class="tt tt-g">1-step email</span
+              ><span class="tt tt-g">19 leads</span
+              ><span class="tt tt-g">area + category</span
+              ><span class="tt tt-g">Bucket public</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-today"></div>
+            <div class="tl-date">April 3 — Today</div>
+            <div class="tl-title tl-today-title">
+              Status Page + Pre-Launch QA
+            </div>
+            <div class="tl-body">
+              Status page deployed. 19 leads in Instantly — screenshots loading,
+              company names correct, all variables set. Campaign ready to
+              activate. Clay webhook fires before enrichment completes (31/35
+              webhooks had no email — skipped). Security issues identified but
+              not yet shipped.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-b">Status page live</span
+              ><span class="tt tt-b">QA complete</span
+              ><span class="tt tt-b">Clay fix needed</span
+              ><span class="tt tt-b">Campaign ready</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-future"></div>
+            <div class="tl-date">April 6</div>
+            <div class="tl-title tl-future-title">
+              🚀 Campaign Launch — 30 Emails/Day
+            </div>
+            <div class="tl-body">
+              Activate Instantly campaign. 30 emails/day to dental practice
+              owners. Personalized inline screenshot, real company name, city.
+              Fix Clay webhook filter. Monitor open rates (target 40%+) and
+              reply rates (target 5–10%). First conversion expected within 48–72
+              hours.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-o">30 emails/day</span
+              ><span class="tt tt-o">19 leads ready</span
+              ><span class="tt tt-o">Clay fix</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-future"></div>
+            <div class="tl-date">April 7–8</div>
+            <div class="tl-title tl-future-title">Scale to 100+ Leads</div>
+            <div class="tl-body">
+              Clay webhook fixed → fully automated pipeline. Target 100
+              practices. Zero manual steps. Expand beyond dental into
+              chiropractors, lawyers, real estate, restaurants — category/area
+              variables already support this.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-o">100 lead target</span
+              ><span class="tt tt-o">New categories</span
+              ><span class="tt tt-o">Fully automated</span>
+            </div>
+          </div>
+          <div class="tli">
+            <div class="tl-dot dot-goal"></div>
+            <div class="tl-date">April 9–11</div>
+            <div class="tl-title tl-future-title">
+              First $200 MRR — 10 Paying Customers
+            </div>
+            <div class="tl-body">
+              2% conversion on ~200 leads = 4–6 customers. Ship security fixes
+              (auth + idempotency). Add custom domain upsell at $49/month. Each
+              customer is $240/year recurring.
+            </div>
+            <div class="tl-tags">
+              <span class="tt tt-y">$200 MRR goal</span
+              ><span class="tt tt-y">Security fixes</span
+              ><span class="tt tt-y">Domain upsell</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPEN ITEMS -->
+      <div class="section" id="open">
+        <div class="sh">
+          <div class="sh-num">06</div>
+          <div class="sh-title">Open Items</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="open-grid">
+          <div class="oi crit">
+            <div class="oi-num">01</div>
+            <div>
+              <div class="oi-title">
+                Zero auth on /fulfill-payment
+                <span
+                  style="
+                    color: var(--red);
+                    font-size: 10px;
+                    font-weight: 700;
+                    margin-left: 6px;
+                    background: var(--red-light);
+                    padding: 2px 6px;
+                    border-radius: 3px;
+                  "
+                  >CRITICAL</span
+                >
+              </div>
+              <div class="oi-body">
+                Anyone with the URL can trigger watermark removal, spam
+                confirmation emails, and exfiltrate HTML. Easy to find via
+                Stripe webhook logs.
+              </div>
+              <div class="oi-fix">
+                → FULFILL_SECRET env var on Railway + Vercel · validate
+                X-Fulfill-Secret header via hmac.compare_digest()
+              </div>
+            </div>
+          </div>
+          <div class="oi crit">
+            <div class="oi-num">02</div>
+            <div>
+              <div class="oi-title">
+                Zero auth on /api/dashboard
+                <span
+                  style="
+                    color: var(--red);
+                    font-size: 10px;
+                    font-weight: 700;
+                    margin-left: 6px;
+                    background: var(--red-light);
+                    padding: 2px 6px;
+                    border-radius: 3px;
+                  "
+                  >CRITICAL</span
+                >
+              </div>
+              <div class="oi-body">
+                Returns all customer emails, site URLs, Stripe revenue, every
+                active subscription — completely public with no token required.
+              </div>
+              <div class="oi-fix">
+                → DASHBOARD_SECRET server-side · x-dashboard-key header check ·
+                NEXT_PUBLIC_DASHBOARD_KEY for client fetch
+              </div>
+            </div>
+          </div>
+          <div class="oi warn">
+            <div class="oi-num">03</div>
+            <div>
+              <div class="oi-title">No idempotency on fulfillment</div>
+              <div class="oi-body">
+                Stripe retries webhooks. session_id is received but never
+                stored. Same payment can trigger double watermark removal +
+                double confirmation emails to a real customer.
+              </div>
+              <div class="oi-fix">
+                → store fulfilled_session in Supabase notes · check before
+                processing · skip if already done
+              </div>
+            </div>
+          </div>
+          <div class="oi warn">
+            <div class="oi-num">04</div>
+            <div>
+              <div class="oi-title">
+                Clay webhook fires before email verification
+              </div>
+              <div class="oi-body">
+                31/35 webhooks arrived with verified=false and no email. Clay
+                fires on row creation, not after enrichment. Massively limiting
+                throughput.
+              </div>
+              <div class="oi-fix">
+                → add Clay filter: only fire when "Verified - Email - People" =
+                true AND email is not empty
+              </div>
+            </div>
+          </div>
+          <div class="oi low">
+            <div class="oi-num">05</div>
+            <div>
+              <div class="oi-title">_normalize_url() lstrip() bug</div>
+              <div class="oi-body">
+                lstrip("www.") strips any leading chars in {w,o,m,.} — not the
+                prefix "www.". westoverdentistry.com → estoverdentistry.com.
+                Wrong cache hits, duplicate Supabase rows.
+              </div>
+              <div class="oi-fix">
+                → replace lstrip("www.") with removeprefix("www.") in
+                pipeline.py
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GOALS -->
+      <div class="section" id="roadmap">
+        <div class="sh">
+          <div class="sh-num">07</div>
+          <div class="sh-title">Goals & Outcomes</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="goals">
+          <div class="goal g1">
+            <div class="goal-when g">This Week — Apr 6–11</div>
+            <div class="goal-mrr g">$200 MRR</div>
+            <div class="goal-sub">First paying customers</div>
+            <ul class="gl">
+              <li>19 leads emailed, target 1–3 replies</li>
+              <li>First $20/mo customer within 72h</li>
+              <li>Clay webhook fixed — leads automated</li>
+              <li>30 emails/day sustained</li>
+              <li>Security fixes shipped</li>
+            </ul>
+          </div>
+          <div class="goal g2">
+            <div class="goal-when b">Month 1 — April</div>
+            <div class="goal-mrr b">$500 MRR</div>
+            <div class="goal-sub">Consistent pipeline</div>
+            <ul class="gl">
+              <li>25 paying customers</li>
+              <li>500+ sites across 3+ categories</li>
+              <li>Self-serve inbound converting</li>
+              <li>Domain upsell at $49/mo live</li>
+              <li>Fully automated end-to-end</li>
+            </ul>
+          </div>
+          <div class="goal g3">
+            <div class="goal-when o">Month 2–3</div>
+            <div class="goal-mrr o">$2k MRR</div>
+            <div class="goal-sub">Scale + expand</div>
+            <ul class="gl">
+              <li>100 paying customers</li>
+              <li>Dental → lawyers, chiro, restaurants</li>
+              <li>Churn detection + win-back emails</li>
+              <li>Client site editor live</li>
+              <li>10,000+ sites generated</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- STACK -->
+      <div class="section" id="stack">
+        <div class="sh">
+          <div class="sh-num">08</div>
+          <div class="sh-title">Tech Stack</div>
+          <div class="sh-line"></div>
+        </div>
+        <div class="stack-grid">
+          <div class="sg">
+            <div class="sg-cat">AI / Generation</div>
+            <div class="sg-items">
+              <div>
+                <div class="sg-name">Claude Sonnet 4.6</div>
+                <div class="sg-role">HTML site generation</div>
+              </div>
+              <div>
+                <div class="sg-name">Claude Haiku 4.5</div>
+                <div class="sg-role">8-step analysis pipeline</div>
+              </div>
+              <div>
+                <div class="sg-name">Exa</div>
+                <div class="sg-role">Reviews + competitors</div>
+              </div>
+              <div>
+                <div class="sg-name">Firecrawl</div>
+                <div class="sg-role">Web scraping + crawling</div>
+              </div>
+              <div>
+                <div class="sg-name">Apify</div>
+                <div class="sg-role">Screenshots (1440px)</div>
+              </div>
+            </div>
+          </div>
+          <div class="sg">
+            <div class="sg-cat">Infrastructure</div>
+            <div class="sg-items">
+              <div>
+                <div class="sg-name">Railway</div>
+                <div class="sg-role">Python pipeline server</div>
+              </div>
+              <div>
+                <div class="sg-name">Vercel</div>
+                <div class="sg-role">Next.js frontend + APIs</div>
+              </div>
+              <div>
+                <div class="sg-name">Cloudflare Pages</div>
+                <div class="sg-role">Generated site hosting</div>
+              </div>
+              <div>
+                <div class="sg-name">Supabase</div>
+                <div class="sg-role">DB + File Storage</div>
+              </div>
+              <div>
+                <div class="sg-name">Pillow (PIL)</div>
+                <div class="sg-role">Screenshot compression</div>
+              </div>
+            </div>
+          </div>
+          <div class="sg">
+            <div class="sg-cat">Outbound / Sales</div>
+            <div class="sg-items">
+              <div>
+                <div class="sg-name">Clay</div>
+                <div class="sg-role">Lead enrichment + verify</div>
+              </div>
+              <div>
+                <div class="sg-name">Instantly v2</div>
+                <div class="sg-role">Email sequences</div>
+              </div>
+              <div>
+                <div class="sg-name">Instantly API</div>
+                <div class="sg-role">6 custom vars per lead</div>
+              </div>
+            </div>
+          </div>
+          <div class="sg">
+            <div class="sg-cat">Payments / Comms</div>
+            <div class="sg-items">
+              <div>
+                <div class="sg-name">Stripe</div>
+                <div class="sg-role">Subscriptions + webhooks</div>
+              </div>
+              <div>
+                <div class="sg-name">Resend</div>
+                <div class="sg-role">Transactional emails</div>
+              </div>
+              <div>
+                <div class="sg-name">Cloudflare DNS</div>
+                <div class="sg-role">Auto CNAME per customer</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="costs">
+      <div class="sh">
+        <div class="sh-num">09</div>
+        <div class="sh-title">Cost Breakdown</div>
+        <div class="sh-line"></div>
+      </div>
+
+      <!-- Variable costs table -->
+      <div style="margin-bottom: 24px">
+        <div
+          style="
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+          "
+        >
+          <div style="font-size: 13px; font-weight: 700; color: var(--text)">
+            Variable — per site generated
+          </div>
+          <div style="font-size: 11px; color: var(--text3)">
+            measured via Anthropic count_tokens API · April 2026
+          </div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Tool
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                What it does
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Calls/site
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Unit price
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Cost/site
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: #f0faf4;
+              "
+            >
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 600;
+                  color: var(--text);
+                  white-space: nowrap;
+                "
+              >
+                Claude Haiku 4.5
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Image classify, text extract, color, vibe, reviews,
+                demographics, market, audit
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                8 calls
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                $1/M in · $5/M out
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.0197
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: #f0faf4;
+              "
+            >
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 600;
+                  color: var(--text);
+                  white-space: nowrap;
+                "
+              >
+                Claude Sonnet 4.6
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Generate full HTML site (10,180 in / 16,000 out tokens)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                1 call
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                $3/M in · $15/M out
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.2705
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Firecrawl
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Scrape homepage + 6 subpages
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                ~7 pages
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                $0.00083/page
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.0058
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Exa AI
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Research, reviews, demographics, competitors
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                4 searches
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                $7/1K queries
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.0280
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Apify
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Screenshot of homepage
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                1 run
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                ~$0.01/run
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.0100
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Stripe
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Process payment
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">
+                per conversion
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text3);
+                  font-family: var(--mono);
+                  font-size: 12px;
+                  white-space: nowrap;
+                "
+              >
+                2.9% + $0.30
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 600;
+                  color: var(--text3);
+                  text-align: right;
+                "
+              >
+                per txn only
+              </td>
+            </tr>
+            <tr
+              style="
+                background: var(--s2);
+                border-top: 2px solid var(--border2);
+              "
+            >
+              <td
+                colspan="4"
+                style="padding: 10px 14px; font-weight: 700; color: var(--text)"
+              >
+                Variable total
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.334/site
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Flat infra table -->
+      <div style="margin-bottom: 24px">
+        <div
+          style="
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+          "
+        >
+          Flat monthly infra
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Tool
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                What it does
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Plan
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Cost/mo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Railway
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Hosts the pipeline server
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">Hobby</td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $5–10/mo
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Supabase
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Database, leads, site cache
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">
+                Free (until ~50K sites)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                $0
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Cloudflare Pages
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Deploys generated HTML sites
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">
+                Free (500 builds/mo)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                $0
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Resend
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Post-purchase welcome email
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">
+                Free (3K/mo)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                $0
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Sending Infra
+              </td>
+              <td style="padding: 10px 14px; color: var(--text2)">
+                Cold outreach · 12 domains · 116 mailboxes · 34K/day capacity ·
+                Medium tier
+              </td>
+              <td style="padding: 10px 14px; color: var(--text3)">
+                M365 (4d/100mb) + Google WS (8d/16mb)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $256/mo
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Sending infra breakdown -->
+      <div
+        style="
+          margin-bottom: 24px;
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          overflow: hidden;
+        "
+      >
+        <div
+          style="
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            background: var(--s1);
+          "
+        >
+          <span style="font-size: 13px; font-weight: 700; color: var(--text)"
+            >Sending infrastructure detail</span
+          >
+          <span style="font-size: 11px; color: var(--text3)"
+            >1,000/day · Medium tier · 70% Microsoft / 30% Google</span
+          >
+        </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+          "
+        >
+          <div style="padding: 16px; border-right: 1px solid var(--border)">
+            <div
+              style="font-size: 1.6rem; font-weight: 800; color: var(--text)"
+            >
+              12
+            </div>
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text3);
+                margin-top: 3px;
+              "
+            >
+              Domains
+            </div>
+          </div>
+          <div style="padding: 16px; border-right: 1px solid var(--border)">
+            <div
+              style="font-size: 1.6rem; font-weight: 800; color: var(--text)"
+            >
+              116
+            </div>
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text3);
+                margin-top: 3px;
+              "
+            >
+              Mailboxes
+            </div>
+          </div>
+          <div style="padding: 16px">
+            <div
+              style="font-size: 1.6rem; font-weight: 800; color: var(--green)"
+            >
+              34K
+            </div>
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text3);
+                margin-top: 3px;
+              "
+            >
+              Daily capacity
+            </div>
+          </div>
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 12px 16px; font-weight: 600; color: var(--text)"
+              >
+                <span
+                  style="
+                    display: inline-block;
+                    width: 9px;
+                    height: 9px;
+                    border-radius: 50%;
+                    background: #0078d4;
+                    margin-right: 7px;
+                  "
+                ></span
+                >Microsoft 365
+              </td>
+              <td style="padding: 12px 16px; color: var(--text2)">
+                4 domains · 100 mailboxes
+              </td>
+              <td style="padding: 12px 16px; width: 140px">
+                <div
+                  style="
+                    background: var(--s2);
+                    border-radius: 4px;
+                    height: 6px;
+                    overflow: hidden;
+                  "
+                >
+                  <div
+                    style="background: #0078d4; width: 70%; height: 100%"
+                  ></div>
+                </div>
+                <div
+                  style="font-size: 11px; color: var(--text3); margin-top: 3px"
+                >
+                  70% of volume
+                </div>
+              </td>
+              <td
+                style="
+                  padding: 12px 16px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $200/mo
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 12px 16px; font-weight: 600; color: var(--text)"
+              >
+                <span
+                  style="
+                    display: inline-block;
+                    width: 9px;
+                    height: 9px;
+                    border-radius: 50%;
+                    background: #ea4335;
+                    margin-right: 7px;
+                  "
+                ></span
+                >Google Workspace
+              </td>
+              <td style="padding: 12px 16px; color: var(--text2)">
+                8 domains · 16 mailboxes
+              </td>
+              <td style="padding: 12px 16px; width: 140px">
+                <div
+                  style="
+                    background: var(--s2);
+                    border-radius: 4px;
+                    height: 6px;
+                    overflow: hidden;
+                  "
+                >
+                  <div
+                    style="background: #ea4335; width: 30%; height: 100%"
+                  ></div>
+                </div>
+                <div
+                  style="font-size: 11px; color: var(--text3); margin-top: 3px"
+                >
+                  30% of volume
+                </div>
+              </td>
+              <td
+                style="
+                  padding: 12px 16px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $56/mo
+              </td>
+            </tr>
+            <tr
+              style="
+                background: var(--s2);
+                border-top: 2px solid var(--border2);
+              "
+            >
+              <td
+                colspan="3"
+                style="padding: 10px 16px; font-weight: 700; color: var(--text)"
+              >
+                Total sending infra
+              </td>
+              <td
+                style="
+                  padding: 10px 16px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $256/mo
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Summary table -->
+      <div style="margin-bottom: 16px">
+        <div
+          style="
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+          "
+        >
+          Total cost per site generated
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Volume
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Variable
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Infra (amortized)
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Total/site
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Monthly bill
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Margin @ $20/mo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                10/mo
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.334
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.50
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.834
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $8
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                95.8%
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                100/mo
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.334
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.05
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.384
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $38
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                98.1%
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                500/mo
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.334
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $0.01
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $0.344
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $172
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                98.3%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div
+        style="
+          background: var(--yellow-light);
+          border: 1px solid #fde68a;
+          border-radius: 8px;
+          padding: 12px 16px;
+          font-size: 12px;
+          color: #92400e;
+        "
+      >
+        <strong>Key insight:</strong> Sonnet 4.6 output = $0.24 of every $0.334
+        variable cost (72%). Haiku's 8 calls combined cost $0.02 — rounding
+        error. Token counts measured via Anthropic count_tokens API on real
+        Advanced Dental Hoboken data.
+      </div>
+    </div>
+
+    <footer>
+      <div class="wrap">
+        <div class="fi">
+          <div class="fl">Fresh<span>Facing</span> — Internal Status</div>
+          <div class="fr">April 3, 2026 · freshfacing.com/status.html</div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
