@@ -783,6 +783,12 @@ export default function Dashboard() {
                       plan: "Free (3K/mo)",
                       cost: "$0",
                     },
+                    {
+                      tool: "Sending Infra (cold outreach)",
+                      what: "12 domains · 116 mailboxes · 34K/day capacity · Medium tier · 70% Microsoft / 30% Google",
+                      plan: "Microsoft 365 (4d/100mb) + Google Workspace (8d/16mb)",
+                      cost: "$256/mo",
+                    },
                   ].map((row, i) => (
                     <tr
                       key={row.tool}
@@ -817,6 +823,208 @@ export default function Dashboard() {
                       </td>
                     </tr>
                   ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Sending infra breakdown */}
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e8e2d9",
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "16px 20px",
+                  borderBottom: "1px solid #e8e2d9",
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 12,
+                }}
+              >
+                <span
+                  style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a" }}
+                >
+                  Sending infrastructure breakdown
+                </span>
+                <span style={{ fontSize: 12, color: "#888" }}>
+                  cold outreach · 1,000/day · Medium tier
+                </span>
+              </div>
+              {/* Stats row */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  borderBottom: "1px solid #e8e2d9",
+                }}
+              >
+                {[
+                  { label: "Domains", value: "12" },
+                  { label: "Mailboxes", value: "116" },
+                  { label: "Daily capacity", value: "34K" },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    style={{
+                      padding: "16px 20px",
+                      borderRight: "1px solid #e8e2d9",
+                      textAlign: "center",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "1.5rem",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      {s.value}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 600,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: "#888",
+                        marginTop: 4,
+                      }}
+                    >
+                      {s.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Provider breakdown */}
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontSize: 13,
+                }}
+              >
+                <tbody>
+                  {[
+                    {
+                      provider: "Microsoft 365",
+                      detail: "4 domains · 100 mailboxes · 70% of volume",
+                      cost: "$200/mo",
+                      share: 70,
+                      color: "#0078d4",
+                    },
+                    {
+                      provider: "Google Workspace",
+                      detail: "8 domains · 16 mailboxes · 30% of volume",
+                      cost: "$56/mo",
+                      share: 30,
+                      color: "#ea4335",
+                    },
+                  ].map((row, i) => (
+                    <tr
+                      key={row.provider}
+                      style={{
+                        borderBottom: "1px solid #f0ece6",
+                        background: i % 2 === 0 ? "#fff" : "#fdfcfa",
+                      }}
+                    >
+                      <td
+                        style={{
+                          padding: "13px 16px",
+                          fontWeight: 600,
+                          color: "#1a1a1a",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 8,
+                          }}
+                        >
+                          <span
+                            style={{
+                              width: 10,
+                              height: 10,
+                              borderRadius: "50%",
+                              background: row.color,
+                              display: "inline-block",
+                              flexShrink: 0,
+                            }}
+                          />
+                          {row.provider}
+                        </div>
+                      </td>
+                      <td style={{ padding: "13px 16px", color: "#555" }}>
+                        {row.detail}
+                      </td>
+                      <td style={{ padding: "13px 16px", width: 120 }}>
+                        <div
+                          style={{
+                            background: "#f0f0f0",
+                            borderRadius: 4,
+                            height: 6,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <div
+                            style={{
+                              background: row.color,
+                              width: `${row.share}%`,
+                              height: "100%",
+                            }}
+                          />
+                        </div>
+                        <div
+                          style={{ fontSize: 11, color: "#888", marginTop: 3 }}
+                        >
+                          {row.share}%
+                        </div>
+                      </td>
+                      <td
+                        style={{
+                          padding: "13px 20px",
+                          fontWeight: 700,
+                          color: "#1a1a1a",
+                          textAlign: "right",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {row.cost}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr
+                    style={{
+                      background: "#faf7f2",
+                      borderTop: "2px solid #e8e2d9",
+                    }}
+                  >
+                    <td
+                      colSpan={3}
+                      style={{
+                        padding: "11px 16px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Total sending infra
+                    </td>
+                    <td
+                      style={{
+                        padding: "11px 20px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                        textAlign: "right",
+                      }}
+                    >
+                      $256/mo
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
