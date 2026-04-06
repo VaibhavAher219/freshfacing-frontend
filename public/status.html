@@ -3778,6 +3778,751 @@
         error. Token counts measured via Anthropic count_tokens API on real
         Advanced Dental Hoboken data.
       </div>
+
+      <!-- Scale costs -->
+      <div style="margin-top: 24px; margin-bottom: 24px">
+        <div
+          style="
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+          "
+        >
+          Total monthly cost at scale
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Volume
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                API cost
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Infra
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Total/mo
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                  white-space: nowrap;
+                "
+              >
+                Revenue @ $20
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Margin
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                10,000/mo
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $3,270
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $80
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $3,350
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $200,000
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                98.3%
+              </td>
+            </tr>
+            <tr style="background: var(--s1)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                32,000/mo
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $10,464
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $80
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $10,544
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                $640,000
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                98.4%
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CPA section -->
+      <div style="margin-top: 8px">
+        <div
+          style="
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 12px;
+          "
+        >
+          <div style="font-size: 13px; font-weight: 700; color: var(--text)">
+            Customer Acquisition Cost (CPA)
+          </div>
+          <div style="font-size: 11px; color: var(--text3)">
+            10K emails/mo · 1.5% conversion · 150 customers acquired
+          </div>
+        </div>
+
+        <!-- Outbound costs -->
+        <table
+          style="
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 16px;
+          "
+        >
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Tool
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Cost/mo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Clay
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $149
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Instantly
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $99
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Sending infra (M365 + Google WS)
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $226
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                Misc
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $50
+              </td>
+            </tr>
+            <tr
+              style="
+                background: var(--s2);
+                border-top: 2px solid var(--border2);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 700; color: var(--text)"
+              >
+                Total outbound cost
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $524/mo
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Unit economics cards -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+          "
+        >
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 16px 18px;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text3);
+                margin-bottom: 6px;
+              "
+            >
+              CPA
+            </div>
+            <div
+              style="font-size: 1.8rem; font-weight: 800; color: var(--text)"
+            >
+              $3.49
+            </div>
+            <div style="font-size: 11px; color: var(--text3); margin-top: 4px">
+              $524 ÷ 150 customers
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 16px 18px;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--text3);
+                margin-bottom: 6px;
+              "
+            >
+              LTV (12mo)
+            </div>
+            <div
+              style="font-size: 1.8rem; font-weight: 800; color: var(--text)"
+            >
+              $240
+            </div>
+            <div style="font-size: 11px; color: var(--text3); margin-top: 4px">
+              12 months × $20/mo
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--green-light);
+              border: 1px solid var(--green-border);
+              border-radius: 10px;
+              padding: 16px 18px;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--green);
+                margin-bottom: 6px;
+              "
+            >
+              LTV:CPA
+            </div>
+            <div
+              style="font-size: 1.8rem; font-weight: 800; color: var(--green)"
+            >
+              68.7x
+            </div>
+            <div style="font-size: 11px; color: var(--green); margin-top: 4px">
+              $240 ÷ $3.49
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--green-light);
+              border: 1px solid var(--green-border);
+              border-radius: 10px;
+              padding: 16px 18px;
+            "
+          >
+            <div
+              style="
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--green);
+                margin-bottom: 6px;
+              "
+            >
+              Payback period
+            </div>
+            <div
+              style="font-size: 1.8rem; font-weight: 800; color: var(--green)"
+            >
+              6 days
+            </div>
+            <div style="font-size: 11px; color: var(--green); margin-top: 4px">
+              $3.49 ÷ $20/mo
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensitivity table -->
+        <div
+          style="
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text3);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+          "
+        >
+          CPA sensitivity — if conversion drops
+        </div>
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px">
+          <thead>
+            <tr
+              style="
+                background: var(--s1);
+                border-bottom: 1px solid var(--border);
+              "
+            >
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: left;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Conversion rate
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                Customers/mo
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                CPA
+              </th>
+              <th
+                style="
+                  padding: 9px 14px;
+                  text-align: right;
+                  font-size: 10px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                  text-transform: uppercase;
+                  color: var(--text3);
+                "
+              >
+                LTV:CPA
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: #f0faf4;
+              "
+            >
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 600;
+                  color: var(--green);
+                "
+              >
+                1.5% ← baseline
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                150
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                $3.49
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--green);
+                  text-align: right;
+                "
+              >
+                68.7x
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                1.0%
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                100
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $5.24
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                45.8x
+              </td>
+            </tr>
+            <tr
+              style="
+                border-bottom: 1px solid var(--border);
+                background: var(--s1);
+              "
+            >
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                0.5%
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                50
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $10.48
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                22.9x
+              </td>
+            </tr>
+            <tr style="background: var(--s1)">
+              <td
+                style="padding: 10px 14px; font-weight: 600; color: var(--text)"
+              >
+                0.2%
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  color: var(--text2);
+                  text-align: right;
+                "
+              >
+                20
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                $26.20
+              </td>
+              <td
+                style="
+                  padding: 10px 14px;
+                  font-weight: 700;
+                  color: var(--text);
+                  text-align: right;
+                "
+              >
+                9.2x
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <footer>
