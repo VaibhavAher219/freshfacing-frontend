@@ -59,12 +59,12 @@ export default function Dashboard() {
   const [data, setData] = useState<DashData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
-  const [tab, setTab] = useState<"leads" | "stripe">("leads");
+  const [tab, setTab] = useState<"leads" | "stripe" | "costs">("leads");
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const r = await fetch("/api/dashboard");
+      const r = await fetch("/api/dashboard", { cache: "no-store" });
       const d = await r.json();
       setData(d);
       setLastRefresh(new Date());
@@ -195,7 +195,7 @@ export default function Dashboard() {
 
         {/* Tabs */}
         <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
-          {(["leads", "stripe"] as const).map((t) => (
+          {(["leads", "stripe", "costs"] as const).map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -211,7 +211,11 @@ export default function Dashboard() {
                 cursor: "pointer",
               }}
             >
-              {t === "leads" ? "Leads & Sites" : "Stripe Subscriptions"}
+              {t === "leads"
+                ? "Leads & Sites"
+                : t === "stripe"
+                  ? "Stripe Subscriptions"
+                  : "Cost Breakdown"}
             </button>
           ))}
         </div>
@@ -494,6 +498,483 @@ export default function Dashboard() {
                 )}
               </tbody>
             </table>
+          </div>
+        ) : tab === "costs" ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            {/* Variable costs */}
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e8e2d9",
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "16px 20px",
+                  borderBottom: "1px solid #e8e2d9",
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: 12,
+                }}
+              >
+                <span
+                  style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a" }}
+                >
+                  Variable — per site generated
+                </span>
+                <span style={{ fontSize: 12, color: "#888" }}>
+                  measured via count_tokens API · April 2026
+                </span>
+              </div>
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontSize: 13,
+                }}
+              >
+                <thead>
+                  <tr
+                    style={{
+                      background: "#faf7f2",
+                      borderBottom: "1px solid #e8e2d9",
+                    }}
+                  >
+                    {[
+                      "Tool",
+                      "What it does",
+                      "Calls/site",
+                      "Unit price",
+                      "Cost/site",
+                    ].map((h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          fontWeight: 600,
+                          fontSize: 11,
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          color: "#888",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      tool: "Claude Haiku 4.5",
+                      what: "Image classify, text extract, color, vibe, reviews, demographics, market, audit",
+                      calls: "8 calls",
+                      unit: "$1/M in · $5/M out",
+                      cost: "$0.0197",
+                      highlight: false,
+                    },
+                    {
+                      tool: "Claude Sonnet 4.6",
+                      what: "Generate full HTML site",
+                      calls: "1 call",
+                      unit: "$3/M in · $15/M out",
+                      cost: "$0.2705",
+                      highlight: true,
+                    },
+                    {
+                      tool: "Firecrawl",
+                      what: "Scrape homepage + 6 subpages",
+                      calls: "~7 pages",
+                      unit: "$0.00083/page",
+                      cost: "$0.0058",
+                      highlight: false,
+                    },
+                    {
+                      tool: "Exa AI",
+                      what: "Research, reviews, demographics, competitors",
+                      calls: "4 searches",
+                      unit: "$7/1K queries",
+                      cost: "$0.0280",
+                      highlight: false,
+                    },
+                    {
+                      tool: "Apify",
+                      what: "Screenshot of homepage",
+                      calls: "1 run",
+                      unit: "~$0.01/run",
+                      cost: "$0.0100",
+                      highlight: false,
+                    },
+                    {
+                      tool: "Stripe",
+                      what: "Process payment",
+                      calls: "per conversion",
+                      unit: "2.9% + $0.30",
+                      cost: "per txn only",
+                      highlight: false,
+                    },
+                  ].map((row, i) => (
+                    <tr
+                      key={row.tool}
+                      style={{
+                        borderBottom: "1px solid #f0ece6",
+                        background: row.highlight
+                          ? "#f0f7f0"
+                          : i % 2 === 0
+                            ? "#fff"
+                            : "#fdfcfa",
+                      }}
+                    >
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 600,
+                          color: "#1a1a1a",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {row.tool}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#555" }}>
+                        {row.what}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          color: "#888",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {row.calls}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          color: "#888",
+                          whiteSpace: "nowrap",
+                          fontFamily: "monospace",
+                        }}
+                      >
+                        {row.unit}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 700,
+                          color: "#1a1a1a",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {row.cost}
+                      </td>
+                    </tr>
+                  ))}
+                  <tr
+                    style={{
+                      background: "#faf7f2",
+                      borderTop: "2px solid #e8e2d9",
+                    }}
+                  >
+                    <td
+                      colSpan={4}
+                      style={{
+                        padding: "11px 16px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      Variable total
+                    </td>
+                    <td
+                      style={{
+                        padding: "11px 16px",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      $0.334/site
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Flat infra */}
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e8e2d9",
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "16px 20px",
+                  borderBottom: "1px solid #e8e2d9",
+                }}
+              >
+                <span
+                  style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a" }}
+                >
+                  Flat monthly infra
+                </span>
+              </div>
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontSize: 13,
+                }}
+              >
+                <thead>
+                  <tr
+                    style={{
+                      background: "#faf7f2",
+                      borderBottom: "1px solid #e8e2d9",
+                    }}
+                  >
+                    {["Tool", "What it does", "Plan", "Cost/mo"].map((h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          fontWeight: 600,
+                          fontSize: 11,
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          color: "#888",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      tool: "Railway",
+                      what: "Hosts the pipeline server",
+                      plan: "Hobby",
+                      cost: "$5–10/mo",
+                    },
+                    {
+                      tool: "Supabase",
+                      what: "Database, leads, site cache",
+                      plan: "Free (until ~50K sites)",
+                      cost: "$0",
+                    },
+                    {
+                      tool: "Cloudflare Pages",
+                      what: "Deploys generated HTML sites",
+                      plan: "Free (500 builds/mo)",
+                      cost: "$0",
+                    },
+                    {
+                      tool: "Resend",
+                      what: "Post-purchase welcome email",
+                      plan: "Free (3K/mo)",
+                      cost: "$0",
+                    },
+                  ].map((row, i) => (
+                    <tr
+                      key={row.tool}
+                      style={{
+                        borderBottom: "1px solid #f0ece6",
+                        background: i % 2 === 0 ? "#fff" : "#fdfcfa",
+                      }}
+                    >
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 600,
+                          color: "#1a1a1a",
+                        }}
+                      >
+                        {row.tool}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#555" }}>
+                        {row.what}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#888" }}>
+                        {row.plan}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 700,
+                          color: "#1a1a1a",
+                        }}
+                      >
+                        {row.cost}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Summary */}
+            <div
+              style={{
+                background: "#fff",
+                border: "1px solid #e8e2d9",
+                borderRadius: 12,
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "16px 20px",
+                  borderBottom: "1px solid #e8e2d9",
+                }}
+              >
+                <span
+                  style={{ fontWeight: 700, fontSize: 14, color: "#1a1a1a" }}
+                >
+                  Total cost per site
+                </span>
+              </div>
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "collapse",
+                  fontSize: 13,
+                }}
+              >
+                <thead>
+                  <tr
+                    style={{
+                      background: "#faf7f2",
+                      borderBottom: "1px solid #e8e2d9",
+                    }}
+                  >
+                    {[
+                      "Volume",
+                      "Variable",
+                      "Infra (amortized)",
+                      "Total/site",
+                      "Monthly bill",
+                      "Gross margin @ $20/mo",
+                    ].map((h) => (
+                      <th
+                        key={h}
+                        style={{
+                          padding: "10px 16px",
+                          textAlign: "left",
+                          fontWeight: 600,
+                          fontSize: 11,
+                          letterSpacing: "0.06em",
+                          textTransform: "uppercase",
+                          color: "#888",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      vol: "10/mo",
+                      variable: "$0.334",
+                      infra: "$0.50",
+                      total: "$0.834",
+                      monthly: "$8",
+                      margin: "95.8%",
+                    },
+                    {
+                      vol: "100/mo",
+                      variable: "$0.334",
+                      infra: "$0.05",
+                      total: "$0.384",
+                      monthly: "$38",
+                      margin: "98.1%",
+                    },
+                    {
+                      vol: "500/mo",
+                      variable: "$0.334",
+                      infra: "$0.01",
+                      total: "$0.344",
+                      monthly: "$172",
+                      margin: "98.3%",
+                    },
+                  ].map((row, i) => (
+                    <tr
+                      key={row.vol}
+                      style={{
+                        borderBottom: "1px solid #f0ece6",
+                        background: i % 2 === 0 ? "#fff" : "#fdfcfa",
+                      }}
+                    >
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 600,
+                          color: "#1a1a1a",
+                        }}
+                      >
+                        {row.vol}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#555" }}>
+                        {row.variable}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#555" }}>
+                        {row.infra}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 700,
+                          color: "#1a1a1a",
+                        }}
+                      >
+                        {row.total}
+                      </td>
+                      <td style={{ padding: "11px 16px", color: "#555" }}>
+                        {row.monthly}
+                      </td>
+                      <td
+                        style={{
+                          padding: "11px 16px",
+                          fontWeight: 700,
+                          color: "#2d6a4f",
+                        }}
+                      >
+                        {row.margin}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Key insight */}
+            <div
+              style={{
+                background: "#fffbf0",
+                border: "1px solid #e8d9a0",
+                borderRadius: 12,
+                padding: "16px 20px",
+                fontSize: 13,
+                color: "#7a5c00",
+              }}
+            >
+              <strong>Key insight:</strong> Sonnet 4.6 output = $0.24 of every
+              $0.334 variable cost (72%). Haiku&apos;s 8 calls combined cost
+              $0.02 — rounding error. Token counts measured via Anthropic
+              count_tokens API on real Advanced Dental Hoboken data (10,180
+              input / 16,000 output tokens for Sonnet call).
+            </div>
           </div>
         ) : null}
       </div>
