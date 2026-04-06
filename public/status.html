@@ -3933,6 +3933,79 @@
         Advanced Dental Hoboken data.
       </div>
 
+      <!-- Gemini comparison -->
+      <div style="margin-top:28px;margin-bottom:24px;">
+        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:12px;">
+          <div style="font-size:13px;font-weight:700;color:var(--text);">What if we used Gemini instead?</div>
+          <div style="font-size:11px;color:var(--text3);">Gemini 3 Flash · Gemini 3.1 Flash Lite · same token counts · April 2026</div>
+        </div>
+
+        <!-- Model pricing comparison -->
+        <table class="ctable" style="margin-bottom:16px;">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th class="r">Input price</th>
+              <th class="r">Output price</th>
+              <th class="r">Analysis (8 calls)</th>
+              <th class="r">Generation (1 call)</th>
+              <th class="r">Total AI/site</th>
+              <th class="r">Total/site</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background:#f0faf4;">
+              <td class="bold">Claude (current)</td>
+              <td class="r mono">Haiku $1/M · Sonnet $3/M</td>
+              <td class="r mono">Haiku $5/M · Sonnet $15/M</td>
+              <td class="r">$0.0197</td>
+              <td class="r">$0.2705</td>
+              <td class="r bold">$0.2902</td>
+              <td class="r bold">$0.327</td>
+            </tr>
+            <tr>
+              <td class="bold">Gemini 3 Flash</td>
+              <td class="r mono">$0.50/M</td>
+              <td class="r mono">$3/M</td>
+              <td class="r muted">~$0.0109</td>
+              <td class="r muted">$0.0531</td>
+              <td class="r bold">$0.0640</td>
+              <td class="r bold">$0.101</td>
+            </tr>
+            <tr style="background:var(--s1);">
+              <td class="bold">Gemini 3.1 Flash Lite</td>
+              <td class="r mono">$0.25/M</td>
+              <td class="r mono">$1.50/M</td>
+              <td class="r muted">~$0.0055</td>
+              <td class="r muted">$0.0265</td>
+              <td class="r bold">$0.0320</td>
+              <td class="r bold">$0.069</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Savings callout -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:var(--blue-light);border:1px solid var(--blue-border);border-radius:10px;padding:16px 18px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue);margin-bottom:5px;">Gemini 3 Flash saving</div>
+            <div style="font-size:1.7rem;font-weight:800;color:var(--blue);">69% cheaper</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:4px;">$0.327 → $0.101/site · save $0.226</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;">10K/mo: $3,270 → $1,010</div>
+          </div>
+          <div style="background:var(--green-light);border:1px solid var(--green-border);border-radius:10px;padding:16px 18px;">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--green);margin-bottom:5px;">Gemini 3.1 Flash Lite saving</div>
+            <div style="font-size:1.7rem;font-weight:800;color:var(--green);">79% cheaper</div>
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:4px;">$0.327 → $0.069/site · save $0.258</div>
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;">10K/mo: $3,270 → $690</div>
+          </div>
+        </div>
+
+        <!-- Quality tradeoff note -->
+        <div style="background:var(--orange-light);border:1px solid var(--orange-border);border-radius:8px;padding:12px 16px;font-size:12px;color:#92400e;">
+          <strong>Quality tradeoff:</strong> Gemini 3 Flash is frontier-tier and likely matches Sonnet 4.6 for HTML generation. Gemini 3.1 Flash Lite is smaller — adequate for the 8 analysis calls but may reduce generation quality. Recommend A/B testing Gemini 3 Flash for generation before switching.
+        </div>
+      </div>
+
       <!-- Scale costs -->
       <div style="margin-top: 24px; margin-bottom: 24px">
         <div
