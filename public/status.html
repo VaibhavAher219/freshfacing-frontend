@@ -2670,6 +2670,155 @@
         <div class="sh-title">Cost Breakdown</div>
         <div class="sh-line"></div>
       </div>
+      <style>
+        .cost-label {
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--text3);
+          margin-bottom: 5px;
+        }
+        .cost-card {
+          background: var(--s1);
+          border: 1px solid var(--border);
+          border-radius: 10px;
+          padding: 16px 18px;
+        }
+        .cost-card-green {
+          background: var(--green-light);
+          border: 1px solid var(--green-border);
+          border-radius: 10px;
+          padding: 16px 18px;
+        }
+        .cost-big {
+          font-size: 1.9rem;
+          font-weight: 800;
+          color: var(--text);
+          line-height: 1;
+        }
+        .cost-big-green {
+          font-size: 1.9rem;
+          font-weight: 800;
+          color: var(--green);
+          line-height: 1;
+        }
+        .cost-sub {
+          font-size: 11px;
+          color: var(--text3);
+          margin-top: 5px;
+          line-height: 1.4;
+        }
+        .cost-sub-green {
+          font-size: 11px;
+          color: var(--green);
+          margin-top: 5px;
+          line-height: 1.4;
+        }
+        .cost-section-title {
+          font-size: 13px;
+          font-weight: 700;
+          color: var(--text);
+          margin-bottom: 4px;
+        }
+        .cost-section-sub {
+          font-size: 12px;
+          color: var(--text3);
+          margin-bottom: 14px;
+        }
+        .ctable {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 13px;
+        }
+        .ctable thead tr {
+          background: var(--s1);
+          border-bottom: 1px solid var(--border);
+        }
+        .ctable th {
+          padding: 9px 14px;
+          text-align: left;
+          font-size: 10px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: var(--text3);
+          white-space: nowrap;
+        }
+        .ctable th.r {
+          text-align: right;
+        }
+        .ctable td {
+          padding: 10px 14px;
+        }
+        .ctable td.r {
+          text-align: right;
+        }
+        .ctable tr.alt {
+          background: var(--s1);
+        }
+        .ctable tr.total {
+          background: var(--s2);
+          border-top: 2px solid var(--border2);
+        }
+        .ctable .bold {
+          font-weight: 700;
+          color: var(--text);
+        }
+        .ctable .muted {
+          color: var(--text2);
+        }
+        .ctable .dim {
+          color: var(--text3);
+        }
+        .ctable .mono {
+          font-family: var(--mono);
+          font-size: 12px;
+        }
+        .ctable .green {
+          font-weight: 700;
+          color: var(--green);
+        }
+        .pill-already {
+          display: inline-block;
+          background: #dcfce7;
+          color: #166534;
+          font-size: 10px;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 20px;
+          letter-spacing: 0.04em;
+          margin-left: 6px;
+          vertical-align: middle;
+        }
+        .pill-new {
+          display: inline-block;
+          background: #ede9fe;
+          color: #5b21b6;
+          font-size: 10px;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 20px;
+          letter-spacing: 0.04em;
+          margin-left: 6px;
+          vertical-align: middle;
+        }
+        .formula-box {
+          background: var(--s1);
+          border: 1px solid var(--border);
+          border-radius: 8px;
+          padding: 10px 14px;
+          font-size: 12px;
+          color: var(--text2);
+          margin-top: 8px;
+          font-family: var(--mono);
+        }
+        .divider {
+          border: none;
+          border-top: 1px solid var(--border);
+          margin: 28px 0;
+        }
+      </style>
 
       <!-- Variable costs table -->
       <div style="margin-bottom: 24px">
@@ -2817,6 +2966,7 @@
                 "
               >
                 $0.0197
+                <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;font-weight:400;">8 calls · avg ~8K in + ~2K out · measured via count_tokens</div>
               </td>
             </tr>
             <tr
@@ -2867,6 +3017,7 @@
                 "
               >
                 $0.2705
+                <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;font-weight:400;">(10,180×$3 + 16,000×$15) / 1M = $0.031+$0.240</div>
               </td>
             </tr>
             <tr style="border-bottom: 1px solid var(--border)">
@@ -2907,6 +3058,7 @@
                 "
               >
                 $0.0058
+                <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;font-weight:400;">7 pages × $0.00083/page</div>
               </td>
             </tr>
             <tr
@@ -2952,6 +3104,7 @@
                 "
               >
                 $0.0280
+                <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;font-weight:400;">4 searches × $7/1K = 4 × $0.007</div>
               </td>
             </tr>
             <tr style="border-bottom: 1px solid var(--border)">
@@ -2992,6 +3145,7 @@
                 "
               >
                 $0.0030
+                <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;font-weight:400;">1 screenshot × $0.003/run</div>
               </td>
             </tr>
             <tr
@@ -3302,7 +3456,7 @@
             <div
               style="font-size: 1.6rem; font-weight: 800; color: var(--text)"
             >
-              12
+              20
             </div>
             <div
               style="
@@ -3321,7 +3475,7 @@
             <div
               style="font-size: 1.6rem; font-weight: 800; color: var(--text)"
             >
-              116
+              86
             </div>
             <div
               style="
@@ -3352,7 +3506,7 @@
                 margin-top: 3px;
               "
             >
-              Daily capacity
+              Monthly capacity
             </div>
           </div>
         </div>
@@ -4061,6 +4215,8 @@
                 style="padding: 10px 14px; font-weight: 600; color: var(--text)"
               >
                 Clay
+                <span class="pill-already">ALREADY PAYING</span>
+                <div style="font-size:10px;color:var(--text3);margin-top:2px;font-weight:400;">Lead enrichment + data sourcing — not added for FF</div>
               </td>
               <td
                 style="
@@ -4083,6 +4239,8 @@
                 style="padding: 10px 14px; font-weight: 600; color: var(--text)"
               >
                 Instantly
+                <span class="pill-already">ALREADY PAYING</span>
+                <div style="font-size:10px;color:var(--text3);margin-top:2px;font-weight:400;">Email sequencing platform — not added for FF</div>
               </td>
               <td
                 style="
@@ -4100,6 +4258,8 @@
                 style="padding: 10px 14px; font-weight: 600; color: var(--text)"
               >
                 Sending infra (M365 + Google WS)
+                <span class="pill-new">NEW SPEND</span>
+                <div style="font-size:10px;color:var(--text3);margin-top:2px;font-weight:400;">20 domains · 86 mailboxes · 34K/mo capacity</div>
               </td>
               <td
                 style="
@@ -4122,6 +4282,8 @@
                 style="padding: 10px 14px; font-weight: 600; color: var(--text)"
               >
                 Misc
+                <span class="pill-new">NEW SPEND</span>
+                <div style="font-size:10px;color:var(--text3);margin-top:2px;font-weight:400;">Tools, subscriptions, overages</div>
               </td>
               <td
                 style="
@@ -4144,6 +4306,7 @@
                 style="padding: 10px 14px; font-weight: 700; color: var(--text)"
               >
                 Total outbound cost
+                <div style="font-size:10px;color:var(--text3);margin-top:2px;font-weight:400;">$248 sunk + $276 new = $524 · only $276 attributable to FF</div>
               </td>
               <td
                 style="
@@ -4158,6 +4321,27 @@
             </tr>
           </tbody>
         </table>
+
+        <!-- Sunk cost callout -->
+        <div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:10px;padding:16px 18px;margin-bottom:16px;">
+          <div style="font-size:12px;font-weight:700;color:#15803d;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.06em;">Clay + Instantly = sunk costs</div>
+          <div style="font-size:13px;color:#166534;line-height:1.6;">
+            You're already paying $149 (Clay) + $99 (Instantly) = <strong>$248/mo</strong> for outbound regardless of FreshFacing.
+            The only <em>new</em> spend attributable to FF is <strong>Sending Infra ($226) + Misc ($50) = $276/mo</strong>.
+          </div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:#fff;border:1px solid #86efac;border-radius:8px;padding:12px 14px;">
+              <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">All-in CPA</div>
+              <div style="font-size:1.6rem;font-weight:800;color:#111;">$3.49</div>
+              <div style="font-family:var(--mono);font-size:11px;color:#6b7280;margin-top:3px;">$524 ÷ 150 customers</div>
+            </div>
+            <div style="background:#fff;border:1.5px solid #16a34a;border-radius:8px;padding:12px 14px;">
+              <div style="font-size:10px;font-weight:700;color:#15803d;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Marginal CPA (FF-only spend)</div>
+              <div style="font-size:1.6rem;font-weight:800;color:#16a34a;">$1.84</div>
+              <div style="font-family:var(--mono);font-size:11px;color:#6b7280;margin-top:3px;">$276 ÷ 150 customers</div>
+            </div>
+          </div>
+        </div>
 
         <!-- Unit economics cards -->
         <div
@@ -4186,7 +4370,7 @@
                 margin-bottom: 6px;
               "
             >
-              CPA
+              CPA (all-in)
             </div>
             <div
               style="font-size: 1.8rem; font-weight: 800; color: var(--text)"
