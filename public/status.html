@@ -1931,6 +1931,229 @@
         </div>
       </div>
 
+      <!-- CAMPAIGN STATS -->
+      <div class="section" id="campaign-stats">
+        <div class="sh">
+          <div class="sh-num">02B</div>
+          <div class="sh-title">Campaign Stats</div>
+          <div class="sh-line"></div>
+        </div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+          "
+          id="stats-grid"
+        >
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: var(--accent)"
+              id="stat-sent"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Sent
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: var(--accent)"
+              id="stat-opens"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Unique Opens
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: #22c55e"
+              id="stat-replies"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Replies
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: var(--text1)"
+              id="stat-leads"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Total Leads
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: var(--text1)"
+              id="stat-completed"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Completed
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--s1);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+            "
+          >
+            <div
+              style="font-size: 28px; font-weight: 800; color: #ef4444"
+              id="stat-bounced"
+            >
+              --
+            </div>
+            <div
+              style="
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              "
+            >
+              Bounced
+            </div>
+          </div>
+        </div>
+        <div
+          style="font-size: 11px; color: var(--text3); text-align: right"
+          id="stats-updated"
+        >
+          auto-refreshes every 30s
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          function loadStats() {
+            fetch("/api/instantly-stats")
+              .then(function (r) {
+                return r.json();
+              })
+              .then(function (d) {
+                document.getElementById("stat-sent").textContent =
+                  d.sent ?? "--";
+                document.getElementById("stat-opens").textContent =
+                  d.opens ?? "--";
+                document.getElementById("stat-replies").textContent =
+                  d.replies ?? "--";
+                document.getElementById("stat-leads").textContent =
+                  d.leads ?? "--";
+                document.getElementById("stat-completed").textContent =
+                  d.completed ?? "--";
+                document.getElementById("stat-bounced").textContent =
+                  d.bounced ?? "--";
+                var t = new Date();
+                document.getElementById("stats-updated").textContent =
+                  "Last updated " +
+                  t.toLocaleTimeString() +
+                  " - auto-refreshes every 30s";
+              })
+              .catch(function () {
+                document.getElementById("stats-updated").textContent =
+                  "Failed to load stats";
+              });
+          }
+          loadStats();
+          setInterval(loadStats, 30000);
+        })();
+      </script>
+
       <!-- SHIPPED -->
       <div class="section" id="shipped">
         <div class="sh">
