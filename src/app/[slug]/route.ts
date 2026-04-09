@@ -12,12 +12,14 @@ export async function GET(
     return new NextResponse("Not found", { status: 404 });
   }
 
-  const cloudflareUrl = `https://freshfacing-${slug}.pages.dev`;
+  const supabaseUrl =
+    process.env.SUPABASE_URL || "https://xfshkmpmdvfnphtornwe.supabase.co";
+  const storageUrl = `${supabaseUrl}/storage/v1/object/public/site-html/${slug}.html`;
 
   try {
-    const resp = await fetch(cloudflareUrl, {
+    const resp = await fetch(storageUrl, {
       headers: { "User-Agent": "FreshFacing-Proxy/1.0" },
-      next: { revalidate: 60 },
+      next: { revalidate: 3600 },
     });
 
     if (!resp.ok) {
