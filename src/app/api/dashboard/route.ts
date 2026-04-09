@@ -53,15 +53,26 @@ export async function GET() {
       new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
   );
 
-  // Fetch Stripe subscriptions
+  // Fetch Stripe subscriptions — filter to FreshFacing price IDs only
+  const FF_PRICE_IDS = new Set(
+    [process.env.STRIPE_PRICE_ID, process.env.STRIPE_ANNUAL_PRICE_ID].filter(
+      Boolean,
+    ),
+  );
   const subs = await stripe.subscriptions.list({ limit: 100, status: "all" });
-  const active = subs.data.filter((s) => s.status === "active").length;
-  const totalRevenue = subs.data
+  const ffSubs =
+    FF_PRICE_IDS.size > 0
+      ? subs.data.filter((s) =>
+          FF_PRICE_IDS.has(s.items.data[0]?.price?.id ?? ""),
+        )
+      : subs.data;
+  const active = ffSubs.filter((s) => s.status === "active").length;
+  const totalRevenue = ffSubs
     .filter((s) => s.status === "active")
     .reduce((sum, s) => sum + (s.items.data[0]?.price?.unit_amount ?? 0), 0);
 
   const stripeRows = await Promise.all(
-    subs.data.map(async (sub) => {
+    ffSubs.map(async (sub) => {
       const customer =
         typeof sub.customer === "string"
           ? await stripe.customers.retrieve(sub.customer)
