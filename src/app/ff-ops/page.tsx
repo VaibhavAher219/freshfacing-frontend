@@ -55,18 +55,32 @@ function fmt(ts: string | number) {
   });
 }
 
+type CampaignStats = {
+  leads: number;
+  sent: number;
+  opens: number;
+  replies: number;
+  bounced: number;
+  completed: number;
+};
+
 export default function Dashboard() {
   const [data, setData] = useState<DashData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
   const [tab, setTab] = useState<"leads" | "stripe" | "costs">("leads");
+  const [campaign, setCampaign] = useState<CampaignStats | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const r = await fetch("/api/dashboard", { cache: "no-store" });
+      const [r, cr] = await Promise.all([
+        fetch("/api/dashboard", { cache: "no-store" }),
+        fetch("/api/instantly-stats", { cache: "no-store" }),
+      ]);
       const d = await r.json();
       setData(d);
+      if (cr.ok) setCampaign(await cr.json());
       setLastRefresh(new Date());
     } finally {
       setLoading(false);
@@ -190,6 +204,72 @@ export default function Dashboard() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Campaign stats */}
+        {campaign && (
+          <div style={{ marginBottom: 28 }}>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "#aaa",
+                marginBottom: 10,
+              }}
+            >
+              Instantly Campaign
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                gap: 12,
+              }}
+            >
+              {[
+                { label: "In Campaign", value: campaign.leads },
+                { label: "Emails Sent", value: campaign.sent },
+                { label: "Unique Opens", value: campaign.opens },
+                { label: "Replies", value: campaign.replies },
+                { label: "Bounced", value: campaign.bounced },
+                { label: "Completed", value: campaign.completed },
+              ].map(({ label, value }) => (
+                <div
+                  key={label}
+                  style={{
+                    background: "#fff",
+                    border: "1px solid #e8e2d9",
+                    borderRadius: 12,
+                    padding: "16px 20px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 11,
+                      fontWeight: 600,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "#aaa",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "1.5rem",
+                      fontWeight: 700,
+                      color: "#1a1a1a",
+                    }}
+                  >
+                    {value}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
