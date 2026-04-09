@@ -1,10 +1,12 @@
 "use client";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 export default function StatusLogin() {
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const searchParams = useSearchParams();
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -16,7 +18,7 @@ export default function StatusLogin() {
       body: JSON.stringify({ password: pw }),
     });
     if (res.ok) {
-      window.location.href = "/status.html";
+      window.location.href = searchParams.get("next") || "/status.html";
     } else {
       setError("Wrong password.");
       setLoading(false);
