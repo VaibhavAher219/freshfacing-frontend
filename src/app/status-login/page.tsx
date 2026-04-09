@@ -1,8 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function StatusLogin() {
+function LoginForm() {
   const [pw, setPw] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -95,5 +95,13 @@ export default function StatusLogin() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function StatusLogin() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
