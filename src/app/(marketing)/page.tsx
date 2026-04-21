@@ -301,9 +301,15 @@ const bodyHTML = `
       </div>
 
       <!-- Before / after comparison cards -->
+      <div style="margin-top:3.5rem;margin-bottom:1rem;text-align:center;">
+        <div class="section-eyebrow">Why this is a no-brainer</div>
+        <h2 class="section-title" style="margin-top:0.5rem;">Your old site is costing you customers right now.</h2>
+        <p class="section-sub" style="max-width:52ch;margin:0.75rem auto 0;">People see your website and leave in 3 seconds. They call your competitor instead. Our sites are 100x better — and they cost less than your monthly coffee bill.</p>
+      </div>
+
       <div class="comparison">
         <div>
-          <div class="compare-label old">What you have</div>
+          <div class="compare-label old">Your site right now</div>
           <div class="compare-card">
             <div class="compare-bar">
               <div class="bar-dot" style="background:#ff6b6b"></div>
@@ -311,20 +317,21 @@ const bodyHTML = `
             </div>
             <div class="compare-content">
               <div class="compare-rows">
-                <div class="compare-row"><span class="metric">Mobile friendly</span><span class="value-bad">&#10007; Broken</span></div>
-                <div class="compare-row"><span class="metric">Page speed</span><span class="value-bad">8.4 sec</span></div>
-                <div class="compare-row"><span class="metric">Google indexed</span><span class="value-bad">&#10007; No</span></div>
-                <div class="compare-row"><span class="metric">AI search visible</span><span class="value-bad">&#10007; No</span></div>
-                <div class="compare-row"><span class="metric">Working links</span><span class="value-bad">3 of 10</span></div>
-                <div class="compare-row"><span class="metric">Click-to-call</span><span class="value-bad">&#10007; Missing</span></div>
+                <div class="compare-row"><span class="metric">Loads on phone</span><span class="value-bad">&#10007; Broken</span></div>
+                <div class="compare-row"><span class="metric">Page speed</span><span class="value-bad">8.4 seconds</span></div>
+                <div class="compare-row"><span class="metric">Shows on Google</span><span class="value-bad">&#10007; Invisible</span></div>
+                <div class="compare-row"><span class="metric">Shows on AI search</span><span class="value-bad">&#10007; Not a chance</span></div>
+                <div class="compare-row"><span class="metric">Links that work</span><span class="value-bad">3 out of 10</span></div>
+                <div class="compare-row"><span class="metric">Call button</span><span class="value-bad">&#10007; Missing</span></div>
                 <div class="compare-row"><span class="metric">Last updated</span><span class="value-bad">4 years ago</span></div>
+                <div class="compare-row"><span class="metric">What it costs you</span><span class="value-bad">Lost customers daily</span></div>
               </div>
             </div>
           </div>
         </div>
 
         <div>
-          <div class="compare-label new">What we build you</div>
+          <div class="compare-label new">What we build you — from $20/mo</div>
           <div class="compare-card new-card">
             <div class="compare-bar" style="background:#f0fff4;border-color:rgba(92,122,92,0.15)">
               <div class="bar-dot" style="background:#69db7c"></div>
@@ -332,14 +339,18 @@ const bodyHTML = `
             </div>
             <div class="compare-content">
               <div class="compare-rows">
-                <div class="compare-row"><span class="metric">Mobile friendly</span><span class="value-good">&#10003; Perfect</span></div>
-                <div class="compare-row"><span class="metric">Page speed</span><span class="value-good">&lt;1.5 sec</span></div>
-                <div class="compare-row"><span class="metric">Google indexed</span><span class="value-good">&#10003; Yes</span></div>
-                <div class="compare-row"><span class="metric">AI search visible</span><span class="value-good">&#10003; Structured</span></div>
-                <div class="compare-row"><span class="metric">Working links</span><span class="value-good">All of them</span></div>
-                <div class="compare-row"><span class="metric">Click-to-call</span><span class="value-good">&#10003; Front &amp; center</span></div>
-                <div class="compare-row"><span class="metric">Maintenance</span><span class="value-good">We handle it</span></div>
+                <div class="compare-row"><span class="metric">Loads on phone</span><span class="value-good">&#10003; Perfect on every phone</span></div>
+                <div class="compare-row"><span class="metric">Page speed</span><span class="value-good">Under 1.5 seconds</span></div>
+                <div class="compare-row"><span class="metric">Shows on Google</span><span class="value-good">&#10003; Yes</span></div>
+                <div class="compare-row"><span class="metric">Shows on AI search</span><span class="value-good">&#10003; Yes</span></div>
+                <div class="compare-row"><span class="metric">Links that work</span><span class="value-good">Every single one</span></div>
+                <div class="compare-row"><span class="metric">Call button</span><span class="value-good">&#10003; Right at the top</span></div>
+                <div class="compare-row"><span class="metric">Maintenance</span><span class="value-good">We handle it forever</span></div>
+                <div class="compare-row"><span class="metric">What it costs you</span><span class="value-good">$20/mo or $199/yr</span></div>
               </div>
+            </div>
+            <div style="background:var(--sage);border-radius:0 0 10px 10px;padding:0.85rem 1.25rem;margin:1rem -1.25rem -1.25rem;text-align:center;">
+              <span style="color:#fff;font-weight:700;font-size:0.82rem;letter-spacing:0.03em;">100X BETTER SITE &middot; LESS THAN $1/DAY &middot; ZERO WORK FOR YOU</span>
             </div>
           </div>
         </div>
@@ -520,9 +531,9 @@ const bodyHTML = `
     <div style="background:var(--ink);border-radius:10px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
       <div>
         <div style="font-size:0.75rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(250,247,242,0.4);margin-bottom:0.5rem;">The bottom line</div>
-        <p style="font-family:'Newsreader',serif;font-style:italic;font-size:1.15rem;color:var(--cream);line-height:1.55;max-width:50ch;">This is the best-looking website you'll ever have — and it'll take you <strong style="font-style:normal;color:var(--amber);">zero hours</strong> to get it.</p>
+        <p style="font-family:'Newsreader',serif;font-style:italic;font-size:1.15rem;color:var(--cream);line-height:1.55;max-width:50ch;">A site that looks 100x better. Loads 6x faster. Shows up on Google. Works on every phone. <strong style="font-style:normal;color:var(--amber);">$20/month</strong> — or pay once a year for <strong style="font-style:normal;color:var(--amber);">$199</strong> and save $41. Zero hours of your time. No contracts.</p>
       </div>
-      <a href="/scan" style="display:inline-block;padding:1rem 2rem;background:var(--amber);color:var(--ink);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.875rem;letter-spacing:0.05em;border-radius:5px;white-space:nowrap;flex-shrink:0;">Scan My Site Free &rarr;</a>
+      <a href="/scan" style="display:inline-block;padding:1rem 2rem;background:var(--amber);color:var(--ink);text-decoration:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.875rem;letter-spacing:0.05em;border-radius:5px;white-space:nowrap;flex-shrink:0;">See My New Site Free &rarr;</a>
     </div>
 
   </div>

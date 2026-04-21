@@ -40,10 +40,21 @@ const STATUS_COLOR: Record<string, string> = {
   done: "#2d6a4f",
   running: "#b07d00",
   failed: "#c0392b",
+  sold: "#6b21a8",
   // stripe statuses
   active: "#2d6a4f",
   canceled: "#888",
   past_due: "#c0392b",
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  new: "pending",
+  converted: "rebuilt",
+  sold: "sold",
+  site_built: "site built",
+  done: "done",
+  running: "running",
+  failed: "failed",
 };
 
 function fmt(ts: string | number) {
@@ -352,81 +363,90 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {data.leads.map((lead, i) => (
-                  <tr
-                    key={lead.id}
-                    style={{
-                      borderBottom: "1px solid #f0ece6",
-                      background: i % 2 === 0 ? "#fff" : "#fdfcfa",
-                    }}
-                  >
-                    <td
+                {data.leads
+                  .filter(
+                    (lead) =>
+                      /^[a-zA-Z0-9]/.test(lead.url || "") &&
+                      lead.status !== "new",
+                  )
+                  .map((lead, i) => (
+                    <tr
+                      key={lead.id}
                       style={{
-                        padding: "12px 16px",
-                        whiteSpace: "nowrap",
-                        color: "#888",
+                        borderBottom: "1px solid #f0ece6",
+                        background: i % 2 === 0 ? "#fff" : "#fdfcfa",
                       }}
                     >
-                      {fmt(lead.created_at)}
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        maxWidth: 180,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      <a
-                        href={`https://${lead.url?.replace(/^https?:\/\//, "")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{ color: "#1a1a1a", textDecoration: "none" }}
-                      >
-                        {lead.url?.replace(/^https?:\/\//, "")}
-                      </a>
-                    </td>
-                    <td style={{ padding: "12px 16px", color: "#555" }}>
-                      {lead.business_name || "—"}
-                    </td>
-                    <td style={{ padding: "12px 16px", color: "#555" }}>
-                      {lead.email || "—"}
-                    </td>
-                    <td style={{ padding: "12px 16px" }}>
-                      <span
+                      <td
                         style={{
-                          background: `${STATUS_COLOR[lead.status] || "#888"}18`,
-                          color: STATUS_COLOR[lead.status] || "#888",
-                          padding: "3px 10px",
-                          borderRadius: 20,
-                          fontWeight: 600,
-                          fontSize: 11,
+                          padding: "12px 16px",
+                          whiteSpace: "nowrap",
+                          color: "#888",
                         }}
                       >
-                        {lead.status || "—"}
-                      </span>
-                    </td>
-                    <td style={{ padding: "12px 16px" }}>
-                      {lead.public_url ? (
+                        {fmt(lead.created_at)}
+                      </td>
+                      <td
+                        style={{
+                          padding: "12px 16px",
+                          maxWidth: 180,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
                         <a
-                          href={lead.public_url}
+                          href={`https://${lead.url?.replace(/^[^a-zA-Z0-9]*(?:https?:\/\/)?/, "")}`}
                           target="_blank"
                           rel="noopener noreferrer"
+                          style={{ color: "#1a1a1a", textDecoration: "none" }}
+                        >
+                          {lead.url?.replace(
+                            /^[^a-zA-Z0-9]*(?:https?:\/\/)?/,
+                            "",
+                          )}
+                        </a>
+                      </td>
+                      <td style={{ padding: "12px 16px", color: "#555" }}>
+                        {lead.business_name || "—"}
+                      </td>
+                      <td style={{ padding: "12px 16px", color: "#555" }}>
+                        {lead.email || "—"}
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        <span
                           style={{
-                            color: "#5c7a5c",
+                            background: `${STATUS_COLOR[lead.status] || "#888"}18`,
+                            color: STATUS_COLOR[lead.status] || "#888",
+                            padding: "3px 10px",
+                            borderRadius: 20,
                             fontWeight: 600,
-                            textDecoration: "none",
+                            fontSize: 11,
                           }}
                         >
-                          View →
-                        </a>
-                      ) : (
-                        "—"
-                      )}
-                    </td>
-                  </tr>
-                ))}
+                          {STATUS_LABEL[lead.status] || lead.status || "—"}
+                        </span>
+                      </td>
+                      <td style={{ padding: "12px 16px" }}>
+                        {lead.public_url ? (
+                          <a
+                            href={lead.public_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              color: "#5c7a5c",
+                              fontWeight: 600,
+                              textDecoration: "none",
+                            }}
+                          >
+                            View →
+                          </a>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                    </tr>
+                  ))}
                 {data.leads.length === 0 && (
                   <tr>
                     <td

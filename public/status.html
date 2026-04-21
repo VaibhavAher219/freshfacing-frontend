@@ -2114,7 +2114,7 @@
           style="font-size: 11px; color: var(--text3); text-align: right"
           id="stats-updated"
         >
-          auto-refreshes every 30s
+          auto-refreshes every 3h
         </div>
       </div>
 
@@ -2142,7 +2142,7 @@
                 document.getElementById("stats-updated").textContent =
                   "Last updated " +
                   t.toLocaleTimeString() +
-                  " - auto-refreshes every 30s";
+                  " - auto-refreshes every 3h";
               })
               .catch(function () {
                 document.getElementById("stats-updated").textContent =
@@ -2150,7 +2150,7 @@
               });
           }
           loadStats();
-          setInterval(loadStats, 30000);
+          setInterval(loadStats, 10800000);
         })();
       </script>
 
