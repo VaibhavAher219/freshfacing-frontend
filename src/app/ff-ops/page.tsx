@@ -241,13 +241,33 @@ export default function Dashboard() {
               }}
             >
               {[
-                { label: "In Campaign", value: campaign.leads },
-                { label: "Emails Sent", value: campaign.sent },
-                { label: "Replies", value: campaign.replies },
-                { label: "Positive Replies", value: campaign.positive_replies },
-                { label: "Bounced", value: campaign.bounced },
-                { label: "Completed", value: campaign.completed },
-              ].map(({ label, value }) => (
+                { label: "In Campaign", value: campaign.leads, pct: null },
+                { label: "Emails Sent", value: campaign.sent, pct: null },
+                {
+                  label: "Replies",
+                  value: campaign.replies,
+                  pct: campaign.sent ? campaign.replies / campaign.sent : null,
+                },
+                {
+                  label: "Positive Replies",
+                  value: campaign.positive_replies,
+                  pct: campaign.sent
+                    ? campaign.positive_replies / campaign.sent
+                    : null,
+                },
+                {
+                  label: "Bounced",
+                  value: campaign.bounced,
+                  pct: campaign.sent ? campaign.bounced / campaign.sent : null,
+                },
+                {
+                  label: "Completed",
+                  value: campaign.completed,
+                  pct: campaign.leads
+                    ? campaign.completed / campaign.leads
+                    : null,
+                },
+              ].map(({ label, value, pct }) => (
                 <div
                   key={label}
                   style={{
@@ -270,13 +290,24 @@ export default function Dashboard() {
                     {label}
                   </div>
                   <div
-                    style={{
-                      fontSize: "1.5rem",
-                      fontWeight: 700,
-                      color: "#1a1a1a",
-                    }}
+                    style={{ display: "flex", alignItems: "baseline", gap: 8 }}
                   >
-                    {value}
+                    <div
+                      style={{
+                        fontSize: "1.5rem",
+                        fontWeight: 700,
+                        color: "#1a1a1a",
+                      }}
+                    >
+                      {value}
+                    </div>
+                    {pct !== null && (
+                      <div
+                        style={{ fontSize: 12, fontWeight: 600, color: "#888" }}
+                      >
+                        {(pct * 100).toFixed(1)}%
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
