@@ -250,11 +250,10 @@ export default function Dashboard() {
                 },
                 {
                   label: "Positive Replies",
-                  value: campaign.positive_replies ?? "—",
-                  pct:
-                    campaign.sent && campaign.positive_replies != null
-                      ? campaign.positive_replies / campaign.sent
-                      : null,
+                  value: campaign.positive_replies,
+                  pct: campaign.sent
+                    ? campaign.positive_replies / campaign.sent
+                    : null,
                 },
                 {
                   label: "Bounced",
