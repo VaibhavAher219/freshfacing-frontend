@@ -69,8 +69,8 @@ function fmt(ts: string | number) {
 type CampaignStats = {
   leads: number;
   sent: number;
-  opens: number;
   replies: number;
+  positive_replies: number;
   bounced: number;
   completed: number;
 };
@@ -243,8 +243,8 @@ export default function Dashboard() {
               {[
                 { label: "In Campaign", value: campaign.leads },
                 { label: "Emails Sent", value: campaign.sent },
-                { label: "Unique Opens", value: campaign.opens },
                 { label: "Replies", value: campaign.replies },
+                { label: "Positive Replies", value: campaign.positive_replies },
                 { label: "Bounced", value: campaign.bounced },
                 { label: "Completed", value: campaign.completed },
               ].map(({ label, value }) => (
