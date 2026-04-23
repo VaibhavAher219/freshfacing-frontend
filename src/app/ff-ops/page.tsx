@@ -75,12 +75,25 @@ type CampaignStats = {
   completed: number;
 };
 
+type ReplyDetail = {
+  email: string;
+  subject: string;
+  preview: string;
+  timestamp: string;
+  is_positive: boolean;
+  old_site: string | null;
+  new_site: string | null;
+};
+
 export default function Dashboard() {
   const [data, setData] = useState<DashData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
   const [tab, setTab] = useState<"leads" | "stripe" | "costs">("leads");
   const [campaign, setCampaign] = useState<CampaignStats | null>(null);
+  const [modal, setModal] = useState<"replies" | "positive" | null>(null);
+  const [replyDetails, setReplyDetails] = useState<ReplyDetail[] | null>(null);
+  const [replyLoading, setReplyLoading] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -97,6 +110,24 @@ export default function Dashboard() {
       setLoading(false);
     }
   }, []);
+
+  const openModal = useCallback(
+    async (type: "replies" | "positive") => {
+      setModal(type);
+      if (replyDetails) return;
+      setReplyLoading(true);
+      try {
+        const r = await fetch("/api/reply-details", { cache: "no-store" });
+        if (r.ok) {
+          const d = await r.json();
+          setReplyDetails(d.replies ?? []);
+        }
+      } finally {
+        setReplyLoading(false);
+      }
+    },
+    [replyDetails],
+  );
 
   useEffect(() => {
     load();
@@ -241,12 +272,23 @@ export default function Dashboard() {
               }}
             >
               {[
-                { label: "In Campaign", value: campaign.leads, pct: null },
-                { label: "Emails Sent", value: campaign.sent, pct: null },
+                {
+                  label: "In Campaign",
+                  value: campaign.leads,
+                  pct: null,
+                  clickType: null,
+                },
+                {
+                  label: "Emails Sent",
+                  value: campaign.sent,
+                  pct: null,
+                  clickType: null,
+                },
                 {
                   label: "Replies",
                   value: campaign.replies,
                   pct: campaign.sent ? campaign.replies / campaign.sent : null,
+                  clickType: "replies" as const,
                 },
                 {
                   label: "Positive Replies",
@@ -254,11 +296,13 @@ export default function Dashboard() {
                   pct: campaign.sent
                     ? campaign.positive_replies / campaign.sent
                     : null,
+                  clickType: "positive" as const,
                 },
                 {
                   label: "Bounced",
                   value: campaign.bounced,
                   pct: campaign.sent ? campaign.bounced / campaign.sent : null,
+                  clickType: null,
                 },
                 {
                   label: "Completed",
@@ -266,15 +310,29 @@ export default function Dashboard() {
                   pct: campaign.leads
                     ? campaign.completed / campaign.leads
                     : null,
+                  clickType: null,
                 },
-              ].map(({ label, value, pct }) => (
+              ].map(({ label, value, pct, clickType }) => (
                 <div
                   key={label}
+                  onClick={() => clickType && openModal(clickType)}
                   style={{
                     background: "#fff",
                     border: "1px solid #e8e2d9",
                     borderRadius: 12,
                     padding: "16px 20px",
+                    cursor: clickType ? "pointer" : "default",
+                    transition: "border-color 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (clickType)
+                      (e.currentTarget as HTMLDivElement).style.borderColor =
+                        "#1a1a1a";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (clickType)
+                      (e.currentTarget as HTMLDivElement).style.borderColor =
+                        "#e8e2d9";
                   }}
                 >
                   <div
@@ -288,6 +346,9 @@ export default function Dashboard() {
                     }}
                   >
                     {label}
+                    {clickType && (
+                      <span style={{ marginLeft: 4, color: "#ccc" }}>↗</span>
+                    )}
                   </div>
                   <div
                     style={{ display: "flex", alignItems: "baseline", gap: 8 }}
@@ -1317,6 +1378,207 @@ export default function Dashboard() {
           </div>
         ) : null}
       </div>
+
+      {/* Reply modal */}
+      {modal && (
+        <div
+          onClick={() => setModal(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.4)",
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 24,
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: "#fff",
+              borderRadius: 16,
+              width: "100%",
+              maxWidth: 720,
+              maxHeight: "80vh",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            {/* Modal header */}
+            <div
+              style={{
+                padding: "20px 24px",
+                borderBottom: "1px solid #e8e2d9",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div style={{ fontWeight: 700, fontSize: 15, color: "#1a1a1a" }}>
+                {modal === "replies" ? "All Replies" : "Positive Replies"}
+              </div>
+              <button
+                onClick={() => setModal(null)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: 20,
+                  cursor: "pointer",
+                  color: "#888",
+                  lineHeight: 1,
+                }}
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Modal body */}
+            <div style={{ overflowY: "auto", flex: 1 }}>
+              {replyLoading ? (
+                <div
+                  style={{ padding: 40, textAlign: "center", color: "#888" }}
+                >
+                  Loading…
+                </div>
+              ) : !replyDetails || replyDetails.length === 0 ? (
+                <div
+                  style={{ padding: 40, textAlign: "center", color: "#888" }}
+                >
+                  No replies found.
+                </div>
+              ) : (
+                replyDetails
+                  .filter((r) => (modal === "replies" ? true : r.is_positive))
+                  .map((r, i) => (
+                    <div
+                      key={r.email}
+                      style={{
+                        padding: "16px 24px",
+                        borderBottom: "1px solid #f0ece6",
+                        background: i % 2 === 0 ? "#fff" : "#fdfcfa",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          marginBottom: 6,
+                        }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 10,
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontWeight: 700,
+                              fontSize: 13,
+                              color: "#1a1a1a",
+                            }}
+                          >
+                            {r.email}
+                          </span>
+                          {r.is_positive && (
+                            <span
+                              style={{
+                                background: "#e8f5ee",
+                                color: "#2d6a4f",
+                                fontSize: 10,
+                                fontWeight: 700,
+                                padding: "2px 8px",
+                                borderRadius: 20,
+                                letterSpacing: "0.06em",
+                                textTransform: "uppercase",
+                              }}
+                            >
+                              positive
+                            </span>
+                          )}
+                        </div>
+                        <span style={{ fontSize: 11, color: "#aaa" }}>
+                          {r.timestamp
+                            ? new Date(r.timestamp).toLocaleDateString(
+                                "en-US",
+                                { month: "short", day: "numeric" },
+                              )
+                            : ""}
+                        </span>
+                      </div>
+                      {r.subject && (
+                        <div
+                          style={{
+                            fontSize: 12,
+                            color: "#555",
+                            marginBottom: 4,
+                          }}
+                        >
+                          {r.subject}
+                        </div>
+                      )}
+                      {r.preview && (
+                        <div
+                          style={{
+                            fontSize: 12,
+                            color: "#888",
+                            marginBottom: 8,
+                            whiteSpace: "pre-wrap",
+                          }}
+                        >
+                          {r.preview.slice(0, 200)}
+                          {r.preview.length > 200 ? "…" : ""}
+                        </div>
+                      )}
+                      <div style={{ display: "flex", gap: 12 }}>
+                        {r.old_site && (
+                          <a
+                            href={`https://${r.old_site.replace(/^https?:\/\//, "")}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              fontSize: 12,
+                              color: "#888",
+                              textDecoration: "none",
+                              border: "1px solid #e8e2d9",
+                              borderRadius: 6,
+                              padding: "3px 10px",
+                            }}
+                          >
+                            Old site →
+                          </a>
+                        )}
+                        {r.new_site && (
+                          <a
+                            href={r.new_site}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{
+                              fontSize: 12,
+                              color: "#2d6a4f",
+                              fontWeight: 600,
+                              textDecoration: "none",
+                              border: "1px solid #b7d9c8",
+                              borderRadius: 6,
+                              padding: "3px 10px",
+                            }}
+                          >
+                            New site →
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
