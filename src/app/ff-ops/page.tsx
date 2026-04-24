@@ -102,8 +102,7 @@ export default function Dashboard() {
         fetch("/api/dashboard", { cache: "no-store" }),
         fetch("/api/instantly-stats", { cache: "no-store" }),
       ]);
-      const d = await r.json();
-      setData(d);
+      if (r.ok) setData(await r.json());
       if (cr.ok) setCampaign(await cr.json());
       setLastRefresh(new Date());
     } finally {

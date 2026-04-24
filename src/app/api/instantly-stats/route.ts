@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { NextResponse } from "next/server";
 
 const RAILWAY_URL =
@@ -6,7 +9,7 @@ const RAILWAY_URL =
 
 export async function GET() {
   const res = await fetch(`${RAILWAY_URL}/instantly-stats`, {
-    next: { revalidate: 0 },
+    cache: "no-store",
   });
   const data = await res.json();
   return NextResponse.json(data, { status: res.status });
